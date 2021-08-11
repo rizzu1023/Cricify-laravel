@@ -24,10 +24,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('optimize');
-        $schedule->command('config:clear')->everyMinute();
-        $schedule->command('config:cache')->everyTwoMinutes();
-        $schedule->command('view:clear')->everyThreeMinutes();
+        $schedule->command('optimize')->daily();
         $schedule->command('telescope:clear')->daily();
     }
 
