@@ -24,7 +24,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 'Right Arm Offbreak',
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -36,7 +36,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -48,7 +48,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -60,7 +60,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -72,7 +72,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -84,7 +84,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -96,7 +96,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -108,7 +108,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
 
@@ -121,7 +121,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -133,7 +133,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -145,7 +145,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -157,7 +157,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         //INDIA  13-24
@@ -171,7 +171,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -183,7 +183,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -195,7 +195,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -207,7 +207,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -219,7 +219,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -231,7 +231,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -243,7 +243,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -255,7 +255,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -267,7 +267,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -279,7 +279,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -291,7 +291,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -303,7 +303,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         // AUSTRALIA  25-36
@@ -317,7 +317,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -329,7 +329,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -341,7 +341,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -353,7 +353,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -365,7 +365,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -377,7 +377,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -389,7 +389,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -401,7 +401,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -413,7 +413,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -425,7 +425,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -437,7 +437,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -449,7 +449,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         //New zealand 37-48
@@ -463,7 +463,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -475,7 +475,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -487,7 +487,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -499,7 +499,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -511,7 +511,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -523,7 +523,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -535,7 +535,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -547,7 +547,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -559,7 +559,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -571,7 +571,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -583,7 +583,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -595,7 +595,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         //South Africa 49-60
@@ -609,7 +609,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -621,7 +621,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -633,7 +633,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -645,7 +645,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -657,7 +657,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -669,7 +669,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -681,7 +681,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -693,7 +693,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -705,7 +705,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -717,7 +717,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -729,7 +729,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -741,7 +741,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         //WEST INDIES 61-72
@@ -756,7 +756,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -768,7 +768,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -780,7 +780,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -792,7 +792,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -804,7 +804,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -816,7 +816,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -828,7 +828,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -840,7 +840,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -852,7 +852,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -864,7 +864,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -876,7 +876,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -888,7 +888,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         //PAKISTAN 73-84
@@ -902,7 +902,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -914,7 +914,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -926,7 +926,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -938,7 +938,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
         DB::table('players')->insert([
             'player_id' => 'HSH',
@@ -949,7 +949,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -961,7 +961,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
         DB::table('players')->insert([
             'player_id' => 'SBM',
@@ -972,7 +972,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -984,7 +984,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
         DB::table('players')->insert([
             'player_id' => 'SRA',
@@ -995,7 +995,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -1007,7 +1007,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
         DB::table('players')->insert([
             'player_id' => 'SFD',
@@ -1018,7 +1018,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -1030,7 +1030,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
 
@@ -1044,7 +1044,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -1056,7 +1056,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
 
@@ -1069,7 +1069,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -1081,7 +1081,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
 
@@ -1094,7 +1094,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -1106,7 +1106,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -1118,7 +1118,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -1130,7 +1130,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -1142,7 +1142,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -1154,7 +1154,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -1166,7 +1166,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
         DB::table('players')->insert([
@@ -1178,7 +1178,7 @@ class PlayerSeeder extends Seeder
             'batting_style' => 1,
             'bowling_style' => 1,
             'dob' => '2000-12-12',
-            'user_id' => '1',
+            'user_id' => 2,
         ]);
 
 

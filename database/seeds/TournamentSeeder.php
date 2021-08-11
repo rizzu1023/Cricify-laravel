@@ -19,14 +19,14 @@ class TournamentSeeder extends Seeder
             'tournament_name' => 'CWC19',
             'start_date' => '2019-12-12',
             'end_date' => '2019-12-12',
-            'user_id' => 1,
+            'user_id' => 2,
         ]);
 
         DB::table('tournaments')->insert([
             'tournament_name' => 'IPL19',
             'start_date' => '2019-12-12',
             'end_date' => '2019-12-12',
-            'user_id' => 1,
+            'user_id' => 2,
         ]);
     }
 }
