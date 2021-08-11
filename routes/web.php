@@ -57,6 +57,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
     Route::resource('tournaments.schedules','TournamentScheduleController');
     Route::resource('tournaments.teams', 'TournamentTeamController');
     Route::resource('teams.players','TeamPlayerController');
+    Route::get('/teams/{teamId}/players/excel/upload','TeamPlayerController@playerExcelUpload')->name('player.excel.upload');
+    Route::post('/teams/{teamId}/players/excel/upload','TeamPlayerController@playerExcelUploadStore')->name('player.excel.upload.store');
 
     Route::resource('tournaments.groups','TournamentGroupController')->shallow();
     Route::resource('groups.teams','GroupTeamController');
@@ -70,7 +72,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
 
 
     Route::resource('player','PlayersController');
-    Route::post('store-excel-player',[PlayersController::class,'storeExcelPlayer'])->name('store.excel.player');
+    Route::post('store-excel-player','PlayersController@storeExcelPlayer')->name('store.excel.player');
 
     Route::post('player/add-in-team',[PlayersController::class,'add_in_team']);
     Route::post('player/remove-from-team',[PlayersController::class,'remove_from_team']);

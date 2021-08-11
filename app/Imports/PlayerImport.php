@@ -2,37 +2,56 @@
 
 namespace App\Imports;
 
+use App\Models\MasterBattingStyle;
+use App\Models\MasterBowlingStyle;
+use App\Models\MasterRole;
 use App\Players;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Collection;
-use Maatwebsite\Excel\Concerns\SkipsOnError;
-use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
-use Throwable;
 
 class PlayerImport implements ToModel, WithHeadingRow, WithValidation
 {
-    private $user;
+    private $user,$team;
 
-    public function __construct($user)
+    public function __construct($user,$team)
     {
         $this->user = $user;
+        $this->team = $team;
     }
 
     public function model(array $row)
     {
-        return new Players([
+        $role = MasterRole::where('name',$row['role'])->firstOrCreate([
+            'name' => $row['role'],
+            'status' => 1,
+        ]);
+
+        $battingStyle = MasterBattingStyle::where('name',$row['batting_style'])->firstOrCreate([
+            'name' => $row['batting_style'],
+            'status' => 1,
+        ]);
+
+        $bowlingStyle = MasterBowlingStyle::where('name',$row['bowling_style'])->firstOrCreate([
+            'name' => $row['bowling_style'],
+            'status' => 1,
+        ]);
+
+        $player =  Players::create([
             'player_id' => $row['player_id'],
             'first_name' => $row['first_name'],
             'last_name' => $row['last_name'],
-            'role' => $row['role'],
-            'batting_style' => $row['batting_style'],
-            'bowling_style' => $row['bowling_style'],
+            'role_id' => $role->id,
+            'batting_style_id' => $battingStyle->id,
+            'bowling_style_id' => $bowlingStyle->id,
 //            'dob' => $row['dob'],
             'user_id' => $this->user->id,
         ]);
+
+        if(!is_null($this->team)){
+            $player->Teams()->syncWithoutDetaching($this->team);
+        }
+        return $player;
     }
 
 
@@ -42,9 +61,9 @@ class PlayerImport implements ToModel, WithHeadingRow, WithValidation
             '*.player_id' => 'required|unique:players,player_id',
             '*.first_name' => 'required|string',
             '*.last_name' => 'required|string',
-            '*.role' => 'required|string',
-            '*.batting_style' => 'required|string',
-            '*.bowling_style' => 'required|string',
+            '*.role' => 'required',
+            '*.batting_style' => 'required',
+            '*.bowling_style' => 'required',
         ];
     }
 }

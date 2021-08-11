@@ -13,6 +13,7 @@ use App\Players;
 use App\Teams;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Validators\ValidationException;
 
 class PlayersController extends Controller
 {
@@ -147,14 +148,18 @@ class PlayersController extends Controller
     {
         $request->validate([
             'player_sheet' => 'required|mimes:xls,xlsx',
+            'team_id' => 'sometimes|required|exists:teams,id',
         ]);
+
 
         $user = auth()->user();
         if($request->hasFile('player_sheet')){
-//            $file = $request->file('player_sheet');
-//            $import = new PlayerImport($user);
-//            $import->import($file);
-            $import = Excel::import(new PlayerImport($user), $request->file('player_sheet'));
+            $team = NULL;
+            if($request->has('team_id')){
+                $team = Teams::find($request->team_id);
+            }
+            Excel::import(new PlayerImport($user,$team), $request->file('player_sheet'));
+
             return back()->with([ 'status' => true, 'message' => 'File Successfully Uploaded']);
         }
 

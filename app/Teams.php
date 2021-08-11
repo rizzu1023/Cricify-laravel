@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\PlayerTeamMapping;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -29,5 +30,10 @@ class Teams extends Model
 
     public function Players(){
         return $this->belongsToMany('App\Players','player_team','team_id','player_id')->withTimestamps();
+    }
+
+    public function Player()
+    {
+        return $this->hasMany(PlayerTeamMapping::class,'team_id','id');
     }
 }

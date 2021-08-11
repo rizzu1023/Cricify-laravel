@@ -25,6 +25,7 @@
             <div class="card">
                 <div class="card-body">
                     <a class="btn btn-success btn-sm mb-3 " href="{{ route('teams.players.create',$team->id)}}"><i class="fa fa-plus"></i>Add New Player</a>
+                    <a class="btn btn-primary btn-sm mb-3 " href="{{ route('player.excel.upload',$team->id)}}"><i class="fa fa-plus"></i>Bulk Upload</a>
                     <a style=" float: right" class="btn btn-success btn-sm mb-3 " href="/admin/teams/{{$team->id}}/players/exist_create"><i class="fa fa-plus"></i>Add Existing Player</a>
 
                     <div class="tables">

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\PlayerTeamMapping;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
@@ -23,6 +24,11 @@ class Players extends Model implements HasMedia
 
     public function Teams(){
         return $this->belongsToMany('App\Teams','player_team','player_id','team_id')->withTimestamps();
+    }
+
+    public function Team()
+    {
+        return $this->hasMany(PlayerTeamMapping::class,'player_id','id');
     }
 
     public function Role()

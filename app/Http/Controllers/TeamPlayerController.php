@@ -21,7 +21,6 @@ class TeamPlayerController extends Controller
         $players = Players::with('Role')->whereHas('teams',function($query) use($team_id){
             $query->where('team_id',$team_id);
         })->get();
-//        return $players;
 //        $players = Players::where('team_id',$team->id)->orderBy('team_id', 'asc')->get();
         return view('Admin/Player/index', compact('players','team'));
     }
@@ -163,6 +162,22 @@ class TeamPlayerController extends Controller
         $player = Players::find($request->player_id);
         $player->Teams()->syncWithoutDetaching($team);
         return back()->with('message','Player added');
+    }
+
+    public function playerExcelUpload($teamId)
+    {
+        $team = Teams::where('id',$teamId)->first();
+        if($team){
+            return view('Admin.Player.excel-upload',compact('team'));
+        }
+        else{
+            return back()->with('message','Team Not Found');
+        }
+    }
+
+    public function playerExcelUploadStore(Request $request,$teamId)
+    {
+        return $teamId;
     }
 
 }
