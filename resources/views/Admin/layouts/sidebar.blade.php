@@ -1,11 +1,7 @@
 <!-- Page Sidebar Start-->
 <div class="sidebar-wrapper">
-    <div class="logo-wrapper" style="box-shadow: none"><a href="/admin/"><img class="img-fluid"
-                                                                                       src="{{asset('Assets/Admin/images/feimages/FELogo.png')}}"
-                                                                                       alt=""></a></div>
-    <div class="logo-icon-wrapper"><a href="/admin/dashboard"><img class="img-fluid"
-                                                                   src="{{asset('Assets/Admin/images/feimages/FELogo.png')}}"
-                                                                   alt=""></a></div>
+    <div class="logo-wrapper" style="box-shadow: none"><a href="/admin/">CIRCIFY</a></div>
+    <div class="logo-icon-wrapper"><a href="/admin/dashboard">CRICIFY</a></div>
     <nav>
         <div class="sidebar-main">
             <div id="sidebar-menu">

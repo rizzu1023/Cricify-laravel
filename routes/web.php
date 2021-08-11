@@ -11,6 +11,7 @@ Route::get('/stats', [MainController::class,'GetStats']);
 
 Route::view('/blank','Main.layouts.layout');
 
+Auth::routes();
 
 //Admin Routes
 Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
@@ -97,7 +98,6 @@ Route::group(['prefix' => 'super-admin', 'middleware' => ['auth']], function() {
     Route::get('admin',[SuperAdminController::class,'admin_index']);
 });
 
-Auth::routes();
 
 Route::get('/home', [HomeController::class,'index'])->name('home');
-Route::get('/{any}', [App\Http\Controllers\AppController::class,'index'])->where('any','.*');
+//Route::get('/{any}', [App\Http\Controllers\AppController::class,'index'])->where('any','.*');
