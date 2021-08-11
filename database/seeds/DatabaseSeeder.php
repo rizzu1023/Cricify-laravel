@@ -16,8 +16,8 @@ class DatabaseSeeder extends Seeder
 //        \App\Players::factory(60)->create();
 
 //        $this->call(\Database\Seeders\UserSeeder::class);
-        $this->call(\Database\Seeders\TournamentSeeder::class);
-        $this->call(\Database\Seeders\TeamSeeder::class);
+//        $this->call(\Database\Seeders\TournamentSeeder::class);
+//        $this->call(\Database\Seeders\TeamSeeder::class);
         $this->call(\Database\Seeders\PlayerSeeder::class);
         $this->call(\Database\Seeders\PlayerTeamSeeder::class);
         $this->call(\Database\Seeders\ScheduleSeeder::class);
