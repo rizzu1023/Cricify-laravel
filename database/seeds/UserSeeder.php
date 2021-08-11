@@ -18,12 +18,21 @@ class UserSeeder extends Seeder
     {
 //        DB::table('users')->truncate();
         DB::table('users')->insert([
-            'name' => 'Mohammed Rizwan',
-            'email' => 'mrizwan9022@gmail.com',
-            'password' => Hash::make('password'),
+            'name' => 'WANC STUDIOS',
+            'email' => 'wancstudios@gmail.com',
+            'password' => Hash::make('Wancstudios@ars21'),
             'email_verified_at' => Carbon::now(),
             'is_active' => 1,
             'is_super_admin' => 1,
+            'user_type' => 'super-admin',
+        ]);
+        DB::table('users')->insert([
+            'name' => 'Balapeer Premier League',
+            'email' => 'bpl@gmail.com',
+            'password' => Hash::make('bpl@2021'),
+            'email_verified_at' => Carbon::now(),
+            'is_active' => 1,
+            'is_super_admin' => 0,
             'user_type' => 'super-admin',
         ]);
     }
