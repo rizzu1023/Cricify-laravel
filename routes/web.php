@@ -8,14 +8,16 @@ Route::get('/pointsTable', [MainController::class,'GetPointsTable']);
 Route::get('/teams', [MainController::class,'GetTeams']);
 Route::get('/schedule', [MainController::class,'GetSchedule']);
 Route::get('/stats', [MainController::class,'GetStats']);
-
+Route::get('/',function(){
+    return redirect()->route('admin.dashboard');
+});
 Route::view('/blank','Main.layouts.layout');
 
 Auth::routes();
 
 //Admin Routes
 Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
-    Route::get('/dashboard', [App\Http\Controllers\AdminController::class,'getDashboard'])->name('GetDashboard');
+    Route::get('/dashboard', [App\Http\Controllers\AdminController::class,'getDashboard'])->name('admin.dashboard');
     Route::resource('/Tournament','TournamentController');  //Tournament
     Route::post('/Tournament/addTeam',[TournamentController::class,'Tournament_add_Team'])->name('Tournament_add_Team');
     Route::post('/Tournament/destroyTeam',[TournamentController::class,'Tournament_destroy_Team'])->name('Tournament_destroy_Team');

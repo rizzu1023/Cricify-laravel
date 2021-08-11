@@ -33,7 +33,7 @@
 
 
                     <li class="sidebar-list">
-                        <a class="nav-link"  onclick="event.preventDefault(); document.getElementById('logout-form').submit();" href="{{ route('logout' ) }}"><i data-feather="log-out"></i><span>Log out</span></>
+                        <a class="nav-link"  onclick="event.preventDefault(); document.getElementById('logout-form').submit();" href="{{ route('logout' ) }}"><i data-feather="log-out"></i><span>Log out</span></a>
                         <form method="POST"  id="logout-form" action="{{ Route('logout') }}" >
                             @csrf
                         </form>
