@@ -188,8 +188,8 @@ class MatchController extends Controller
 
                     $partnership_query = MatchTrack::select('score', 'over', 'overball', 'wickets')->whereIn('wickets', [$match_detail->wicket -1, $match_detail->wicket])->where('team_id', $match_detail->team_id)->where('match_id', $match_id)->where('tournament_id', $tournament->id)->orderBy('score', 'desc')->orderBy('over', 'desc')->orderBy('overball', 'desc')->get();
 
-                    $p0 = $partnership_query->where('wickets', $match_detail->wicket - 1)->last();
-                    $p1 = $partnership_query->where('wickets', $match_detail->wicket)->last();
+                    $p0 = $partnership_query->where('wickets', $match_detail->wicket)->last();
+                    $p1 = $partnership_query->where('wickets', $match_detail->wicket - 1)->last();
 
                     if ($p1) {
                         if ($p1 && $p0) {
