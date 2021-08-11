@@ -19,7 +19,7 @@ class PlayersController extends Controller
 {
     public function index()
     {
-       $players = Players::with('Role')->where('user_id' , auth()->user()->id)->get();
+       $players = Players::with('Role','BattingStyle','BowlingStyle')->where('user_id' , auth()->user()->id)->get();
        return view('Admin.Player.playerIndex',compact('players'));
     }
 
@@ -32,6 +32,7 @@ class PlayersController extends Controller
     }
     public function show($id)
     {
+
         $player = Players::find($id);
         $bt = Batting::where('player_id',$player->player_id)->first();
         $bw = Bowling::where('player_id',$player->player_id)->first();

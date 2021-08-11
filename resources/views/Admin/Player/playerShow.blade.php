@@ -93,15 +93,15 @@
                                 </tr>
                                 <tr>
                                     <td>Role</td>
-                                    <td>{{$player['role']}}</td>
+                                    <td>{{$player->Role ? $player->Role->name : NULL}}</td>
                                 </tr>
                                 <tr>
                                     <td>Bowling Style</td>
-                                    <td>{{$player['batting_style']}}</td>
+                                    <td>{{$player->BattingStyle ? $player->BattingStyle->name : NULL}}</td>
                                 </tr>
                                 <tr>
                                     <td>Bowling Style</td>
-                                    <td>{{$player['bowling_style']}}</td>
+                                    <td>{{$player->BowlingStyle ? $player->BowlingStyle->name : NULL}}</td>
                                 </tr>
 {{--                                <tr>--}}
 {{--                                    <td>Teams</td>--}}
@@ -123,55 +123,66 @@
                                 <tbody>
                                 <tr>
                                     <td>Matches</td>
-                                    <td>{{$bt['bt_matches']}}</td>
+                                    <td>{{optional($bt)->bt_matches}}</td>
                                 </tr>
                                 <tr>
                                     <td>Innings</td>
-                                    <td>{{$bt['bt_innings']}}</td>
+                                    <td>{{optional($bt)->bt_innings}}</td>
+
                                 </tr>
                                 <tr>
                                     <td>Runs</td>
-                                    <td>0</td>
+                                    <td>{{optional($bt)->id}}</td>
                                 </tr>
                                 <tr>
                                     <td>Balls</td>
-                                    <td>{{$bt['bt_balls']}}</td>
+                                    <td>{{optional($bt)->bt_balls}}</td>
+
                                 </tr>
                                 <tr>
                                     <td>Highest</td>
-                                    <td>0</td>
+                                    <td>{{optional($bt)->id}}</td>
+
                                 </tr>
                                 <tr>
                                     <td>Average</td>
-                                    <td>0</td>
+                                    <td>{{optional($bt)->id}}</td>
+
                                 </tr>
                                 <tr>
                                     <td>SR</td>
-                                    <td>0</td>
+                                    <td>{{optional($bt)->id}}</td>
+
                                 </tr>
                                 <tr>
                                     <td>Not Out</td>
-                                    <td>0</td>
+                                    <td>{{optional($bt)->id}}</td>
+
                                 </tr>
                                 <tr>
                                     <td>Fours</td>
-                                    <td>{{$bt['bt_fours']}}</td>
+                                    <td>{{optional($bt)->bt_fours}}</td>
+
                                 </tr>
                                 <tr>
                                     <td>Sixes</td>
-                                    <td>0</td>
+                                    <td>{{optional($bt)->id}}</td>
+
                                 </tr>
                                 <tr>
                                     <td>Ducks</td>
-                                    <td>0</td>
+                                    <td>{{optional($bt)->id}}</td>
+
                                 </tr>
                                 <tr>
                                     <td>50s</td>
-                                    <td>0</td>
+                                    <td>{{optional($bt)->id}}</td>
+
                                 </tr>
                                 <tr>
                                     <td>100s</td>
-                                    <td>0</td>
+                                    <td>{{optional($bt)->id}}</td>
+
                                 </tr>
                                 </tbody>
                             </table>
@@ -189,51 +200,56 @@
                                 <tbody>
                                 <tr>
                                     <td>Matches</td>
-                                    <td>{{$bw['bw_matches']}}</td>
+                                    <td>{{optional($bw)->bw_matches}}</td>
+
                                 </tr>
                                 <tr>
                                     <td>Innings</td>
-                                    <td>{{$bw['bw_innings']}}</td>
+                                    <td>{{optional($bw)->bw_innings}}</td>
+
                                 </tr>
                                 <tr>
                                     <td>Runs</td>
-                                    <td>0</td>
+                                    <td>{{optional($bw)->id}}</td>
                                 </tr>
                                 <tr>
                                     <td>Balls</td>
-                                    <td>{{$bw['bw_balls']}}</td>
+                                    <td>{{optional($bw)->bw_balls}}</td>
+
                                 </tr>
                                 <tr>
                                     <td>Maidens</td>
-                                    <td>0</td>
+                                    <td>{{optional($bw)->id}}</td>
                                 </tr>
                                 <tr>
                                     <td>wickets</td>
-                                    <td>{{$bw['bw_wickets']}}</td>
+                                    <td>{{optional($bw)->bw_wickets}}</td>
                                 </tr>
                                 <tr>
                                     <td>Average</td>
-                                    <td>0</td>
+                                    <td>{{optional($bw)->id}}</td>
+
                                 </tr>
                                 <tr>
                                     <td>Economy</td>
-                                    <td>0</td>
+                                    <td>{{optional($bw)->id}}</td>
+
                                 </tr>
                                 <tr>
                                     <td>SR</td>
-                                    <td>0</td>
+                                    <td>{{optional($bw)->id}}</td>
                                 </tr>
                                 <tr>
                                     <td>BBI</td>
-                                    <td>0</td>
+                                    <td>{{optional($bw)->id}}</td>
                                 </tr>
                                 <tr>
                                     <td>4w</td>
-                                    <td>0</td>
+                                    <td>{{optional($bw)->id}}</td>
                                 </tr>
                                 <tr>
                                     <td>5w</td>
-                                    <td>0</td>
+                                    <td>{{optional($bw)->id}}</td>
                                 </tr>
 
                                 </tbody>
