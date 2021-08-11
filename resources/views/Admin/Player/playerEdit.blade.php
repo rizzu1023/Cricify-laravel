@@ -54,31 +54,29 @@
                             </div>
                             <div class="form-group">
                                 <label class="col-form-label">Player Role</label>
-                                <select class="form-control" name="role" required="" >
-                                    <option selected="" value="{{$player->role}}">{{$player->role}}</option>
-                                    <option>Batsman</option>
-                                    <option>WK-Batsman</option>
-                                    <option>Bowler</option>
-                                    <option>Bowling Allrounder</option>
-                                    <option>Batting Allrounder</option>
+                                <select class="form-control" name="role_id" required="" >
+                                    <option selected="" value="{{$player->Role->id}}">{{$player->Role->name}}</option>
+                                    @foreach($roles as $style)
+                                        <option value="{{$style->id}}">{{$style->name}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label class="col-form-label">Batting Style</label>
-                                <select class="form-control" name="batting_style" required="" >
-                                    <option selected=""  value="{{$player->batting_style}}">{{$player->batting_style}}</option>
-                                    <option>Right Hand Batsman</option>
-                                    <option>Left Hand Batsman</option>
+                                <select class="form-control" name="batting_style_id" required="" >
+                                    <option selected=""  value="{{$player->BattingStyle->id}}">{{$player->BattingStyle->name}}</option>
+                                    @foreach($battingStyles as $style)
+                                    <option value="{{$style->id}}">{{$style->name}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label class="col-form-label">Bowling Style (optional)</label>
-                                <select class="form-control" name="bowling_style" required="" >
-                                    <option selected=""  value="{{$player->bowling_style}}">{{$player->bowling_style}}</option>
-                                    <option>Right-arm fast</option>
-                                    <option>Left-arm fast</option>
-                                    <option>Right-arm legbreak</option>
-                                    <option>Left-arm legbreak</option>
+                                <select class="form-control" name="bowling_style_id" required="" >
+                                    <option selected=""  value="{{$player->BowlingStyle->id}}">{{$player->BowlingStyle->name}}</option>
+                                    @foreach($bowlingStyles as $style)
+                                        <option value="{{$style->id}}">{{$style->name}}</option>
+                                    @endforeach
                                 </select>
                             </div>
 

@@ -80,7 +80,10 @@ class PlayersController extends Controller
     public function edit($id)
     {
         $player = Players::find($id);
-        return view('Admin.Player.playerEdit',compact('player'));
+        $roles = MasterRole::where('status',1)->get();
+        $battingStyles = MasterBattingStyle::where('status',1)->get();
+        $bowlingStyles = MasterBowlingStyle::where('status',1)->get();
+        return view('Admin.Player.playerEdit',compact('player','roles','battingStyles','bowlingStyles'));
 
     }
 
@@ -92,9 +95,9 @@ class PlayersController extends Controller
             'player_id' => 'required|min:2',
             'first_name' => 'required',
             'last_name' => 'required',
-            'role' => 'required',
-            'batting_style' => 'required',
-            'bowling_style' => '',
+            'role_id' => 'required',
+            'batting_style_id' => 'required',
+            'bowling_style_id' => '',
             'dob' => '',
         ]);
 
