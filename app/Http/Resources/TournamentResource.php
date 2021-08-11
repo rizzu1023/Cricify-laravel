@@ -14,8 +14,8 @@ class TournamentResource extends JsonResource
      */
     public function toArray($request)
     {
-        $start_date = date('d M', strtotime($this->start_date));
-        $end_date = date('d M', strtotime($this->end_date));
+        $start_date = Carbon::parse($this->start_date)->format('d M Y');
+        $end_date = Carbon::parse($this->end_date)->format('d M Y');
         return [
             'id' => $this->id,
             'tournament_name' => $this->tournament_name,

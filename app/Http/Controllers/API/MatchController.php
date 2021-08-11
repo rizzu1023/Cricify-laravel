@@ -165,6 +165,7 @@ class MatchController extends Controller
                 $target = $bowling_team->score;
 
                 $batting_team = $query->where('isBatting', 1)->first();
+
                 if ($batting_team) {
                     $match_detail = new MatchDetailResource($batting_team);
                     $batsman = MatchPlayers::with('Players', 'wicketPrimary', 'wicketSecondary')->whereIn('bt_status', ['10', '11'])->where('team_id', $batting_team->team_id)->where('match_id', $match_id)->where('tournament_id', $tournament->id)->orderBy('bt_order', 'asc')->get();
@@ -185,10 +186,12 @@ class MatchController extends Controller
 
                     $partnership = [];
 
-                    $partnership_query = MatchTrack::select('score', 'over', 'overball')->whereIn('wickets', [$match_detail->wicket, $match_detail->wicket - 1])->where('team_id', $match_detail->team_id)->where('match_id', $match_id)->where('tournament_id', $tournament->id)->orderBy('score', 'desc')->orderBy('over', 'desc')->orderBy('overball', 'desc')->get();
-                    $p0 = $partnership_query->where('wickets', $match_detail->wicket)->first();
-                    $p1 = $partnership_query->where('wickets', $match_detail->wicket - 1)->first();
-                    if ($p1) {
+                    $partnership_query = MatchTrack::select('score', 'over', 'overball')->whereIn('wickets', [$match_detail->wicket -1, $match_detail->wicket])->where('team_id', $match_detail->team_id)->where('match_id', $match_id)->where('tournament_id', $tournament->id)->orderBy('score', 'desc')->orderBy('over', 'desc')->orderBy('overball', 'desc')->get();
+
+                    $p0 = $partnership_query->where('wickets', $match_detail->wicket - 1)->last();
+                    $p1 = $partnership_query->where('wickets', $match_detail->wicket)->last();
+
+                    if ($p0) {
                         if ($p1 && $p0) {
                             $score = $p1->score - $p0->score;
                             $balls = $this->calculating_balls($p1->over, $p0->over, $p1->overball, $p0->overball + 1);
@@ -204,6 +207,7 @@ class MatchController extends Controller
                         $partnership['score'] = 0;
                         $partnership['balls'] = 0;
                     }
+
 
 
                 }
