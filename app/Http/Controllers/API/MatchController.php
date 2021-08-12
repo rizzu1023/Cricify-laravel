@@ -307,7 +307,9 @@ class MatchController extends Controller
 
 
         if ($match) {
-            $match_players_query = MatchPlayers::with('Players', 'wicketPrimary', 'wicketSecondary')->where('match_id', $match_id)->where('tournament_id', $tournament->id)->orderBy('bt_order', 'asc')->get();
+            $match_players_query = MatchPlayers::with(['Players' => function($query){
+                return $query->with('media','Role','BattingStyle','BowlingStyle');
+            }, 'wicketPrimary', 'wicketSecondary'])->where('match_id', $match_id)->where('tournament_id', $tournament->id)->orderBy('bt_order', 'asc')->get();
             $match_details_query = MatchDetail::select('score', 'wicket', 'over', 'overball', 'no_ball', 'wide', 'byes', 'legbyes', 'team_id')->where('match_id', $match_id)->where('tournament_id', $tournament->id)->get();
             $match_track_query = MatchTrack::with('Batsman')->select('player_id', 'score', 'wickets', 'over', 'overball', 'team_id')->where('action', 'wicket')->where('match_id', $match_id)->where('tournament_id', $tournament->id)->orderBy('wickets', 'asc')->get();
 
