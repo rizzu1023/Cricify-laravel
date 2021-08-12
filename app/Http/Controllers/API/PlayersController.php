@@ -18,13 +18,11 @@ class PlayersController extends Controller
     public function index(Teams $team)
     {
         $team_id = $team->id;
-        //TODO : Mysql
 //        $player = Players::whereHas('teams',function($query) use($team_id){
 //            $query->where('team_id',$team_id);
 //        })->orderByRaw("FIELD(role, 'Batsman','WK-Batsman','Allrounder','Bowler')")->get();
 
-        // TODO : Mariadb
-        $player = Players::with('media')->whereHas('teams',function($query) use($team_id){
+        $player = Players::with('media','Role','BattingStyle','BowlingStyle')->whereHas('teams',function($query) use($team_id){
             $query->where('team_id',$team_id);
         })->get();
 
