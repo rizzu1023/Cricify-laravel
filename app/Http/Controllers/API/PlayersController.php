@@ -99,12 +99,19 @@ class PlayersController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id)
     {
         $player = Players::findOrFail($id);
-        $player->delete();
-        return ['message' => 'Player Deleted'];
+        $matchPlayer = MatchPlayers::where('player_id',$player->player_id)->first();
+        if($matchPlayer){
+            return back()->with(['error' => 'You can not delete this player because he played some matches.']);
+        }
+        if($player->Teams->isNotEmpty()){
+            return back()->with(['error' => 'Remove this player from squads']);
+        }
+//        $player->delete();
+        return back()->with(['message' => 'Player Deleted']);
     }
 }

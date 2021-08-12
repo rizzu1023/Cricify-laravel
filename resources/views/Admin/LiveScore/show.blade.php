@@ -195,7 +195,7 @@
                         {{--                <h4>xyz won by 20 runs</h4>--}}
                         <a class="btn btn-secondary btn-square btn-md mt-1"
                            onclick="livescore_function('reverse_inning')">Undo</a>
-                        <a href="/admin/result/{{$game->tournament_id}}/{{$game->id}}/show"
+                        <a href="/admin/result/{{$game->tournament_id}}/{{$game->match_id}}/show"
                            class="btn btn-primary btn-square btn-md mt-1">Result</a>
                 @endif
 
@@ -965,16 +965,25 @@
         $('#modal').on('submit', function (e) {
             e.preventDefault();
 
-            $.ajax({
-                type: "POST",
-                url: '{{Route('LiveUpdate')}}',
-                data: $(this).serialize(),
-                success: function (data) {
-                    $('#bowlerModal').modal('hide');
-                    //  alert(data.message);
-                    location.reload();
-                }
-            });
+            let strike_id = $("select[name=strike_id]").val();
+            let nonstrike_id = $("select[name=nonstrike_id]").val();
+
+            if(strike_id === nonstrike_id){
+                alert('Please select different Batsman.');
+            }
+            else{
+                $.ajax({
+                    type: "POST",
+                    url: '{{Route('LiveUpdate')}}',
+                    data: $(this).serialize(),
+                    success: function (data) {
+                        $('#bowlerModal').modal('hide');
+                        location.reload();
+                    }
+                });
+            }
+
+
         });
 
 
