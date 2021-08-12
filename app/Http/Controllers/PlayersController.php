@@ -11,6 +11,7 @@ use App\Models\MasterBowlingStyle;
 use App\Models\MasterRole;
 use App\Players;
 use App\Teams;
+use App\MatchPlayers;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Validators\ValidationException;
@@ -115,7 +116,13 @@ class PlayersController extends Controller
     public function destroy($id)
     {
         $player = Players::find($id);
-        $player->delete();
+        $matchPlayer = MatchPlayers::where('player_id',$player->player_id)->first();
+        if($matchPlayer){
+            return back()->with(['error' => 'You can not delete this player because he played some matches.']);
+        }
+        if($player->Teams->isNotEmpty()){
+            return back()->with(['error' => 'Remove this player from squads']);
+        }
 
         $pid = $player->player_id;
 
@@ -127,6 +134,9 @@ class PlayersController extends Controller
 
         $teams = Teams::all();
         $player->Teams()->detach($teams);
+
+        $player->delete();
+
 
         return back()->with('message','Player Deleted');
     }

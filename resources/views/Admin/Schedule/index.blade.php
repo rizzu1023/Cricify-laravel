@@ -48,7 +48,7 @@
                                     <td> @if($s->Game)
                                             @if($s->Game->status == 4)
                                                 <a class="btn btn-dark btn-sm"
-                                                   href="/admin/result/{{$s->id}}/{{$s->tournament_id}}/show">Result</a>
+                                                   href="/admin/result/{{$s->Game->tournament_id}}/{{$s->Game->match_id}}/show">Result</a>
                                             @else
                                                 <a class="btn btn-primary btn-sm"
                                                    href="/admin/LiveUpdate/{{$s->id}}/{{$s->tournament_id}}">Score</a>

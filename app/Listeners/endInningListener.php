@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use App\Game;
+use App\Jobs\CalculateNRRJob;
 use App\MatchDetail;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
@@ -47,8 +48,8 @@ class endInningListener
 
             $inning1->isBatting = 0;
             $inning0->isBatting = 1;
-            $inning1->save();
-            $inning0->save();
+            $inning1->update();
+            $inning0->update();
 
         }
         if($match->status == 4){
@@ -79,10 +80,12 @@ class endInningListener
                 $match->won = 0;
                 $match->description = "Match Draw";
             }
-            $match->save();
+            $match->update();
 
             $inning1->isBatting = 0;
-            $inning1->save();
+            $inning1->update();
+
+            CalculateNRRJob::dispatch($event->request->match_id);
         }
     }
 }

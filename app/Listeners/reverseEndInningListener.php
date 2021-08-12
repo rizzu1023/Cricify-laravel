@@ -4,6 +4,7 @@ namespace App\Listeners;
 
 use App\Events\reverseEndInningEvent;
 use App\Game;
+use App\Jobs\ReverseCalculateNRRJob;
 use App\MatchDetail;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
@@ -28,9 +29,13 @@ class reverseEndInningListener
      */
     public function handle($event)
     {
-        $match1 = Game::where('match_id', $event->request->match_id)
+        $game = Game::where('match_id', $event->request->match_id)
             ->where('tournament_id', $event->request->tournament)
-            ->decrement('status');
+            ->first();
+
+        $game->status = $game->status - 1;
+        $game->mom = '--';
+        $game->update();
 
         $match = Game::where('match_id',$event->request->match_id)->first();
         if ($match->status == 1) {
@@ -83,6 +88,7 @@ class reverseEndInningListener
             $match->description = "--";
             $match->save();
 
+            ReverseCalculateNRRJob::dispatch($event->request->match_id);
         }
     }
 }

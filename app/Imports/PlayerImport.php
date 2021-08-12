@@ -5,6 +5,8 @@ namespace App\Imports;
 use App\Models\MasterBattingStyle;
 use App\Models\MasterBowlingStyle;
 use App\Models\MasterRole;
+use App\Batting;
+use App\Bowling;
 use App\Players;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -51,6 +53,15 @@ class PlayerImport implements ToModel, WithHeadingRow, WithValidation
         if(!is_null($this->team)){
             $player->Teams()->syncWithoutDetaching($this->team);
         }
+
+        Batting::create([
+            'player_id' => $player->player_id,
+        ]);
+
+        Bowling::create([
+            'player_id' => $player->player_id,
+        ]);
+
         return $player;
     }
 

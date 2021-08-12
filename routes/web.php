@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\LiveScoreController;
+use App\Http\Controllers\ResultController;
+use App\Http\Controllers\PointsTableController;
+use App\Http\Controllers\TournamentScheduleController;
 
 //frontend Routes
 Route::get('/index', [MainController::class,'GetIndex']);
@@ -65,8 +68,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
     Route::resource('tournaments.groups','TournamentGroupController')->shallow();
     Route::resource('groups.teams','GroupTeamController');
 
-    Route::get('tournaments/{tournament}/points-table',[\App\Http\Controllers\PointsTableController::class,'index']);
-    Route::get('tournaments/{tournament}/points-table/edit',[App\Http\Controllers\PointsTableController::class,'edit']);
+    Route::get('tournaments/{tournament}/points-table',[PointsTableController::class,'index']);
+    Route::get('tournaments/{tournament}/points-table/edit',[PointsTableController::class,'edit']);
 
     Route::post('tournaments/{tournament}/points-table/match_selected',[PointsTableController::class,'match_selected']);
     Route::post('tournaments/{tournament}/points-table/nrr',[PointsTableController::class,'nrr']);
@@ -105,3 +108,16 @@ Route::group(['prefix' => 'super-admin', 'middleware' => ['auth']], function() {
 
 Route::get('/home', [HomeController::class,'index'])->name('home');
 //Route::get('/{any}', [App\Http\Controllers\AppController::class,'index'])->where('any','.*');
+
+Route::get('/nrr-test',function(){
+
+    $totalRunsScored = 225;
+    $oversFaced = 50;
+    $wicketsGone = 7 == 10;
+    $totalRunsConceded = 103;
+    $totalOversBowled = 41;
+    $wicketsTaken = 10 == 10;
+    $totalOvers = 50;
+
+    return calculateNRR($totalRunsScored, $oversFaced, $wicketsGone, $totalRunsConceded, $totalOversBowled, $wicketsTaken, $totalOvers);
+});
