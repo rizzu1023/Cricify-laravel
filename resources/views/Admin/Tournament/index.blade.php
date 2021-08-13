@@ -39,11 +39,11 @@
                             <h2>{{$t->tournament_name}}</h2>
                             <span>{{$t->start_date}} to</span><span> {{$t->end_date}}</span>
                         </div>
-                        <a class="btn btn-secondary btn-md " href="/admin/tournaments/{{$t->id}}/teams">Teams</a>
-                        <a class="btn btn-success btn-md " href="/admin/tournaments/{{$t->id}}/schedules">Schedule</a>
-                        <a class="btn btn-primary btn-md " href="/admin/tournaments/{{$t->id}}/results">Results</a>
-                        <a class="btn btn-info btn-md " href="/admin/tournaments/{{$t->id}}/groups">Groups</a>
-                        <a class="btn btn-warning btn-md " href="/admin/tournaments/{{$t->id}}/points-table">Points Table</a>
+                        <a class="btn btn-secondary btn-md mt-1" href="/admin/tournaments/{{$t->id}}/teams">Teams</a>
+                        <a class="btn btn-success btn-md mt-1" href="/admin/tournaments/{{$t->id}}/schedules">Schedule</a>
+                        <a class="btn btn-primary btn-md mt-1" href="/admin/tournaments/{{$t->id}}/results">Results</a>
+                        <a class="btn btn-info btn-md mt-1" href="/admin/tournaments/{{$t->id}}/groups">Groups</a>
+                        <a class="btn btn-warning btn-md mt-1" href="/admin/tournaments/{{$t->id}}/points-table">Points Table</a>
 
                     </div>
                 </div>
