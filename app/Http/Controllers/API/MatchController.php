@@ -145,8 +145,8 @@ class MatchController extends Controller
 
                     $batting_team = $query->where('team_id', $batting_team_id)->first();
                     $bowling_team = $query->where('team_id', $bowling_team_id)->first();
-                    $won = $game;
-                    $mom = $game;
+                    $won = $game->WON;
+                    $mom = $game->MOM;
                     return [
                         'match_status' => $match_status,
                         'team1' => new MatchDetailResource($batting_team),
