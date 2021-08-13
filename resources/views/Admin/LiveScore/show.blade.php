@@ -896,7 +896,7 @@
                 success: function (data) {
                     // $('#overModal').modal('hide');
                     //  alert(data.message);
-                    location.reload();
+                    location.reload(true);
                 }
             });
         });
@@ -909,7 +909,7 @@
                 url: '{{Route('LiveUpdate')}}',
                 data: $(this).serialize(),
                 success: function (data) {
-                    location.reload();
+                    location.reload(true);
                 }
             });
         });
@@ -924,7 +924,7 @@
                 success: function (data) {
                     $('#overModal').modal('hide');
                     //  alert(data.message);
-                    location.reload();
+                    location.reload(true);
                 }
             });
         });
@@ -940,7 +940,7 @@
                 success: function (data) {
                     $('#wicketModal').modal('hide');
                     //  alert(data.message);
-                    location.reload();
+                    location.reload(true);
                 }
             });
         });
@@ -955,7 +955,7 @@
                 success: function (data) {
                     $('#retiredHurtModal').modal('hide');
                     //  alert(data.message);
-                    location.reload();
+                    location.reload(true);
                 }
             });
         });
@@ -978,7 +978,7 @@
                     data: $(this).serialize(),
                     success: function (data) {
                         $('#bowlerModal').modal('hide');
-                        location.reload();
+                        location.reload(true);
                     }
                 });
             }
