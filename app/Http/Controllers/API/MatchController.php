@@ -152,8 +152,8 @@ class MatchController extends Controller
                         'team1' => new MatchDetailResource($batting_team),
                         'team2' => new MatchDetailResource($bowling_team),
                         'won_match_detail' => $game,
-                        'won' => $won,
-                        'mom' => $mom,
+                        'won' => TeamResource::make($won),
+                        'mom' => PlayersResource::make($mom),
                     ];
                 }
 

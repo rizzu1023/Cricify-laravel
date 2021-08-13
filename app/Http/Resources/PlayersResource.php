@@ -12,7 +12,7 @@ class PlayersResource extends JsonResource
         if($this->dob){
             $today = Carbon::today();
             $dob = Carbon::parse($this->dob)->format('d-M-Y');
-            $age = Carbon::parse($this->dob)->diffInYears($today);
+            $age = (string)Carbon::parse($this->dob)->diffInYears($today);
         }
         else{
             $dob = NULL;
