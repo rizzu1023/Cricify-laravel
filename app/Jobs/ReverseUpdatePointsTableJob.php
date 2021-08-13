@@ -2,7 +2,6 @@
 
 namespace App\Jobs;
 
-use App\Game;
 use App\Models\GroupTeam;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -10,19 +9,19 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class ReverseCalculateNRRJob implements ShouldQueue
+class ReverseUpdatePointsTableJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-    protected $matchId;
+    protected $match;
 
     /**
      * Create a new job instance.
      *
-     * @param $matchId
+     * @param $match
      */
-    public function __construct($matchId)
+    public function __construct($match)
     {
-        $this->matchId = $matchId;
+        $this->match = $match;
     }
 
     /**
@@ -32,9 +31,8 @@ class ReverseCalculateNRRJob implements ShouldQueue
      */
     public function handle()
     {
-        $game = Game::with('MatchDetail')->where('match_id', $this->matchId)->first();
-        $winningTeam = $game->MatchDetail->where('score')->sortByDesc('score')->first();
-        $losingTeam = $game->MatchDetail->where('score')->sortBy('score')->first();
+        $winningTeam = $this->match->MatchDetail->sortByDesc('score')->first();
+        $losingTeam = $this->match->MatchDetail->sortBy('score')->first();
 
         $totalRunsScored = $winningTeam->score;
         $oversFaced = $winningTeam->over;
@@ -42,12 +40,12 @@ class ReverseCalculateNRRJob implements ShouldQueue
         $totalRunsConceded = $losingTeam->score;
         $totalOversBowled = $losingTeam->over;
         $wicketsTaken = $losingTeam->wicket == 10;
-        $totalOvers = $game->overs;
+        $totalOvers = $this->match->overs;
 
         $nrr = calculateNRR($totalRunsScored, $oversFaced, $wicketsGone, $totalRunsConceded, $totalOversBowled, $wicketsTaken, $totalOvers);
 
-        $winningGroupTeam = GroupTeam::where('team_id', $winningTeam->team_id)->where('tournament_id', $game->tournament_id)->first();
-        $losingGroupTeam = GroupTeam::where('team_id', $losingTeam->team_id)->where('tournament_id', $game->tournament_id)->first();
+        $winningGroupTeam = GroupTeam::where('team_id', $winningTeam->team_id)->where('tournament_id', $this->match->tournament_id)->first();
+        $losingGroupTeam = GroupTeam::where('team_id', $losingTeam->team_id)->where('tournament_id', $this->match->tournament_id)->first();
 
         if($winningGroupTeam){
             $winningGroupTeam->points = $winningGroupTeam->points - 2;

@@ -3,7 +3,7 @@
 namespace App\Listeners;
 
 use App\Game;
-use App\Jobs\CalculateNRRJob;
+use App\Jobs\UpdatePointsTableJob;
 use App\MatchDetail;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
@@ -32,7 +32,7 @@ class endInningListener
             ->where('tournament_id',$event->request->tournament)
             ->increment('status');
 
-        $match = Game::where('match_id',$event->request->match_id)->first();
+        $match = Game::with('MatchDetail')->where('match_id',$event->request->match_id)->first();
 
         if($match->status == 2){
             $inning1 = MatchDetail::where('match_id',$event->request->match_id)
@@ -85,7 +85,8 @@ class endInningListener
             $inning1->isBatting = 0;
             $inning1->update();
 
-            CalculateNRRJob::dispatch($event->request->match_id);
+
+            UpdatePointsTableJob::dispatch($match);
         }
     }
 }
