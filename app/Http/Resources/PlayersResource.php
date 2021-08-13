@@ -7,27 +7,12 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class PlayersResource extends JsonResource
 {
-    private $team_name;
-    /**
-     * Transform the resource into an array.
-     *
-//     * @param  \Illuminate\Http\Request  $request
-//     * @return array
-     */
-//    public function __construct($resource , $team_name)
-//    {
-//        parent::__construct($resource);
-//        $this->resource = $resource;
-//        $this->team_name = $team_name;
-//
-//    }
-
     public function toArray($request)
     {
-        $age = Carbon::parse($this->dob)->diff(\Carbon\Carbon::now())->format('%y');
         if($this->dob){
-            $dob = date('d-M-Y',strtotime($this->dob));
-            $age = Carbon::parse($this->dob)->diff(\Carbon\Carbon::now())->format('%y');
+            $today = Carbon::today();
+            $dob = Carbon::parse($this->dob)->format('d-M-Y');
+            $age = Carbon::parse($this->dob)->diffInYears($today);
         }
         else{
             $dob = NULL;
