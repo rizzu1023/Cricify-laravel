@@ -8,6 +8,7 @@ use App\Http\Resources\FowResource;
 use App\Http\Resources\MatchDetailResource;
 use App\Http\Resources\MatchPlayersResource;
 use App\Http\Resources\MatchTrackResource;
+use App\Http\Resources\PlayersResource;
 use App\Http\Resources\TeamResource;
 use App\MatchDetail;
 use App\MatchPlayers;
@@ -144,15 +145,15 @@ class MatchController extends Controller
 
                     $batting_team = $query->where('team_id', $batting_team_id)->first();
                     $bowling_team = $query->where('team_id', $bowling_team_id)->first();
-                    $won = $game->WON;
-                    $mom = $game->MOM;
+                    $won = $game;
+                    $mom = $game;
                     return [
                         'match_status' => $match_status,
                         'team1' => new MatchDetailResource($batting_team),
                         'team2' => new MatchDetailResource($bowling_team),
                         'won_match_detail' => $game,
-                        'won' => $won,
-                        'mom' => $mom,
+                        'won' => TeamResource::make($won),
+                        'mom' => PlayersResource::make($mom),
                     ];
                 }
 
