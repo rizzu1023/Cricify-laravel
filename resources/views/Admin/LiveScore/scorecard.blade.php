@@ -98,7 +98,7 @@
                                             <b>st</b> {{$m->wicketSecondary->first_name}} {{$m->wicketSecondary->last_name}}
                                             <b>b</b> {{$m->wicketPrimary->first_name}} {{$m->wicketPrimary->last_name}}
                                         @elseif($m->bt_status == 0 && $m->wicket_type == 'runout')
-                                            @if($m->wicket_secondary == '--')
+                                            @if($m->wicket_secondary == NULL)
                                                 <b>runout</b>({{$m->wicketPrimary->first_name}} {{$m->wicketPrimary->last_name}})
                                             @else
                                                 <b>runout</b>({{$m->wicketPrimary->first_name}} {{$m->wicketPrimary->last_name}}/{{$m->wicketSecondary->first_name}} {{$m->wicketSecondary->last_name}})

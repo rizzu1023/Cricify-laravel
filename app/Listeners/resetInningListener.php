@@ -67,9 +67,9 @@ class resetInningListener
             $player->bt_fours = 0;
             $player->bt_sixes = 0;
             $player->bt_order = 100;
-            $player->wicket_type = '--';
-            $player->wicket_primary = '--';
-            $player->wicket_secondary = '--';
+            $player->wicket_type = NULL;
+            $player->wicket_primary = NULL;
+            $player->wicket_secondary = NULL;
             $player->save();
         }
 

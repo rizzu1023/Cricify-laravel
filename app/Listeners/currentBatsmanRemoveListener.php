@@ -131,7 +131,7 @@ class currentBatsmanRemoveListener
             if($event->request->wicket_secondary)
             $got_out_batsman->wicket_secondary = $event->request->wicket_secondary;
             else
-            $got_out_batsman->wicket_secondary = '--';
+            $got_out_batsman->wicket_secondary = NULL;
             $got_out_batsman->save();
         }
     }
