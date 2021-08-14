@@ -53,12 +53,12 @@ class reverseNewBatsmanAddedListener
                     $nonstriker_batsman->bt_balls = 0;
                     $nonstriker_batsman->bt_fours = 0;
                     $nonstriker_batsman->bt_sixes = 0;
-                    $nonstriker_batsman->save();
+                    $nonstriker_batsman->update();
                 }
 
                 if ($striker_batsman) {
                     $striker_batsman->bt_status = 10;
-                    $striker_batsman->save();
+                    $striker_batsman->update();
                 }
             } else {
                 if ($striker_batsman) {
@@ -68,7 +68,7 @@ class reverseNewBatsmanAddedListener
                     $striker_batsman->bt_balls = 0;
                     $striker_batsman->bt_fours = 0;
                     $striker_batsman->bt_sixes = 0;
-                    $striker_batsman->save();
+                    $striker_batsman->update();
                 }
 
             }

@@ -764,6 +764,7 @@
 
 
             $('#wicket_button').on('click', function () {
+                $('#newBatsmanForm').trigger('reset');
                 $("#wicketModal").modal('show');
 
                 $('#div_wicket_primary').hide();
