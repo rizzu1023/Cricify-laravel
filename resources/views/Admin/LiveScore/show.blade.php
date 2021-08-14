@@ -1029,7 +1029,8 @@
             var non_striker_id = $("input[name=player_id]:not(:checked)").val();
 
 
-            $('#undo_button').addClass('disabled');
+            $('.btn').addClass('disabled');
+            // $('#undo_button').addClass('disabled');
 
 
             $.ajax({
@@ -1048,10 +1049,7 @@
                     value: value
                 },
                 success: function (data) {
-                    $('#undo_button').removeClass('disabled');
-                    // if(!data.status){
-                    //     alert(data.errors);
-                    // }
+                    $('.btn').removeClass('disabled');
                     $('#newBatsmanForm').trigger('reset');
 
 
@@ -1137,7 +1135,7 @@
                     }
                 },
                 error: function (data) {
-                    $('#undo_button').removeClass('disabled');
+                    $('.btn').removeClass('disabled');
                     alert('something went wrong');
                 }
             });
