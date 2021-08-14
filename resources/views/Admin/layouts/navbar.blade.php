@@ -63,6 +63,9 @@
                         <li>
                             <div class="mode"><i class="fa fa-moon-o"></i></div>
                         </li>
+                        <li>
+                            <div class="refresh"><i data-feather="refresh-ccw"></i></div>
+                        </li>
 
                         {{-- <li class="onhover-dropdown"><i data-feather="message-square"></i>
                             <ul class="chat-dropdown onhover-show-div">
@@ -103,8 +106,8 @@
                                 <li class="text-center"> <a class="btn btn-primary" href="#">View All </a></li>
                             </ul>
                         </li> --}}
-                        <li class="maximize"><a class="text-dark" href="#!" onclick="javascript:toggleFullScreen()"><i
-                                    data-feather="maximize"></i></a></li>
+{{--                        <li class="maximize"><a class="text-dark" href="#!" onclick="javascript:toggleFullScreen()"><i--}}
+{{--                                    data-feather="maximize"></i></a></li>--}}
                         <li class="profile-nav onhover-dropdown p-0 mr-0">
                             <div class="media profile-media"><img class="b-r-10"
                                     src="{{asset('Assets/Admin//images/dashboard/wanc_logo.jpeg')}}" alt="" width="38px">

@@ -125,7 +125,9 @@
         <script src="{{asset('assets/Admin/js/animation/wow/wow.min.js')}}"> </script>
 
         <script>
-            // WOW.init();
+            $('.refresh').on('click',function(){
+                window.location.reload(true);
+            });
         </script>
 @yield('js')
 
