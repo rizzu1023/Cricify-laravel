@@ -217,7 +217,11 @@ class LiveScoreController extends Controller
 
     public function LiveUpdateShow($id, $tournament)
     {
-        $over = MatchTrack::where('match_id', $id)->where('tournament_id', $tournament)->latest()->get()->take(10);
+        $over = MatchTrack::where('match_id', $id)->where('tournament_id', $tournament)
+            ->orderBy('over','desc')
+            ->orderBy('overball','desc')
+            ->orderBy('created_at','desc')
+            ->get()->take(10);
         $over = $over->reverse();
 
         $game = Game::where('match_id', $id)->where('tournament_id', $tournament)->first();
@@ -334,7 +338,11 @@ class LiveScoreController extends Controller
             if ($request->value == 'reverse_inning') event(new reverseEndInningEvent($request));
 
             if ($request->value == 'undo') {
-                $previous_ball = MatchTrack::where('team_id', $request->bt_team_id)->where('match_id', $request->match_id)->where('tournament_id', $request->tournament)->latest()->first();
+                $previous_ball = MatchTrack::where('team_id', $request->bt_team_id)->where('match_id', $request->match_id)->where('tournament_id', $request->tournament)
+                    ->orderBy('over','desc')
+                    ->orderBy('overball','desc')
+                    ->orderBy('created_at','desc')
+                    ->first();
                 if ($previous_ball->action == 'zero') event(new reverseDotBallEvent($request, $previous_ball));
                 if ($previous_ball->action == 'one') event(new reverseOneRunEvent($request, $previous_ball));
                 if ($previous_ball->action == 'two') event(new reverseTwoRunEvent($request, $previous_ball));
