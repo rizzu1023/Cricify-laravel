@@ -25,32 +25,45 @@
             <div class="card">
                 <div class="card-header">
                     @include('Admin.layouts.message')
-                    @if($game->status == '1' || $game->status == '3')
-                        <a href="/admin/LiveScoreCard/{{$game->match_id}}/{{$game->tournament_id}}"
-                           class="btn btn-info btn-sm"
-                        >Scorecard</a>
-                        <a class="btn btn-success btn-sm"
-                           href="/admin/result/{{$game->tournament_id}}/{{$game->match_id}}/show">Edit</a>
-                        <form id="endInningForm" style="display: inline-block; float: right;">
-                            @csrf
-                            <input type="hidden" name="endInning" value="1">
-                            <input type="hidden" name="match_id" value="{{$game['match_id']}}">
-                            <input type="hidden" name="tournament" value="{{$game['tournament_id']}}">
-                            <button type="submit" class="btn btn-danger btn-sm"
-                                    onclick="return confirm('Are you sure?')">End Inning
-                            </button>
-                        </form>
-                        <form id="resetInningForm" style="display: inline-block; float: right;">
-                            @csrf
-                            <input type="hidden" name="resetInning" value="1">
-                            <input type="hidden" name="match_id" value="{{$game['match_id']}}">
-                            <input type="hidden" name="tournament" value="{{$game['tournament_id']}}">
-                            <input type="hidden" name="bt_team_id" value="{{$batting_team_id}}">
-                            <input type="hidden" name="bw_team_id" value="{{$bowling_team_id}}">
-                            <button type="submit" class="btn btn-secondary mr-1 btn-sm"
-                                    onclick="return confirm('Are you sure?')">Reset Inning
-                            </button>
-                        </form>
+                    <div class="row">
+
+                @if($game->status == '1' || $game->status == '3')
+                        <div class="col-6">
+                            <a href="/admin/LiveScoreCard/{{$game->match_id}}/{{$game->tournament_id}}"
+                               class="btn btn-info btn-sm"
+                            >Scorecard</a>
+                        </div>
+                        <div class="col-6">
+                            <a class="btn btn-success btn-sm"
+                               href="/admin/result/{{$game->tournament_id}}/{{$game->match_id}}/show">Edit</a>
+                        </div>
+
+                        <div class="col-6 mt-1">
+                            <form id="endInningForm" style="display: inline-block;">
+                                @csrf
+                                <input type="hidden" name="endInning" value="1">
+                                <input type="hidden" name="match_id" value="{{$game['match_id']}}">
+                                <input type="hidden" name="tournament" value="{{$game['tournament_id']}}">
+                                <button type="submit" class="btn btn-danger btn-sm "
+                                        onclick="return confirm('Are you sure?')">End Inning
+                                </button>
+                            </form>
+                        </div>
+
+                        <div class="col-6 mt-1">
+                            <form id="resetInningForm" style="display: inline-block;">
+                                @csrf
+                                <input type="hidden" name="resetInning" value="1">
+                                <input type="hidden" name="match_id" value="{{$game['match_id']}}">
+                                <input type="hidden" name="tournament" value="{{$game['tournament_id']}}">
+                                <input type="hidden" name="bt_team_id" value="{{$batting_team_id}}">
+                                <input type="hidden" name="bw_team_id" value="{{$bowling_team_id}}">
+                                <button type="submit" class="btn btn-secondary btn-sm"
+                                        onclick="return confirm('Are you sure?')">Reset Inning
+                                </button>
+                            </form>
+                        </div>
+
                     @elseif($game->status == '2')
                         <span>First Inning has Been ended</span>
                     @elseif($game->status == '4')
@@ -96,6 +109,7 @@
                             </form>
                         </div>
                     @endif
+                    </div>
                 </div>
                 <div class="card-body pt-0">
                     <!-- Opening Modal -->
