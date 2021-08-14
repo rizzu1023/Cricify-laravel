@@ -32,6 +32,5 @@ class batsmanBallUpdateListener
             ->where('team_id', $event->request->bt_team_id)
             ->where('player_id', $event->request->player_id)
             ->increment('bt_balls');
-
     }
 }

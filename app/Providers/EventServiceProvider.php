@@ -31,10 +31,10 @@ class EventServiceProvider extends ServiceProvider
 //        Run events
 
         \App\Events\dotBallEvent::class => [
+            \App\Listeners\matchTrackListener::class,
             \App\Listeners\batsmanBallUpdateListener::class,
             \App\Listeners\bowlerBallUpdateListener::class,
             \App\Listeners\teamBallUpdateListener::class,
-            \App\Listeners\matchTrackListener::class,
             \App\Listeners\isOverForBowler::class,
             \App\Listeners\isOverForTeam::class,
         ],
@@ -48,6 +48,7 @@ class EventServiceProvider extends ServiceProvider
         ],
 
         \App\Events\oneRunEvent::class => [
+            \App\Listeners\matchTrackListener::class,
             \App\Listeners\batsmanBallUpdateListener::class,
             \App\Listeners\batsmanOneRunUpdateListener::class,
             \App\Listeners\bowlerBallUpdateListener::class,
@@ -55,7 +56,6 @@ class EventServiceProvider extends ServiceProvider
             \App\Listeners\teamBallUpdateListener::class,
             \App\Listeners\teamOneRunUpdateListener::class,
             \App\Listeners\strikeRotateListener::class,
-            \App\Listeners\matchTrackListener::class,
             \App\Listeners\isOverForBowler::class,
             \App\Listeners\isOverForTeam::class,
         ],
@@ -75,13 +75,13 @@ class EventServiceProvider extends ServiceProvider
 
 
         \App\Events\twoRunEvent::class => [
+            \App\Listeners\matchTrackListener::class,
             \App\Listeners\batsmanBallUpdateListener::class,
             \App\Listeners\batsmanTwoRunUpdateListener::class,
             \App\Listeners\bowlerBallUpdateListener::class,
             \App\Listeners\bowlerTwoRunUpdateListener::class,
             \App\Listeners\teamBallUpdateListener::class,
             \App\Listeners\teamTwoRunUpdateListener::class,
-            \App\Listeners\matchTrackListener::class,
             \App\Listeners\isOverForBowler::class,
             \App\Listeners\isOverForTeam::class,
         ],
@@ -99,13 +99,13 @@ class EventServiceProvider extends ServiceProvider
         ],
 
         \App\Events\threeRunEvent::class => [
+            \App\Listeners\matchTrackListener::class,
             \App\Listeners\batsmanBallUpdateListener::class,
             \App\Listeners\batsmanThreeRunUpdateListener::class,
             \App\Listeners\bowlerBallUpdateListener::class,
             \App\Listeners\bowlerThreeRunUpdateListener::class,
             \App\Listeners\teamBallUpdateListener::class,
             \App\Listeners\teamThreeRunUpdateListener::class,
-            \App\Listeners\matchTrackListener::class,
             \App\Listeners\strikeRotateListener::class,
             \App\Listeners\isOverForBowler::class,
             \App\Listeners\isOverForTeam::class,
@@ -126,6 +126,7 @@ class EventServiceProvider extends ServiceProvider
 
 
         \App\Events\fourRunEvent::class => [
+            \App\Listeners\matchTrackListener::class,
             \App\Listeners\batsmanBallUpdateListener::class,
             \App\Listeners\batsmanFourRunUpdateListener::class,
             \App\Listeners\batsmanFourBoundaryUpdateListener::class,
@@ -133,7 +134,6 @@ class EventServiceProvider extends ServiceProvider
             \App\Listeners\bowlerFourRunUpdateListener::class,
             \App\Listeners\teamBallUpdateListener::class,
             \App\Listeners\teamFourRunUpdateListener::class,
-            \App\Listeners\matchTrackListener::class,
             \App\Listeners\isOverForBowler::class,
             \App\Listeners\isOverForTeam::class,
         ],
@@ -152,13 +152,13 @@ class EventServiceProvider extends ServiceProvider
         ],
 
         \App\Events\fiveRunEvent::class => [
+            \App\Listeners\matchTrackListener::class,
             \App\Listeners\batsmanBallUpdateListener::class,
             \App\Listeners\batsmanFiveRunUpdateListener::class,
             \App\Listeners\bowlerBallUpdateListener::class,
             \App\Listeners\bowlerFiveRunUpdateListener::class,
             \App\Listeners\teamBallUpdateListener::class,
             \App\Listeners\teamFiveRunUpdateListener::class,
-            \App\Listeners\matchTrackListener::class,
             \App\Listeners\strikeRotateListener::class,
             \App\Listeners\isOverForBowler::class,
             \App\Listeners\isOverForTeam::class,
@@ -178,7 +178,7 @@ class EventServiceProvider extends ServiceProvider
         ],
 
         \App\Events\sixRunEvent::class => [
-
+            \App\Listeners\matchTrackListener::class,
             \App\Listeners\batsmanBallUpdateListener::class,
             \App\Listeners\batsmanSixRunUpdateListener::class,
             \App\Listeners\batsmanSixBoundaryUpdateListener::class,
@@ -186,7 +186,6 @@ class EventServiceProvider extends ServiceProvider
             \App\Listeners\bowlerSixRunUpdateListener::class,
             \App\Listeners\teamBallUpdateListener::class,
             \App\Listeners\teamSixRunUpdateListener::class,
-            \App\Listeners\matchTrackListener::class,
             \App\Listeners\isOverForBowler::class,
             \App\Listeners\isOverForTeam::class,
         ],
@@ -213,13 +212,13 @@ class EventServiceProvider extends ServiceProvider
 
         \App\Events\wicketEvent::class => [
 //            \App\Listeners\batsmanBallUpdateListener::class,
+            \App\Listeners\matchTrackListener::class,
             \App\Listeners\currentBatsmanRemoveListener::class,
             \App\Listeners\newBatsmanAddedListener::class,
             \App\Listeners\bowlerBallUpdateListener::class,
             \App\Listeners\bowlerWicketUpdateListener::class,
             \App\Listeners\teamBallUpdateListener::class,
             \App\Listeners\teamWicketUpdateListener::class,
-            \App\Listeners\matchTrackListener::class,
             \App\Listeners\isOverForBowler::class,
             \App\Listeners\isOverForTeam::class,
         ],
@@ -239,12 +238,12 @@ class EventServiceProvider extends ServiceProvider
 //        Leg Byes Events
 
         \App\Events\legByesOneRunEvent::class => [
+            \App\Listeners\matchTrackListener::class,
+            \App\Listeners\teamOneRunUpdateListener::class,
             \App\Listeners\batsmanBallUpdateListener::class,
             \App\Listeners\bowlerBallUpdateListener::class,
             \App\Listeners\teamBallUpdateListener::class,
-            \App\Listeners\teamOneRunUpdateListener::class,
             \App\Listeners\teamOneLegByesUpdateListener::class,
-            \App\Listeners\matchTrackListener::class,
             \App\Listeners\strikeRotateListener::class,
             \App\Listeners\isOverForBowler::class,
             \App\Listeners\isOverForTeam::class,
@@ -263,12 +262,12 @@ class EventServiceProvider extends ServiceProvider
         ],
 
         \App\Events\legByesTwoRunEvent::class => [
+            \App\Listeners\matchTrackListener::class,
             \App\Listeners\batsmanBallUpdateListener::class,
             \App\Listeners\bowlerBallUpdateListener::class,
             \App\Listeners\teamBallUpdateListener::class,
             \App\Listeners\teamTwoRunUpdateListener::class,
             \App\Listeners\teamTwoLegByesUpdateListener::class,
-            \App\Listeners\matchTrackListener::class,
             \App\Listeners\isOverForBowler::class,
             \App\Listeners\isOverForTeam::class,
         ],
@@ -283,12 +282,12 @@ class EventServiceProvider extends ServiceProvider
             \App\Listeners\reverseMatchTrackListener::class,
         ],
         \App\Events\legByesThreeRunEvent::class => [
+            \App\Listeners\matchTrackListener::class,
             \App\Listeners\batsmanBallUpdateListener::class,
             \App\Listeners\bowlerBallUpdateListener::class,
             \App\Listeners\teamBallUpdateListener::class,
             \App\Listeners\teamThreeRunUpdateListener::class,
             \App\Listeners\teamThreeLegByesUpdateListener::class,
-            \App\Listeners\matchTrackListener::class,
             \App\Listeners\strikeRotateListener::class,
             \App\Listeners\isOverForBowler::class,
             \App\Listeners\isOverForTeam::class,
@@ -305,12 +304,12 @@ class EventServiceProvider extends ServiceProvider
             \App\Listeners\reverseMatchTrackListener::class,
         ],
         \App\Events\legByesFourRunEvent::class => [
+            \App\Listeners\matchTrackListener::class,
             \App\Listeners\batsmanBallUpdateListener::class,
             \App\Listeners\bowlerBallUpdateListener::class,
             \App\Listeners\teamBallUpdateListener::class,
             \App\Listeners\teamFourRunUpdateListener::class,
             \App\Listeners\teamFourLegByesUpdateListener::class,
-            \App\Listeners\matchTrackListener::class,
             \App\Listeners\isOverForBowler::class,
             \App\Listeners\isOverForTeam::class,
         ],
@@ -328,12 +327,12 @@ class EventServiceProvider extends ServiceProvider
         //byes events
 
         \App\Events\byesOneRunEvent::class => [
+            \App\Listeners\matchTrackListener::class,
             \App\Listeners\batsmanBallUpdateListener::class,
             \App\Listeners\bowlerBallUpdateListener::class,
             \App\Listeners\teamBallUpdateListener::class,
             \App\Listeners\teamOneRunUpdateListener::class,
             \App\Listeners\teamOneByesUpdateListener::class,
-            \App\Listeners\matchTrackListener::class,
             \App\Listeners\strikeRotateListener::class,
             \App\Listeners\isOverForBowler::class,
             \App\Listeners\isOverForTeam::class,
@@ -351,12 +350,12 @@ class EventServiceProvider extends ServiceProvider
         ],
 
         \App\Events\byesTwoRunEvent::class => [
+            \App\Listeners\matchTrackListener::class,
             \App\Listeners\batsmanBallUpdateListener::class,
             \App\Listeners\bowlerBallUpdateListener::class,
             \App\Listeners\teamBallUpdateListener::class,
             \App\Listeners\teamTwoRunUpdateListener::class,
             \App\Listeners\teamTwoByesUpdateListener::class,
-            \App\Listeners\matchTrackListener::class,
             \App\Listeners\isOverForBowler::class,
             \App\Listeners\isOverForTeam::class,
         ],
@@ -373,12 +372,12 @@ class EventServiceProvider extends ServiceProvider
         ],
 
         \App\Events\byesThreeRunEvent::class => [
+            \App\Listeners\matchTrackListener::class,
             \App\Listeners\batsmanBallUpdateListener::class,
             \App\Listeners\bowlerBallUpdateListener::class,
             \App\Listeners\teamBallUpdateListener::class,
             \App\Listeners\teamThreeRunUpdateListener::class,
             \App\Listeners\teamThreeByesUpdateListener::class,
-            \App\Listeners\matchTrackListener::class,
             \App\Listeners\strikeRotateListener::class,
             \App\Listeners\isOverForBowler::class,
             \App\Listeners\isOverForTeam::class,
@@ -396,12 +395,12 @@ class EventServiceProvider extends ServiceProvider
             \App\Listeners\reverseMatchTrackListener::class,
         ],
         \App\Events\byesFourRunEvent::class => [
+            \App\Listeners\matchTrackListener::class,
             \App\Listeners\batsmanBallUpdateListener::class,
             \App\Listeners\bowlerBallUpdateListener::class,
             \App\Listeners\teamBallUpdateListener::class,
             \App\Listeners\teamFourRunUpdateListener::class,
             \App\Listeners\teamFourByesUpdateListener::class,
-            \App\Listeners\matchTrackListener::class,
             \App\Listeners\isOverForBowler::class,
             \App\Listeners\isOverForTeam::class,
         ],
@@ -420,11 +419,11 @@ class EventServiceProvider extends ServiceProvider
 //        wide events
 
         \App\Events\wideZeroRunEvent::class => [
+            \App\Listeners\matchTrackListener::class,
             \App\Listeners\bowlerOneRunUpdateListener::class,
             \App\Listeners\bowlerWideUpdateListener::class,
             \App\Listeners\teamOneRunUpdateListener::class,
             \App\Listeners\teamOneWideUpdateListener::class,
-            \App\Listeners\matchTrackListener::class,
         ],
 
         \App\Events\reverseWideZeroRunEvent::class => [
@@ -436,10 +435,10 @@ class EventServiceProvider extends ServiceProvider
         ],
 
         \App\Events\wideOneRunEvent::class => [
+            \App\Listeners\matchTrackListener::class,
             \App\Listeners\bowlerTwoRunUpdateListener::class,
             \App\Listeners\teamTwoRunUpdateListener::class,
             \App\Listeners\teamTwoWideUpdateListener::class,
-            \App\Listeners\matchTrackListener::class,
             \App\Listeners\strikeRotateListener::class,
         ],
 
@@ -453,10 +452,10 @@ class EventServiceProvider extends ServiceProvider
 
 
         \App\Events\wideTwoRunEvent::class => [
+            \App\Listeners\matchTrackListener::class,
             \App\Listeners\bowlerThreeRunUpdateListener::class,
             \App\Listeners\teamThreeRunUpdateListener::class,
             \App\Listeners\teamThreeWideUpdateListener::class,
-            \App\Listeners\matchTrackListener::class,
         ],
         \App\Events\reverseWideTwoRunEvent::class => [
             \App\Listeners\reverseBowlerThreeRunUpdateListener::class,
@@ -466,10 +465,10 @@ class EventServiceProvider extends ServiceProvider
             \App\Listeners\reverseMatchTrackListener::class,
         ],
         \App\Events\wideThreeRunEvent::class => [
+            \App\Listeners\matchTrackListener::class,
             \App\Listeners\bowlerFourRunUpdateListener::class,
             \App\Listeners\teamFourRunUpdateListener::class,
             \App\Listeners\teamFourWideUpdateListener::class,
-            \App\Listeners\matchTrackListener::class,
             \App\Listeners\strikeRotateListener::class,
         ],
         \App\Events\reverseWideThreeRunEvent::class => [
@@ -480,10 +479,10 @@ class EventServiceProvider extends ServiceProvider
             \App\Listeners\reverseMatchTrackListener::class,
         ],
         \App\Events\wideFourRunEvent::class => [
+            \App\Listeners\matchTrackListener::class,
             \App\Listeners\bowlerFiveRunUpdateListener::class,
             \App\Listeners\teamFiveRunUpdateListener::class,
             \App\Listeners\teamFiveWideUpdateListener::class,
-            \App\Listeners\matchTrackListener::class,
         ],
         \App\Events\reverseWideFourRunEvent::class => [
             \App\Listeners\reverseBowlerFiveRunUpdateListener::class,
@@ -501,12 +500,12 @@ class EventServiceProvider extends ServiceProvider
 //        no ball event
 
         \App\Events\noballZeroRunEvent::class => [
+            \App\Listeners\matchTrackListener::class,
             \App\Listeners\batsmanBallUpdateListener::class,
             \App\Listeners\bowlerOneRunUpdateListener::class,
             \App\Listeners\bowlerOneNoballUpdateListener::class,
             \App\Listeners\teamOneRunUpdateListener::class,
             \App\Listeners\teamOneNoballUpdateListener::class,
-            \App\Listeners\matchTrackListener::class,
         ],
 
         \App\Events\reverseNoballZeroRunEvent::class => [
@@ -518,13 +517,13 @@ class EventServiceProvider extends ServiceProvider
             \App\Listeners\reverseMatchTrackListener::class,
         ],
         \App\Events\noballOneRunEvent::class => [
+            \App\Listeners\matchTrackListener::class,
             \App\Listeners\batsmanBallUpdateListener::class,
             \App\Listeners\batsmanOneRunUpdateListener::class,
             \App\Listeners\bowlerTwoRunUpdateListener::class,
             \App\Listeners\bowlerOneNoballUpdateListener::class,
             \App\Listeners\teamTwoRunUpdateListener::class,
             \App\Listeners\teamOneNoballUpdateListener::class,
-            \App\Listeners\matchTrackListener::class,
             \App\Listeners\strikeRotateListener::class,
         ],
 
@@ -540,13 +539,13 @@ class EventServiceProvider extends ServiceProvider
         ],
 
         \App\Events\noballTwoRunEvent::class => [
+            \App\Listeners\matchTrackListener::class,
             \App\Listeners\batsmanBallUpdateListener::class,
             \App\Listeners\batsmanTwoRunUpdateListener::class,
             \App\Listeners\bowlerThreeRunUpdateListener::class,
             \App\Listeners\bowlerOneNoballUpdateListener::class,
             \App\Listeners\teamThreeRunUpdateListener::class,
             \App\Listeners\teamOneNoballUpdateListener::class,
-            \App\Listeners\matchTrackListener::class,
         ],
 
         \App\Events\reverseNoballTwoRunEvent::class => [
@@ -560,13 +559,13 @@ class EventServiceProvider extends ServiceProvider
         ],
 
         \App\Events\noballThreeRunEvent::class => [
+            \App\Listeners\matchTrackListener::class,
             \App\Listeners\batsmanBallUpdateListener::class,
             \App\Listeners\batsmanThreeRunUpdateListener::class,
             \App\Listeners\bowlerFourRunUpdateListener::class,
             \App\Listeners\bowlerOneNoballUpdateListener::class,
             \App\Listeners\teamFourRunUpdateListener::class,
             \App\Listeners\teamOneNoballUpdateListener::class,
-            \App\Listeners\matchTrackListener::class,
             \App\Listeners\strikeRotateListener::class,
         ],
 
@@ -582,6 +581,7 @@ class EventServiceProvider extends ServiceProvider
         ],
 
         \App\Events\noballFourRunEvent::class => [
+            \App\Listeners\matchTrackListener::class,
             \App\Listeners\batsmanBallUpdateListener::class,
             \App\Listeners\batsmanFourRunUpdateListener::class,
             \App\Listeners\batsmanFourBoundaryUpdateListener::class,
@@ -589,7 +589,6 @@ class EventServiceProvider extends ServiceProvider
             \App\Listeners\bowlerOneNoballUpdateListener::class,
             \App\Listeners\teamFiveRunUpdateListener::class,
             \App\Listeners\teamOneNoballUpdateListener::class,
-            \App\Listeners\matchTrackListener::class,
         ],
 
         \App\Events\reverseNoballFourRunEvent::class => [
@@ -604,13 +603,13 @@ class EventServiceProvider extends ServiceProvider
         ],
 
         \App\Events\noballFiveRunEvent::class => [
+            \App\Listeners\matchTrackListener::class,
             \App\Listeners\batsmanBallUpdateListener::class,
             \App\Listeners\batsmanFiveRunUpdateListener::class,
             \App\Listeners\bowlerSixRunUpdateListener::class,
             \App\Listeners\bowlerOneNoballUpdateListener::class,
             \App\Listeners\teamSixRunUpdateListener::class,
             \App\Listeners\teamOneNoballUpdateListener::class,
-            \App\Listeners\matchTrackListener::class,
             \App\Listeners\strikeRotateListener::class,
         ],
 
@@ -626,6 +625,7 @@ class EventServiceProvider extends ServiceProvider
         ],
 
         \App\Events\noballSixRunEvent::class => [
+            \App\Listeners\matchTrackListener::class,
             \App\Listeners\batsmanBallUpdateListener::class,
             \App\Listeners\batsmanSixRunUpdateListener::class,
             \App\Listeners\batsmanSixBoundaryUpdateListener::class,
@@ -635,7 +635,6 @@ class EventServiceProvider extends ServiceProvider
             \App\Listeners\teamSixRunUpdateListener::class,
             \App\Listeners\teamOneRunUpdateListener::class,
             \App\Listeners\teamOneNoballUpdateListener::class,
-            \App\Listeners\matchTrackListener::class,
         ],
 
         \App\Events\reverseNoballSixRunEvent::class => [
