@@ -37,10 +37,10 @@ class UpdatePointsTableJob implements ShouldQueue
         $losingTeam = $this->match->MatchDetail->sortBy('score')->first();
 
         $totalRunsScored = $winningTeam->score;
-        $oversFaced = $winningTeam->over;
+        $oversFaced = (float) $winningTeam->over.$winningTeam->overball;
         $wicketsGone = $winningTeam->wicket == 10;
         $totalRunsConceded = $losingTeam->score;
-        $totalOversBowled = $losingTeam->over;
+        $totalOversBowled = (float) $losingTeam->over.$losingTeam->overball;
         $wicketsTaken = $losingTeam->wicket == 10;
         $totalOvers = $this->match->overs;
 
