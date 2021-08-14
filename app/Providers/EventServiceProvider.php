@@ -443,6 +443,7 @@ class EventServiceProvider extends ServiceProvider
         ],
 
         \App\Events\reverseWideOneRunEvent::class => [
+            \App\Listeners\strikeRotateListener::class,
             \App\Listeners\reverseBowlerTwoRunUpdateListener::class,
             \App\Listeners\reverseBowlerWideUpdateListener::class,
             \App\Listeners\reverseTeamTwoRunUpdateListener::class,
@@ -472,6 +473,7 @@ class EventServiceProvider extends ServiceProvider
             \App\Listeners\strikeRotateListener::class,
         ],
         \App\Events\reverseWideThreeRunEvent::class => [
+            \App\Listeners\strikeRotateListener::class,
             \App\Listeners\reverseBowlerFourRunUpdateListener::class,
             \App\Listeners\reverseBowlerWideUpdateListener::class,
             \App\Listeners\reverseTeamFourRunUpdateListener::class,
