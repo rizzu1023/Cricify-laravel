@@ -46,6 +46,18 @@ use App\Events\reverseThreeRunEvent;
 use App\Events\reverseTwoRunEvent;
 use App\Events\reverseWicketEvent;
 use App\Events\reverseWideZeroRunEvent;
+use App\Events\reverseWideOneRunEvent;
+use App\Events\reverseWideTwoRunEvent;
+use App\Events\reverseWideThreeRunEvent;
+use App\Events\reverseWideFourRunEvent;
+use App\Events\reverseLegByesOneRunEvent;
+use App\Events\reverseLegByesTwoRunEvent;
+use App\Events\reverseLegByesThreeRunEvent;
+use App\Events\reverseLegByesFourRunEvent;
+use App\Events\reverseByesOneRunEvent;
+use App\Events\reverseByesTwoRunEvent;
+use App\Events\reverseByesThreeRunEvent;
+use App\Events\reverseByesFourRunEvent;
 use App\Events\sixRunEvent;
 use App\Events\startInningEvent;
 use App\Events\strikeRotateEvent;
@@ -331,6 +343,10 @@ class LiveScoreController extends Controller
                 if ($previous_ball->action == 'five') event(new reverseFiveRunEvent($request, $previous_ball));
                 if ($previous_ball->action == 'six') event(new reverseSixRunEvent($request, $previous_ball));
                 if ($previous_ball->action == 'wd') event(new reverseWideZeroRunEvent($request, $previous_ball));
+                if ($previous_ball->action == 'wd1') event(new reverseWideOneRunEvent($request, $previous_ball));
+                if ($previous_ball->action == 'wd2') event(new reverseWideTwoRunEvent($request, $previous_ball));
+                if ($previous_ball->action == 'wd3') event(new reverseWideThreeRunEvent($request, $previous_ball));
+                if ($previous_ball->action == 'wd4') event(new reverseWideFourRunEvent($request, $previous_ball));
                 if ($previous_ball->action == 'wicket') event(new reverseWicketEvent($request, $previous_ball));
                 if ($previous_ball->action == 'nb') event(new reverseNoballZeroRunEvent($request, $previous_ball));
                 if ($previous_ball->action == 'nb1') event(new reverseNoballOneRunEvent($request, $previous_ball));
@@ -339,6 +355,14 @@ class LiveScoreController extends Controller
                 if ($previous_ball->action == 'nb4') event(new reverseNoballFourRunEvent($request, $previous_ball));
                 if ($previous_ball->action == 'nb5') event(new reverseNoballFiveRunEvent($request, $previous_ball));
                 if ($previous_ball->action == 'nb6') event(new reverseNoballSixRunEvent($request, $previous_ball));
+                if ($previous_ball->action == 'lb1') event(new reverseLegByesOneRunEvent($request, $previous_ball));
+                if ($previous_ball->action == 'lb2') event(new reverseLegByesTwoRunEvent($request, $previous_ball));
+                if ($previous_ball->action == 'lb3') event(new reverseLegByesThreeRunEvent($request, $previous_ball));
+                if ($previous_ball->action == 'lb4') event(new reverseLegByesFourRunEvent($request, $previous_ball));
+                if ($previous_ball->action == 'b1') event(new reverseByesOneRunEvent($request, $previous_ball));
+                if ($previous_ball->action == 'b2') event(new reverseByesTwoRunEvent($request, $previous_ball));
+                if ($previous_ball->action == 'b3') event(new reverseByesThreeRunEvent($request, $previous_ball));
+                if ($previous_ball->action == 'b4') event(new reverseByesFourRunEvent($request, $previous_ball));
             }
 
 

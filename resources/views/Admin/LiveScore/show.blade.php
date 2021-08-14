@@ -57,33 +57,37 @@
                         <span>Match has Been ended </span>
                         <h4 class="mt-3">{{$game->WON->team_name}} {{$game->description}}</h4>
 
-                    @if($game->mom != '--')
-                        <h4 class="mt-5">Man of the Match : {{$game->MOM['first_name']}} {{$game->MOM['last_name']}}</h4>
-                    @endif
+                        @if($game->mom != '--')
+                            <h4 class="mt-5">Man of the Match
+                                : {{$game->MOM['first_name']}} {{$game->MOM['last_name']}}</h4>
+                        @endif
                         <div class="form-body mt-5">
                             <form method="POST" action="{{ Route('select.mom') }}">
                                 @csrf
                                 <div class="row">
                                     <div class="col-8">
                                         <div class="form-group">
-                                            <select class="form-control" id="exampleFormControlSelect2" name="mom" required>
+                                            <select class="form-control" id="exampleFormControlSelect2" name="mom"
+                                                    required>
                                                 <option value="">Select Man of the Match</option>
                                                 @foreach($game->MatchPlayers as $mp)
                                                     @if($mp->team_id == $game->won)
-                                                        <option value="{{$mp->player_id}}">{{ $mp->Players['first_name'] }} {{ $mp->Players['last_name'] }}</option>
+                                                        <option
+                                                            value="{{$mp->player_id}}">{{ $mp->Players['first_name'] }} {{ $mp->Players['last_name'] }}</option>
                                                     @endif
                                                 @endforeach
                                             </select>
                                             <input type="hidden" name="match_id" value="{{$game['match_id']}}">
-                                            <input type="hidden" name="tournament_id" value="{{$game['tournament_id']}}">
+                                            <input type="hidden" name="tournament_id"
+                                                   value="{{$game['tournament_id']}}">
 
                                         </div>
                                     </div>
                                     <div class="col-4">
                                         @if($game->mom == '--')
-                                        <button type="submit" class="btn  btn-success">Select</button>
+                                            <button type="submit" class="btn  btn-success">Select</button>
                                         @else
-                                        <button type="submit" class="btn  btn-success">Change</button>
+                                            <button type="submit" class="btn  btn-success">Change</button>
                                         @endif
 
                                     </div>
@@ -610,7 +614,7 @@
                                 </tbody>
                             </table>
                             <div id="current-over">
-                                        <span><h6 style="display:inline-block;font-weight: bold">Current Over : </h6></span>
+                                <span><h6 style="display:inline-block;font-weight: bold">Current Over : </h6></span>
                                 @foreach($over as $o)
 
                                     @if($o->action == 'zero')
@@ -639,7 +643,7 @@
                                 @endforeach
                             </div>
 
-                            <a  class="btn btn-outline-success btn-square btn-sm mt-1 py-3 px-4"
+                            <a class="btn btn-outline-success btn-square btn-sm mt-1 py-3 px-4"
                                onclick="livescore_function(8)">0</a>
                             <a class="btn btn-outline-success btn-square btn-sm mt-1 py-3 px-4"
                                onclick="livescore_function(1)">1</a>
@@ -660,7 +664,7 @@
                             <a class="btn btn-outline-danger btn-square btn-sm mt-1" onclick="livescore_function('nb')">nb</a>
                             <a id="wicket_button" class="btn btn-outline-danger btn-square btn-sm mt-1"
                                onclick="reset_form()">Wicket</a>
-                            <a class="btn btn-outline-danger btn-square btn-sm mt-1"
+                            <a class="btn btn-outline-danger btn-square btn-sm mt-1" id="undo_button"
                                onclick="livescore_function('undo')">undo</a>
 
                             <br><br>
@@ -968,10 +972,9 @@
             let strike_id = $("select[name=strike_id]").val();
             let nonstrike_id = $("select[name=nonstrike_id]").val();
 
-            if(strike_id === nonstrike_id){
+            if (strike_id === nonstrike_id) {
                 alert('Please select different Batsman.');
-            }
-            else{
+            } else {
                 $.ajax({
                     type: "POST",
                     url: '{{Route('LiveUpdate')}}',
@@ -1010,6 +1013,10 @@
             var player_id = $("input[name=player_id]:checked").val();
             var non_striker_id = $("input[name=player_id]:not(:checked)").val();
 
+
+            $('#undo_button').addClass('disabled');
+
+
             $.ajax({
                 type: "POST",
                 url: "{{route('LiveUpdate')}}",
@@ -1017,7 +1024,7 @@
                 data: {
                     {{--"_token": "{{ csrf_token() }}",--}}
                     player_id: player_id,
-                    non_striker_id : non_striker_id,
+                    non_striker_id: non_striker_id,
                     attacker_id: attacker_id,
                     bt_team_id: bt_team_id,
                     bw_team_id: bw_team_id,
@@ -1026,32 +1033,33 @@
                     value: value
                 },
                 success: function (data) {
+                    $('#undo_button').removeClass('disabled');
                     // if(!data.status){
                     //     alert(data.errors);
                     // }
                     $('#newBatsmanForm').trigger('reset');
 
 
-                     if (data.value === '8' || data.value === '1' || data.value === '2' || data.value === '3' || data.value === '4' || data.value === '5' || data.value === '6') {
-                         if(data.value == '8'){
-                             $('#current-over').append("<span>0 </span>");
+                    if (data.value === '8' || data.value === '1' || data.value === '2' || data.value === '3' || data.value === '4' || data.value === '5' || data.value === '6') {
+                        if (data.value == '8') {
+                            $('#current-over').append("<span>0 </span>");
 
-                         }
+                        }
 
-                         if(data.value != '8'){
+                        if (data.value != '8') {
 
-                             $('#current-over').append("<span>"+ data.value + " </span>");
+                            $('#current-over').append("<span>" + data.value + " </span>");
 
-                             var batsman_runs = $('#11').find('#batsman-runs').text();
+                            var batsman_runs = $('#11').find('#batsman-runs').text();
 
-                             $('#11').find("#batsman-runs").text(parseInt(batsman_runs) + parseInt(data.value));
+                            $('#11').find("#batsman-runs").text(parseInt(batsman_runs) + parseInt(data.value));
 
-                             var bowler_runs = $('#bowler-runs').text();
-                             $('#bowler-runs').text(parseInt(bowler_runs) + parseInt(data.value));
+                            var bowler_runs = $('#bowler-runs').text();
+                            $('#bowler-runs').text(parseInt(bowler_runs) + parseInt(data.value));
 
-                             var team_score = $('#team-score').text();
-                             $('#team-score').text(parseInt(team_score) + parseInt(data.value));
-                         }
+                            var team_score = $('#team-score').text();
+                            $('#team-score').text(parseInt(team_score) + parseInt(data.value));
+                        }
 
 
                         var batsman_balls = $('#11').find('#batsman-balls').text();
@@ -1066,7 +1074,7 @@
                         $('#team-overball').text(parseInt(team_overball) + 1);
 
 
-                        if(data.value === '1' || data.value === '3' || data.value === '5') {
+                        if (data.value === '1' || data.value === '3' || data.value === '5') {
                             $('#10').find('input').prop('checked', true);
 
                             $('#10').attr('id', 'temp');
@@ -1074,52 +1082,47 @@
                             $('#temp').attr('id', '11');
                         }
 
-                        if(data.isOver === 1){
+                        if (data.isOver === 1) {
                             $("#overModal").modal('show');
                         }
 
 
+                    } else if (data.value === 'wd') {
+                        $('#current-over').append("<span>" + data.value + " </span>");
 
-                    }
-
-                     else if (data.value === 'wd') {
-                         $('#current-over').append("<span>"+ data.value + " </span>");
-
-                         var team_score = $('#team-score').text();
-                         $('#team-score').text(parseInt(team_score) + parseInt('1'));
+                        var team_score = $('#team-score').text();
+                        $('#team-score').text(parseInt(team_score) + parseInt('1'));
 
 
-                         var bowler_runs = $('#bowler-runs').text();
-                         $('#bowler-runs').text(parseInt(bowler_runs) + parseInt('1'));
+                        var bowler_runs = $('#bowler-runs').text();
+                        $('#bowler-runs').text(parseInt(bowler_runs) + parseInt('1'));
 
-                     }
-                     else if (data.value === 'nb') {
-                         $('#current-over').append("<span>"+ data.value + " </span>");
+                    } else if (data.value === 'nb') {
+                        $('#current-over').append("<span>" + data.value + " </span>");
 
-                         var team_score = $('#team-score').text();
-                         $('#team-score').text(parseInt(team_score) + 1);
+                        var team_score = $('#team-score').text();
+                        $('#team-score').text(parseInt(team_score) + 1);
 
 
-                         var bowler_runs = $('#bowler-runs').text();
-                         $('#bowler-runs').text(parseInt(bowler_runs) + 1);
+                        var bowler_runs = $('#bowler-runs').text();
+                        $('#bowler-runs').text(parseInt(bowler_runs) + 1);
 
-                         var batsman_balls = $('#11').find('#batsman-balls').text();
-                         $('#11').find("#batsman-balls").text(parseInt(batsman_balls) + 1);
+                        var batsman_balls = $('#11').find('#batsman-balls').text();
+                        $('#11').find("#batsman-balls").text(parseInt(batsman_balls) + 1);
 
-                     }
-                     else if(data.value === 'sr'){
-                         $('#10').find('input').prop('checked', true);
+                    } else if (data.value === 'sr') {
+                        $('#10').find('input').prop('checked', true);
 
-                         $('#10').attr('id', 'temp');
-                         $('#11').attr('id', '10');
-                         $('#temp').attr('id', '11');
-                     }
-                     else {
+                        $('#10').attr('id', 'temp');
+                        $('#11').attr('id', '10');
+                        $('#temp').attr('id', '11');
+                    } else {
                         location.reload(true);
 
                     }
                 },
-                error : function(data){
+                error: function (data) {
+                    $('#undo_button').removeClass('disabled');
                     alert('something went wrong');
                 }
             });
