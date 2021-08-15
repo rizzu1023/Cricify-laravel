@@ -97,7 +97,7 @@
                                         </div>
                                     </div>
                                     <div class="col-4">
-                                        @if($game->mom == '--')
+                                        @if($game->mom == NULL)
                                             <button type="submit" class="btn  btn-success">Select</button>
                                         @else
                                             <button type="submit" class="btn  btn-success">Change</button>
@@ -220,7 +220,6 @@
                 @if($game->status == '1' || $game->status == '3')
                     <!-- <div class="container"> -->
 
-                        <!-- Over Modal -->
                         <div class="modal  " id="overModal" tabindex="-1" data-backdrop="false" role="dialog"
                              aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -481,6 +480,7 @@
                                                 </button>
                                                 <button type="submit" class="btn btn-success ">Submit</button>
                                             </div>
+                                        </div>
                                     </form>
                                 </div>
 

@@ -33,6 +33,7 @@ class reverseEndInningListener
             ->where('tournament_id', $event->request->tournament)
             ->first();
 
+
         if($game->status == 2 || $game->status = 4){
             $game->status = $game->status - 1;
             $game->mom = NULL;
