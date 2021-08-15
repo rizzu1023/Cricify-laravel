@@ -38,6 +38,19 @@
                                href="/admin/result/{{$game->tournament_id}}/{{$game->match_id}}/show">Edit</a>
                         </div>
 
+                            <div class="col-6 mt-1">
+                                <form id="resetInningForm" style="display: inline-block;">
+                                    @csrf
+                                    <input type="hidden" name="resetInning" value="1">
+                                    <input type="hidden" name="match_id" value="{{$game['match_id']}}">
+                                    <input type="hidden" name="tournament" value="{{$game['tournament_id']}}">
+                                    <input type="hidden" name="bt_team_id" value="{{$batting_team_id}}">
+                                    <input type="hidden" name="bw_team_id" value="{{$bowling_team_id}}">
+                                    <button type="submit" class="btn btn-secondary btn-sm"
+                                            onclick="return confirm('Are you sure?')">Reset Inning
+                                    </button>
+                                </form>
+                            </div>
                         <div class="col-6 mt-1">
                             <form id="endInningForm" style="display: inline-block;">
                                 @csrf
@@ -50,19 +63,7 @@
                             </form>
                         </div>
 
-                        <div class="col-6 mt-1">
-                            <form id="resetInningForm" style="display: inline-block;">
-                                @csrf
-                                <input type="hidden" name="resetInning" value="1">
-                                <input type="hidden" name="match_id" value="{{$game['match_id']}}">
-                                <input type="hidden" name="tournament" value="{{$game['tournament_id']}}">
-                                <input type="hidden" name="bt_team_id" value="{{$batting_team_id}}">
-                                <input type="hidden" name="bw_team_id" value="{{$bowling_team_id}}">
-                                <button type="submit" class="btn btn-secondary btn-sm"
-                                        onclick="return confirm('Are you sure?')">Reset Inning
-                                </button>
-                            </form>
-                        </div>
+
 
                     @elseif($game->status == '2')
                         <span>First Inning has Been ended</span>
@@ -982,6 +983,14 @@
                     $('#wicketModal').modal('hide');
                     //  alert(data.message);
                     location.reload(true);
+                },
+                error : function (data){
+                    if(data.status === 422){
+                        alert('please select proper data');
+                    }
+                    else{
+                        alert('something went wrong');
+                    }
                 }
             });
         });
@@ -1177,7 +1186,12 @@
                 },
                 error: function (data) {
                     $('.score-button').removeClass('disabled');
-                    alert('something went wrong');
+                    if(data.status === 422){
+                        alert('please select proper data');
+                    }
+                    else{
+                        alert('something went wrong');
+                    }
                 }
             });
 

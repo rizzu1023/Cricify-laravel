@@ -290,6 +290,26 @@ class LiveScoreController extends Controller
     public function LiveUpdate(Request $request)
     {
 
+        if($request->has('value')){
+            if($request->value == 'W'){
+                if($request->wicket_type = "runout"){
+                    $request->validate([
+                        'batsman_runout' => 'required',
+                        'wicket_primary' => 'required',
+                        'player_id' => 'required',
+                        'non_striker_id' => 'required',
+                        'where_batsman_runout' => 'required',
+                        'run_scored' => 'required',
+                        'attacker_id' => 'required',
+                        'newBatsman_id' => 'required',
+                        'bt_team_id' => 'required',
+                        'bw_team_id' => 'required',
+                        'match_id' => 'required',
+                        'tournament' => 'required',
+                    ]);
+                }
+            }
+        }
         if ($request->has('startInning')) {
             if ($request->startInning == 1) {
 

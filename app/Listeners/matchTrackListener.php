@@ -31,7 +31,10 @@ class matchTrackListener
         $match_detail = MatchDetail::select('score','wicket','over','overball')->where('team_id',$event->request->bt_team_id)->where('tournament_id',$event->request->tournament)->where('match_id',$event->request->match_id)->first();
         $action = '--';
         $run = 0;
+        $wicket = 0;
         $wicket_type = NULL;
+        $dismissed_player_id = NULL;
+        $dismissed_at_strike = 1;
         $batsman_cross = 0;
         if ($event->request->value == '8') {
             $action = 'zero';
@@ -118,13 +121,18 @@ class matchTrackListener
             $action = 'rh';
             $run = 0;
         } elseif ($event->request->wicket_type == 'runout') {
+            $wicket = 1;
             $action = 'wicket';
-            $run = 0;
+            $run = $event->request->run_scored;
             $wicket_type = $event->request->wicket_type;
+            $dismissed_player_id = $event->request->batsman_runout;
+            $dismissed_at_strike = $event->request->where_batsman_runout == 'strike' ? 1 : 0;
         } elseif ($event->request->wicket_type == 'lbw' || $event->request->wicket_type == 'bold' || $event->request->wicket_type == 'catch' || $event->request->wicket_type == 'hitwicket' || $event->request->wicket_type == 'stump') {
             $action = 'wicket';
+            $wicket = 1;
             $run = 0;
             $wicket_type = $event->request->wicket_type;
+
             if ($event->request->isBatsmanCross) {
                 $batsman_cross = 1;
                 //update
@@ -153,10 +161,12 @@ class matchTrackListener
                     'player_id' => $striker->player_id,
                     'attacker_id' => $attacker->player_id,
                     'non_striker_id' => $non_striker->player_id,
-                    'score' => $match_detail->score,
-                    'wickets' => $match_detail->wicket,
+                    'score' => $match_detail->score + $run,
+                    'wickets' => $match_detail->wicket + $wicket,
                     'action' => $action,
                     'wicket_type' => $wicket_type,
+                    'dismissed_player_id' => $dismissed_player_id,
+                    'dismissed_at_strike' => $dismissed_at_strike,
                     'run' => $run,
                     'over' => $match_detail->over,
                     'overball' => $match_detail->overball,
