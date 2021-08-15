@@ -227,9 +227,6 @@
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="exampleModalLongTitle">Select New Bowler</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
                                     </div>
                                     <form id="bowlerForm">
                                         <div class="modal-body">
@@ -260,8 +257,6 @@
 
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close
-                                            </button>
                                             <button type="submit" class="btn btn-success ">Submit</button>
                                         </div>
                                     </form>
@@ -586,7 +581,7 @@
                                 <tbody>
                                 @foreach($current_batsman as $batsman)
                                     <tr id="{{$batsman->bt_status}}">
-                                        <td><input type="radio" id="player_id" name="player_id"
+                                        <td><input type="radio" id="player_id" name="player_id" disabled
                                                    value="{{$batsman->player_id}}"
                                                    @if($batsman->bt_status==11) checked @endif> {{$batsman->Players['first_name']}} {{$batsman->Players['last_name']}}
                                         </td>
