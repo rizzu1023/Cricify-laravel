@@ -72,7 +72,7 @@
 
                         @if($game->mom)
                             <h4 class="mt-5">Man of the Match
-                                : {{$game->MOM['first_name']}} {{$game->MOM['last_name']}}</h4>
+                                : {{ $game->MOM['first_name']}} {{$game->MOM['last_name']}}</h4>
                         @endif
                         <div class="form-body mt-5">
                             <form method="POST" action="{{ Route('select.mom') }}">
