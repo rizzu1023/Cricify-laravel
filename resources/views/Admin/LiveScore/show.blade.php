@@ -53,7 +53,7 @@
                                     </button>
                                 </form>
                             </div>
-                            <div class="col-6 mt-1 text-right" >
+                            <div class="col-6 mt-1 text-right">
                                 <form id="endInningForm" style="display: inline-block;">
                                     @csrf
                                     <input type="hidden" name="endInning" value="1">
@@ -622,8 +622,8 @@
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td><input type="radio" id="player_id"  disabled class="mr-1"
-                                                checked >{{$current_bowler->Players['first_name']}} {{$current_bowler->Players['last_name']}}
+                                    <td><input type="radio" id="player_id" disabled class="mr-1"
+                                               checked>{{$current_bowler->Players['first_name']}} {{$current_bowler->Players['last_name']}}
                                     </td>
                                     <input type="hidden" value="{{$current_bowler->player_id}}" name="attacker_id">
                                     <td><span id="bowler-over">{{$current_bowler->bw_over}}</span>.<span
@@ -670,88 +670,103 @@
                                 @endforeach
                             </div>
 
-                            <a class="btn btn-outline-success btn-square btn-sm mt-1 py-3 px-4 score-button"
-                               onclick="livescore_function(8)">0</a>
-                            <a class="btn btn-outline-success btn-square btn-sm mt-1 py-3 px-4 score-button"
-                               onclick="livescore_function(1)">1</a>
-                            <a class="btn btn-outline-success btn-square btn-sm mt-1 py-3 px-4 score-button"
-                               onclick="livescore_function(2)">2</a>
-                            <a class="btn btn-outline-success btn-square btn-sm mt-1 py-3 px-4 score-button"
-                               onclick="livescore_function(3)">3</a>
-                            <a class="btn btn-outline-success btn-square btn-sm mt-1 py-3 px-4 score-button"
-                               onclick="livescore_function(4)">4</a>
-                            <a class="btn btn-outline-success btn-square btn-sm mt-1 py-3 px-4 score-button"
-                               onclick="livescore_function(5)">5</a>
-                            <a class="btn btn-outline-success btn-square btn-sm mt-1 py-3 px-4 score-button"
-                               onclick="livescore_function(6)">6</a>
+                            <div class="btn-group mt-2" role="group">
+                                <a class="btn btn-outline-success btn-square btn-sm mt-1 py-3 px-4 score-button"
+                                   onclick="livescore_function(8)">0</a>
+                                <a class="btn btn-outline-success btn-square btn-sm mt-1 py-3 px-4 score-button"
+                                   onclick="livescore_function(1)">1</a>
+                                <a class="btn btn-outline-success btn-square btn-sm mt-1 py-3 px-4 score-button"
+                                   onclick="livescore_function(2)">2</a>
+                                <a class="btn btn-outline-success btn-square btn-sm mt-1 py-3 px-4 score-button"
+                                   onclick="livescore_function(3)">3</a>
+                                <a class="btn btn-outline-success btn-square btn-sm mt-1 py-3 px-4 score-button"
+                                   onclick="livescore_function(4)">4</a>
+                            </div>
 
-                            <a class="btn btn-outline-info btn-square btn-sm mt-1 score-button py-2" id="undo_button" style="font-size: 18px"
-                               onclick="livescore_function('undo')"><i data-feather="refresh-ccw" class="mr-2"></i><span>Undo</span></a>
-                            <br><br>
+                            <div class="btn-group mt-2" role="group">
 
-                            <a class="btn btn-outline-danger btn-square btn-sm mt-1 score-button"
-                               onclick="livescore_function('wd')">wd</a>
-                            <a class="btn btn-outline-danger btn-square btn-sm mt-1 score-button"
-                               onclick="livescore_function('nb')">nb</a>
-                            <a id="wicket_button" class="btn btn-outline-danger btn-square btn-sm mt-1 score-button"
-                               onclick="reset_form()">Wicket</a>
+                                <a class="btn btn-outline-success btn-square btn-sm mt-1 py-3 px-4 score-button"
+                                   onclick="livescore_function(5)">5</a>
+                                <a class="btn btn-outline-success btn-square btn-sm mt-1 py-3 px-4 score-button"
+                                   onclick="livescore_function(6)">6</a>
 
+                                <a class="btn btn-outline-info btn-square btn-sm mt-1 score-button py-2"
+                                   id="undo_button"
+                                   style="font-size: 18px"
+                                   onclick="livescore_function('undo')"><i data-feather="refresh-ccw"
+                                                                           class="mr-2"></i><span>Undo</span></a>
+                            </div>
+                            <br>
 
-                            <br><br>
+                            <div class="btn-group mt-2" role="group">
 
-                            <a class="btn btn-outline-danger btn-square btn-sm mt-1 score-button"
-                               onclick="livescore_function('nb1')">nb + 1</a>
-                            <a class="btn btn-outline-danger btn-square btn-sm mt-1 score-button"
-                               onclick="livescore_function('nb2')">nb + 2</a>
-                            <a class="btn btn-outline-danger btn-square btn-sm mt-1 score-button"
-                               onclick="livescore_function('nb3')">nb + 3</a>
-                            <a class="btn btn-outline-danger btn-square btn-sm mt-1 score-button"
-                               onclick="livescore_function('nb4')">nb + 4</a>
-                            <a class="btn btn-outline-danger btn-square btn-sm mt-1 score-button"
-                               onclick="livescore_function('nb5')">nb + 5</a>
-                            <a class="btn btn-outline-danger btn-square btn-sm mt-1 score-button"
-                               onclick="livescore_function('nb6')">nb + 6</a>
-
-                            <br><br>
-
-                            <a class="btn btn-outline-secondary btn-square btn-sm mt-1 score-button"
-                               onclick="livescore_function('wd1')">wd + 1</a>
-                            <a class="btn btn-outline-secondary btn-square btn-sm mt-1 score-button"
-                               onclick="livescore_function('wd2')">wd + 2</a>
-                            <a class="btn btn-outline-secondary btn-square btn-sm mt-1 score-button"
-                               onclick="livescore_function('wd3')">wd + 3</a>
-                            <a class="btn btn-outline-secondary btn-square btn-sm mt-1 score-button"
-                               onclick="livescore_function('wd4')">wd + 4</a>
-
-                            <br><br>
-
-                            <a class="btn btn-outline-primary btn-square btn-sm mt-1 score-button"
-                               onclick="livescore_function('lb1')">1 lb</a>
-                            <a class="btn btn-outline-primary btn-square btn-sm mt-1 score-button"
-                               onclick="livescore_function('lb2')">2 lb</a>
-                            <a class="btn btn-outline-primary btn-square btn-sm mt-1 score-button"
-                               onclick="livescore_function('lb3')">3 lb</a>
-                            <a class="btn btn-outline-primary btn-square btn-sm mt-1 score-button"
-                               onclick="livescore_function('lb4')">4 lb</a>
-
-                            <br><br>
-
-                            <a class="btn btn-outline-primary btn-square btn-sm mt-1 score-button"
-                               onclick="livescore_function('b1')">1 b</a>
-                            <a class="btn btn-outline-primary btn-square btn-sm mt-1 score-button"
-                               onclick="livescore_function('b2')">2 b</a>
-                            <a class="btn btn-outline-primary btn-square btn-sm mt-1 score-button"
-                               onclick="livescore_function('b3')">3 b</a>
-                            <a class="btn btn-outline-primary btn-square btn-sm mt-1 score-button"
-                               onclick="livescore_function('b4')">4 b</a>
-
-                            <br><br>
+                                <a class="btn btn-outline-danger btn-square btn-sm mt-1 score-button"
+                                   onclick="livescore_function('wd')">wd</a>
+                                <a class="btn btn-outline-danger btn-square btn-sm mt-1 score-button"
+                                   onclick="livescore_function('nb')">nb</a>
+                                <a id="wicket_button" class="btn btn-outline-danger btn-square btn-sm mt-1 score-button"
+                                   onclick="reset_form()">Wicket</a>
+                            </div>
 
 
-                            <a class="btn btn-outline-primary btn-square btn-sm mt-1 score-button"
-                               onclick="livescore_function('sr')">Strike Rotate</a>
-                            <a class="btn btn-outline-primary btn-square btn-sm mt-1 score-button" id="retired_hurt">Retired
-                                Hurt</a>
+                            <div class="btn-group mt-2" role="group">
+                                <a class="btn btn-outline-danger btn-square btn-sm mt-1 score-button"
+                                   onclick="livescore_function('nb1')">nb + 1</a>
+                                <a class="btn btn-outline-danger btn-square btn-sm mt-1 score-button"
+                                   onclick="livescore_function('nb2')">nb + 2</a>
+                                <a class="btn btn-outline-danger btn-square btn-sm mt-1 score-button"
+                                   onclick="livescore_function('nb3')">nb + 3</a>
+                                <a class="btn btn-outline-danger btn-square btn-sm mt-1 score-button"
+                                   onclick="livescore_function('nb4')">nb + 4</a>
+                                <a class="btn btn-outline-danger btn-square btn-sm mt-1 score-button"
+                                   onclick="livescore_function('nb5')">nb + 5</a>
+                                <a class="btn btn-outline-danger btn-square btn-sm mt-1 score-button"
+                                   onclick="livescore_function('nb6')">nb + 6</a>
+                            </div>
+
+                            <div class="btn-group mt-2" role="group">
+
+                                <a class="btn btn-outline-secondary btn-square btn-sm mt-1 score-button"
+                                   onclick="livescore_function('wd1')">wd + 1</a>
+                                <a class="btn btn-outline-secondary btn-square btn-sm mt-1 score-button"
+                                   onclick="livescore_function('wd2')">wd + 2</a>
+                                <a class="btn btn-outline-secondary btn-square btn-sm mt-1 score-button"
+                                   onclick="livescore_function('wd3')">wd + 3</a>
+                                <a class="btn btn-outline-secondary btn-square btn-sm mt-1 score-button"
+                                   onclick="livescore_function('wd4')">wd + 4</a>
+                            </div>
+
+                            <div class="btn-group mt-2" role="group">
+
+                                <a class="btn btn-outline-primary btn-square btn-sm mt-1 score-button"
+                                   onclick="livescore_function('lb1')">1 lb</a>
+                                <a class="btn btn-outline-primary btn-square btn-sm mt-1 score-button"
+                                   onclick="livescore_function('lb2')">2 lb</a>
+                                <a class="btn btn-outline-primary btn-square btn-sm mt-1 score-button"
+                                   onclick="livescore_function('lb3')">3 lb</a>
+                                <a class="btn btn-outline-primary btn-square btn-sm mt-1 score-button"
+                                   onclick="livescore_function('lb4')">4 lb</a>
+
+                            </div>
+                            <div class="btn-group mt-2" role="group">
+
+                                <a class="btn btn-outline-primary btn-square btn-sm mt-1 score-button"
+                                   onclick="livescore_function('b1')">1 b</a>
+                                <a class="btn btn-outline-primary btn-square btn-sm mt-1 score-button"
+                                   onclick="livescore_function('b2')">2 b</a>
+                                <a class="btn btn-outline-primary btn-square btn-sm mt-1 score-button"
+                                   onclick="livescore_function('b3')">3 b</a>
+                                <a class="btn btn-outline-primary btn-square btn-sm mt-1 score-button"
+                                   onclick="livescore_function('b4')">4 b</a>
+                            </div>
+
+                            <div class="btn-group mt-2" role="group">
+                                <a class="btn btn-outline-primary btn-square btn-sm mt-1 score-button"
+                                   onclick="livescore_function('sr')">Strike Rotate</a>
+                                <a class="btn btn-outline-primary btn-square btn-sm mt-1 score-button"
+                                   id="retired_hurt">Retired
+                                    Hurt</a>
+                            </div>
 
                         </form>
                     </div>
