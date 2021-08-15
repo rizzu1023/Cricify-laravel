@@ -289,6 +289,18 @@ class LiveScoreController extends Controller
             }
         }
 
+        if ($request->has('newOver')) {
+            if($request->newOver == 1 || $request->newOver == '1'){
+                $request->validate([
+                    'newBowler_id' => 'required',
+                    'bt_team_id' => 'required',
+                    'bw_team_id' => 'required',
+                    'match_id' => 'required',
+                    'tournament' => 'required',
+                ]);
+            }
+        }
+
 
         if ($request->ajax()) {
             if ($request->startInning) event(new startInningEvent($request));

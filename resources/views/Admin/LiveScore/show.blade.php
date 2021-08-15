@@ -945,6 +945,11 @@
                     $('#overModal').modal('hide');
                     //  alert(data.message);
                     location.reload(true);
+                },
+                error : function (data){
+                    if(data.status === 422){
+                        alert('please select a bowler');
+                    }
                 }
             });
         });
