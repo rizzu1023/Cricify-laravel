@@ -251,13 +251,19 @@ class LiveScoreController extends Controller
                 if ($mp->bt_status == 10 || $mp->bt_status == 11)
                     $opening = false;
         }
+        $target = 0;
+        if($game->status == 3){
+            $team = $game->MatchDetail->where('isBatting',0)->first();
+            $target = $team ? $team->score + 1 : 0;
+        }
+
 
         $current_batsman = MatchPlayers::whereIn('bt_status', ['10', '11'])->where('team_id', $batting_team_id)->where('match_id', $id)->where('tournament_id', $tournament)->orderBy('bt_order', 'asc')->get();
         $current_bowler = MatchPlayers::where('bw_status', '11')->where('team_id', '<>', $batting_team_id)->where('match_id', $id)->where('tournament_id', $tournament)->first();
 
         $notout_batsman = MatchPlayers::whereIn('bt_status', ['DNB', '12'])->where('team_id', $batting_team_id)->where('match_id', $id)->where('tournament_id', $tournament)->get();
 
-        return view('Admin/LiveScore/show', compact('over', 'game', 'batting_team_id', 'bowling_team_id', 'opening', 'isOver', 'current_over','current_overball', 'current_batsman', 'current_bowler', 'notout_batsman'));
+        return view('Admin/LiveScore/show', compact('target','over', 'game', 'batting_team_id', 'bowling_team_id', 'opening', 'isOver', 'current_over','current_overball', 'current_batsman', 'current_bowler', 'notout_batsman'));
 
     }
 
@@ -422,20 +428,6 @@ class LiveScoreController extends Controller
         return back()->with('message', 'Man of the match successfully selected');
     }
 }
-
-// bt_status
-// 11 = striker
-// 10 = non striker
-// DNB = Did not bat
-
-// 12 = retired hurt
-// 0 = out
-// 1 = notout
-
-//bw_status
-// 11 = attacker
-// 1 = inning yes
-// DNB = Did not ball
 
 
 

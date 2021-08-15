@@ -555,17 +555,28 @@
                 @if($game)
 
                     <div class="tables">
+                        <div class="row py-2">
+                        <div class="col-8">
                         @foreach($game->MatchDetail as $md)
                             @if($md->team_id == $batting_team_id)
-                                <div class="col-md-12 team-name"><h3>{{$md->Teams->team_code}} <span
+                                <div class="col-md-12 team-name"><h5>{{$md->Teams->team_code}} <span
                                             id="team-score">{{$md->score}}</span>/<span
                                             id="team-wicket">{{$md->wicket}}</span> (<span
                                             id="team-over">{{$md->over}}</span>.<span
-                                            id="team-overball">{{$md->overball}}</span>)</h3>
+                                            id="team-overball">{{$md->overball}}</span>)</h5>
 
                                 </div>
                             @endif
                         @endforeach
+                        </div>
+                        <div class="col-4">
+                            @if($target != 0)
+                                <h6>Target : {{$target}}</h6>
+                            @endif
+                        </div>
+                        </div>
+
+
 
                         <form id="updateForm">
                             @csrf
