@@ -237,7 +237,7 @@ class LiveScoreController extends Controller
             $current_overball = $game->MatchDetail['1']->overball;
         }
 
-        $over = MatchTrack::where('match_id', $id)->where('team_id',$batting_team_id)->where('tournament_id', $tournament)
+        $over = MatchTrack::where('match_id', $id)->where('team_id', $batting_team_id)->where('tournament_id', $tournament)
             ->orderBy('over', 'desc')
             ->orderBy('overball', 'desc')
             ->orderBy('created_at', 'desc')
@@ -252,12 +252,12 @@ class LiveScoreController extends Controller
                     $opening = false;
         }
         $target = null;
-        if($game->status == 3){
-            $team = $game->MatchDetail->where('isBatting',0)->first();
+        if ($game->status == 3) {
+            $team = $game->MatchDetail->where('isBatting', 0)->first();
             $target = $team ? $team->score + 1 : 0;
         }
 
-        $batting_team = $game->MatchDetail->where('isBatting',1)->first();
+        $batting_team = $game->MatchDetail->where('isBatting', 1)->first();
         $batting_team_score = $batting_team ? $batting_team->score : NULL;
 
 
@@ -267,10 +267,10 @@ class LiveScoreController extends Controller
         $notout_batsman = MatchPlayers::whereIn('bt_status', ['DNB', '12'])->where('team_id', $batting_team_id)->where('match_id', $id)->where('tournament_id', $tournament)->get();
 
         $mom = NULL;
-        if($game->MOM){
+        if ($game->MOM) {
             $mom = $game->MOM;
         }
-        return view('Admin/LiveScore/show', compact('mom','batting_team_score','target','over', 'game', 'batting_team_id', 'bowling_team_id', 'opening', 'isOver', 'current_over','current_overball', 'current_batsman', 'current_bowler', 'notout_batsman'));
+        return view('Admin/LiveScore/show', compact('mom', 'batting_team_score', 'target', 'over', 'game', 'batting_team_id', 'bowling_team_id', 'opening', 'isOver', 'current_over', 'current_overball', 'current_batsman', 'current_bowler', 'notout_batsman'));
     }
 
     public function LiveScoreCard($id, $tournament)
@@ -290,9 +290,16 @@ class LiveScoreController extends Controller
     public function LiveUpdate(Request $request)
     {
 
-        if($request->has('value')){
-            if($request->value == 'W'){
-                if($request->wicket_type = "runout"){
+        if ($request->has('value')) {
+            if ($request->value == 'W') {
+                $request->validate([
+                    'wicket_type' => 'required',
+                    'bt_team_id' => 'required',
+                    'bw_team_id' => 'required',
+                    'match_id' => 'required',
+                    'tournament' => 'required',
+                ]);
+                if ($request->wicket_type == "runout") {
                     $request->validate([
                         'batsman_runout' => 'required',
                         'wicket_primary' => 'required',
@@ -302,12 +309,23 @@ class LiveScoreController extends Controller
                         'run_scored' => 'required',
                         'attacker_id' => 'required',
                         'newBatsman_id' => 'required',
-                        'bt_team_id' => 'required',
-                        'bw_team_id' => 'required',
-                        'match_id' => 'required',
-                        'tournament' => 'required',
+                    ]);
+                } elseif ($request->wicket_type == 'bold' || $request->wicket_type == 'lbw' || $request->wicket_type == 'hitwicket') {
+                    $request->validate([
+                        'wicket_primary' => 'required',
+                        'player_id' => 'required',
+                        'newBatsman_id' => 'required',
                     ]);
                 }
+                elseif ($request->wicket_type == 'catch' || $request->wicket_type == 'stump') {
+                    $request->validate([
+                        'wicket_primary' => 'required',
+                        'player_id' => 'required',
+                        'newBatsman_id' => 'required',
+                        'wicket_secondary' => 'required',
+                    ]);
+                }
+
             }
         }
         if ($request->has('startInning')) {
@@ -326,7 +344,7 @@ class LiveScoreController extends Controller
         }
 
         if ($request->has('newOver')) {
-            if($request->newOver == 1 || $request->newOver == '1'){
+            if ($request->newOver == 1 || $request->newOver == '1') {
                 $request->validate([
                     'newBowler_id' => 'required',
                     'bt_team_id' => 'required',
@@ -396,7 +414,7 @@ class LiveScoreController extends Controller
                     ->orderBy('created_at', 'desc')
                     ->first();
 
-                if(!$previous_ball) return response()->json(['status' => false,'message' => 'Invalid Option']);
+                if (!$previous_ball) return response()->json(['status' => false, 'message' => 'Invalid Option']);
                 if ($previous_ball->action == 'zero') event(new reverseDotBallEvent($request, $previous_ball));
                 if ($previous_ball->action == 'one') event(new reverseOneRunEvent($request, $previous_ball));
                 if ($previous_ball->action == 'two') event(new reverseTwoRunEvent($request, $previous_ball));
@@ -435,21 +453,20 @@ class LiveScoreController extends Controller
                 ->where('team_id', $request->bt_team_id)->first();
             $isOver = $match_detail->isOver;
             $isEndInning = false;
-            if($match->overs == $match_detail->over){
+            if ($match->overs == $match_detail->over) {
                 $isEndInning = true;
             }
             $target = NULL;
 
-            if($match->status == 3){
-                $team = $match->MatchDetail->where('isBatting',0)->first();
+            if ($match->status == 3) {
+                $team = $match->MatchDetail->where('isBatting', 0)->first();
                 $target = $team ? $team->score + 1 : 0;
             }
-            $batting_team = $match->MatchDetail->where('isBatting',1)->first();
+            $batting_team = $match->MatchDetail->where('isBatting', 1)->first();
             $batting_team_score = $batting_team ? $batting_team->score : NULL;
 
 
-
-            return response()->json(['status' => true,'message' => 'success', 'value' => $request->value, 'isOver' => $isOver,'isEndInning' => $isEndInning,'target' => $target,'batting_team_score' => $batting_team_score]);
+            return response()->json(['status' => true, 'message' => 'success', 'value' => $request->value, 'isOver' => $isOver, 'isEndInning' => $isEndInning, 'target' => $target, 'batting_team_score' => $batting_team_score]);
         }
     }
 
