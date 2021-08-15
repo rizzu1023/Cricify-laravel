@@ -29,16 +29,16 @@
                     @include('Admin.layouts.message')
                     <div class="row">
 
-                @if($game->status == '1' || $game->status == '3')
-                        <div class="col-6">
-                            <a href="/admin/LiveScoreCard/{{$game->match_id}}/{{$game->tournament_id}}"
-                               class="btn btn-info btn-sm"
-                            >Scorecard</a>
-                        </div>
-                        <div class="col-6">
-                            <a class="btn btn-success btn-sm"
-                               href="/admin/result/{{$game->tournament_id}}/{{$game->match_id}}/show">Edit</a>
-                        </div>
+                        @if($game->status == '1' || $game->status == '3')
+                            <div class="col-6">
+                                <a href="/admin/LiveScoreCard/{{$game->match_id}}/{{$game->tournament_id}}"
+                                   class="btn btn-info btn-sm"
+                                >Scorecard</a>
+                            </div>
+                            <div class="col-6 text-right">
+                                <a class="btn btn-success btn-sm"
+                                   href="/admin/result/{{$game->tournament_id}}/{{$game->match_id}}/show">Edit</a>
+                            </div>
 
                             <div class="col-6 mt-1">
                                 <form id="resetInningForm" style="display: inline-block;">
@@ -53,65 +53,65 @@
                                     </button>
                                 </form>
                             </div>
-                        <div class="col-6 mt-1">
-                            <form id="endInningForm" style="display: inline-block;">
-                                @csrf
-                                <input type="hidden" name="endInning" value="1">
-                                <input type="hidden" name="match_id" value="{{$game['match_id']}}">
-                                <input type="hidden" name="tournament" value="{{$game['tournament_id']}}">
-                                <button type="submit" class="btn btn-danger btn-sm "
-                                        onclick="return confirm('Are you sure?')">End Inning
-                                </button>
-                            </form>
-                        </div>
+                            <div class="col-6 mt-1 text-right" >
+                                <form id="endInningForm" style="display: inline-block;">
+                                    @csrf
+                                    <input type="hidden" name="endInning" value="1">
+                                    <input type="hidden" name="match_id" value="{{$game['match_id']}}">
+                                    <input type="hidden" name="tournament" value="{{$game['tournament_id']}}">
+                                    <button type="submit" class="btn btn-danger btn-sm"
+                                            onclick="return confirm('Are you sure?')">End Inning
+                                    </button>
+                                </form>
+                            </div>
 
 
 
-                    @elseif($game->status == '2')
-                        <span>First Inning has Been ended</span>
-                    @elseif($game->status == '4')
-                        <span>Match has Been ended </span>
-                        <h4 class="mt-3">{{$game->WON->team_name}} {{$game->description}}</h4>
+                        @elseif($game->status == '2')
+                            <span>First Inning has Been ended</span>
+                        @elseif($game->status == '4')
+                            <span>Match has Been ended </span>
+                            <h4 class="mt-3">{{$game->WON->team_name}} {{$game->description}}</h4>
 
-                        @if($game->mom)
-                            <h4 class="mt-5">Man of the Match
-                                : {{ $game->MOM['first_name']}} {{$game->MOM['last_name']}}</h4>
-                        @endif
-                        <div class="form-body mt-5">
-                            <form method="POST" action="{{ Route('select.mom') }}">
-                                @csrf
-                                <div class="row">
-                                    <div class="col-8">
-                                        <div class="form-group">
-                                            <select class="form-control" id="exampleFormControlSelect2" name="mom"
-                                                    required>
-                                                <option value="">Select Man of the Match</option>
-                                                @foreach($game->MatchPlayers as $mp)
-                                                    @if($mp->team_id == $game->won)
-                                                        <option
-                                                            value="{{$mp->player_id}}">{{ $mp->Players['first_name'] }} {{ $mp->Players['last_name'] }}</option>
-                                                    @endif
-                                                @endforeach
-                                            </select>
-                                            <input type="hidden" name="match_id" value="{{$game['match_id']}}">
-                                            <input type="hidden" name="tournament_id"
-                                                   value="{{$game['tournament_id']}}">
+                            @if($game->mom)
+                                <h4 class="mt-5">Man of the Match
+                                    : {{ $game->MOM['first_name']}} {{$game->MOM['last_name']}}</h4>
+                            @endif
+                            <div class="form-body mt-5">
+                                <form method="POST" action="{{ Route('select.mom') }}">
+                                    @csrf
+                                    <div class="row">
+                                        <div class="col-8">
+                                            <div class="form-group">
+                                                <select class="form-control" id="exampleFormControlSelect2" name="mom"
+                                                        required>
+                                                    <option value="">Select Man of the Match</option>
+                                                    @foreach($game->MatchPlayers as $mp)
+                                                        @if($mp->team_id == $game->won)
+                                                            <option
+                                                                value="{{$mp->player_id}}">{{ $mp->Players['first_name'] }} {{ $mp->Players['last_name'] }}</option>
+                                                        @endif
+                                                    @endforeach
+                                                </select>
+                                                <input type="hidden" name="match_id" value="{{$game['match_id']}}">
+                                                <input type="hidden" name="tournament_id"
+                                                       value="{{$game['tournament_id']}}">
+
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            @if($game->mom == NULL)
+                                                <button type="submit" class="btn  btn-success">Select</button>
+                                            @else
+                                                <button type="submit" class="btn  btn-success">Change</button>
+                                            @endif
 
                                         </div>
                                     </div>
-                                    <div class="col-4">
-                                        @if($game->mom == NULL)
-                                            <button type="submit" class="btn  btn-success">Select</button>
-                                        @else
-                                            <button type="submit" class="btn  btn-success">Change</button>
-                                        @endif
 
-                                    </div>
-                                </div>
-
-                            </form>
-                        </div>
-                    @endif
+                                </form>
+                            </div>
+                        @endif
                     </div>
                 </div>
                 <div class="card-body pt-0">
@@ -200,7 +200,9 @@
                         {{--                <input type="hidden" name="match_id" value="{{$game['match_id']}}">--}}
                         {{--                <input type="hidden" name="tournament" value="{{$game['tournament_id']}}">--}}
                         @if($game->status == '0')
-                                <button class="btn btn-success btn-md mr-2 startInningButton">Start 1st Inning</button>   <a class="btn btn-primary btn-sm" href="/admin/result/{{$game->tournament_id}}/{{$game->match_id}}/show">Edit</a>
+                            <button class="btn btn-success btn-md mr-2 startInningButton">Start 1st Inning</button>   <a
+                                class="btn btn-primary btn-sm"
+                                href="/admin/result/{{$game->tournament_id}}/{{$game->match_id}}/show">Edit</a>
                         @elseif($game->status == '2')
                             <button class="btn btn-success btn-md startInningButton">Start 2nd Inning</button>
                             <a class="btn btn-outline-success btn-square btn-sm mt-1"
@@ -555,26 +557,25 @@
 
                     <div class="tables">
                         <div class="row py-2">
-                        <div class="col-8">
-                        @foreach($game->MatchDetail as $md)
-                            @if($md->team_id == $batting_team_id)
-                                <div class="col-md-12 team-name"><h5>{{$md->Teams->team_code}} <span
-                                            id="team-score">{{$md->score}}</span>/<span
-                                            id="team-wicket">{{$md->wicket}}</span> (<span
-                                            id="team-over">{{$md->over}}</span>.<span
-                                            id="team-overball">{{$md->overball}}</span>)</h5>
+                            <div class="col-8">
+                                @foreach($game->MatchDetail as $md)
+                                    @if($md->team_id == $batting_team_id)
+                                        <div class="col-md-12 team-name"><h5>{{$md->Teams->team_code}} <span
+                                                    id="team-score">{{$md->score}}</span>/<span
+                                                    id="team-wicket">{{$md->wicket}}</span> (<span
+                                                    id="team-over">{{$md->over}}</span>.<span
+                                                    id="team-overball">{{$md->overball}}</span>)</h5>
 
-                                </div>
-                            @endif
-                        @endforeach
+                                        </div>
+                                    @endif
+                                @endforeach
+                            </div>
+                            <div class="col-4">
+                                @if($target)
+                                    <h6>Target : {{$target}}</h6>
+                                @endif
+                            </div>
                         </div>
-                        <div class="col-4">
-                            @if($target)
-                                <h6>Target : {{$target}}</h6>
-                            @endif
-                        </div>
-                        </div>
-
 
 
                         <form id="updateForm">
@@ -609,7 +610,7 @@
                                 </tbody>
                             </table>
 
-                            <table class="table table-responsive-sm">
+                            <table class="table">
                                 <thead>
                                 <tr class="bg-light">
                                     <th>Bowler</th>
@@ -621,7 +622,9 @@
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td>{{$current_bowler->Players['first_name']}} {{$current_bowler->Players['last_name']}}</td>
+                                    <td><input type="radio" id="player_id"  disabled class="mr-1"
+                                                checked >{{$current_bowler->Players['first_name']}} {{$current_bowler->Players['last_name']}}
+                                    </td>
                                     <input type="hidden" value="{{$current_bowler->player_id}}" name="attacker_id">
                                     <td><span id="bowler-over">{{$current_bowler->bw_over}}</span>.<span
                                             id="bowler-overball">{{$current_bowler->bw_overball}}</span></td>
@@ -634,9 +637,11 @@
                                 <input type="hidden" name="tournament" value="{{$game->tournament_id}}">
                                 </tbody>
                             </table>
-                            <div id="current-over">
+
+                            <div id="current-over" class="px-2">
                                 <span><h6 style="display:inline-block;font-weight: bold">Last 10 balls : </h6></span>
                                 @foreach($over as $o)
+
 
                                     @if($o->action == 'zero')
                                         <span>0</span>
@@ -657,9 +662,10 @@
                                     @else
                                         <span>{{$o->action}}</span>
                                     @endif
-                                    @if($o->overball == 5)
+                                    @if($o->overball == 5 && ($o->action != 'wd' && $o->action != 'wd1' && $o->action != 'wd2' && $o->action != 'wd3' && $o->action != 'wd4' && $o->action != 'nb' && $o->action != 'nb1' && $o->action != 'nb2' && $o->action != 'nb3' && $o->action != 'nb4' && $o->action != 'nb5' && $o->action != 'nb6' ))
                                         <span style="font-weight: bold; color: red"> | </span>
                                     @endif
+
 
                                 @endforeach
                             </div>
@@ -679,16 +685,16 @@
                             <a class="btn btn-outline-success btn-square btn-sm mt-1 py-3 px-4 score-button"
                                onclick="livescore_function(6)">6</a>
 
-                            <a class="btn btn-outline-danger btn-square btn-sm mt-1 score-button py-2" id="undo_button"
+                            <a class="btn btn-outline-info btn-square btn-sm mt-1 score-button py-2" id="undo_button" style="font-size: 18px"
                                onclick="livescore_function('undo')"><i data-feather="refresh-ccw" class="mr-2"></i><span>Undo</span></a>
                             <br><br>
 
-                            <a class="btn btn-outline-danger btn-square btn-sm mt-1 score-button" onclick="livescore_function('wd')">wd</a>
-                            <a class="btn btn-outline-danger btn-square btn-sm mt-1 score-button" onclick="livescore_function('nb')">nb</a>
+                            <a class="btn btn-outline-danger btn-square btn-sm mt-1 score-button"
+                               onclick="livescore_function('wd')">wd</a>
+                            <a class="btn btn-outline-danger btn-square btn-sm mt-1 score-button"
+                               onclick="livescore_function('nb')">nb</a>
                             <a id="wicket_button" class="btn btn-outline-danger btn-square btn-sm mt-1 score-button"
                                onclick="reset_form()">Wicket</a>
-
-
 
 
                             <br><br>
@@ -744,11 +750,12 @@
 
                             <a class="btn btn-outline-primary btn-square btn-sm mt-1 score-button"
                                onclick="livescore_function('sr')">Strike Rotate</a>
-                            <a class="btn btn-outline-primary btn-square btn-sm mt-1 score-button" id="retired_hurt">Retired Hurt</a>
-
+                            <a class="btn btn-outline-primary btn-square btn-sm mt-1 score-button" id="retired_hurt">Retired
+                                Hurt</a>
 
                         </form>
                     </div>
+
 
 
                 @endif
@@ -757,7 +764,6 @@
                 @endif
             </div>
         </div>
-        <!-- Container-fluid Ends-->
     </div>
 @endsection
 
@@ -777,20 +783,17 @@
 
             if ((total_over == current_over - 1 && current_overball == 6) || total_over == current_over) {
                 $('#endInningForm').submit();
-            }
-            else{
+            } else {
                 if (isOver) {
                     $("#overModal").modal('show');
                 }
             }
 
-            if(batting_team_score && target){
-                if(batting_team_score >= target){
+            if (batting_team_score && target) {
+                if (batting_team_score >= target) {
                     $('#endInningForm').submit();
                 }
             }
-
-
 
 
             $('.startInningButton').on('click', function () {
@@ -967,8 +970,8 @@
                     //  alert(data.message);
                     location.reload(true);
                 },
-                error : function (data){
-                    if(data.status === 422){
+                error: function (data) {
+                    if (data.status === 422) {
                         alert('please select a bowler');
                     }
                 }
@@ -988,11 +991,10 @@
                     //  alert(data.message);
                     location.reload(true);
                 },
-                error : function (data){
-                    if(data.status === 422){
+                error: function (data) {
+                    if (data.status === 422) {
                         alert('please select proper data');
-                    }
-                    else{
+                    } else {
                         alert('something went wrong');
                     }
                 }
@@ -1011,7 +1013,7 @@
                     //  alert(data.message);
                     location.reload(true);
                 },
-                error : function (data){
+                error: function (data) {
                     alert(data.data);
                 }
             });
@@ -1036,8 +1038,8 @@
                         $('#bowlerModal').modal('hide');
                         location.reload(true);
                     },
-                    error : function (data){
-                        if(data.status === 422){
+                    error: function (data) {
+                        if (data.status === 422) {
                             alert('Please select proper data');
                         }
                     }
@@ -1093,7 +1095,7 @@
                 success: function (data) {
                     $('.score-button').removeClass('disabled');
                     $('#newBatsmanForm').trigger('reset');
-                    if(data.status){
+                    if (data.status) {
                         if (data.value === '8' || data.value === '1' || data.value === '2' || data.value === '3' || data.value === '4' || data.value === '5' || data.value === '6') {
                             if (data.value == '8') {
                                 $('#current-over').append("<span>0 </span>");
@@ -1137,17 +1139,16 @@
                             }
 
 
-                            if (data.isEndInning === true){
+                            if (data.isEndInning === true) {
                                 $('#endInningForm').submit();
-                            }
-                            else{
+                            } else {
                                 if (data.isOver === 1) {
                                     $("#overModal").modal('show');
                                 }
                             }
 
-                            if(data.target && data.batting_team_score){
-                                if(data.target <= data.batting_team_score){
+                            if (data.target && data.batting_team_score) {
+                                if (data.target <= data.batting_team_score) {
                                     $('#endInningForm').submit();
                                 }
                             }
@@ -1186,20 +1187,17 @@
                             location.reload(true);
 
                         }
-                    }
-                    else{
+                    } else {
                         alert(data.message);
                     }
-
 
 
                 },
                 error: function (data) {
                     $('.score-button').removeClass('disabled');
-                    if(data.status === 422){
+                    if (data.status === 422) {
                         alert('please select proper data');
-                    }
-                    else{
+                    } else {
                         alert('something went wrong');
                     }
                 }
