@@ -27,23 +27,39 @@ class reverseNewBatsmanAddedListener
      */
     public function handle($event)
     {
-        if ($event->request->wicket_type != 'runout') {
+        $nonstriker_batsman = MatchPlayers::where('match_id', $event->request->match_id)
+            ->where('tournament_id', $event->request->tournament)
+            ->where('team_id', $event->request->bt_team_id)
+            ->where('bt_status', 10)->first();
 
-//            MatchPlayers::where('match_id', $event->request->match_id)
-//                ->where('tournament_id', $event->request->tournament)
-//                ->where('team_id', $event->request->bt_team_id)
-//                ->where('player_id', $event->request->newBatsman_id)
-//                ->update(['bt_status' => 'DNB','bt_order' => 100]);
+        $striker_batsman = MatchPlayers::where('match_id', $event->request->match_id)
+            ->where('tournament_id', $event->request->tournament)
+            ->where('team_id', $event->request->bt_team_id)
+            ->where('bt_status', 11)->first();
 
-            $nonstriker_batsman = MatchPlayers::where('match_id', $event->request->match_id)
-                ->where('tournament_id', $event->request->tournament)
-                ->where('team_id', $event->request->bt_team_id)
-                ->where('bt_status', 10)->first();
 
-            $striker_batsman = MatchPlayers::where('match_id', $event->request->match_id)
-                ->where('tournament_id', $event->request->tournament)
-                ->where('team_id', $event->request->bt_team_id)
-                ->where('bt_status', 11)->first();
+        if ($event->previous_ball->wicket_type == 'runout') {
+            if($event->previous_ball->dismissed_at_strike == 1){
+                $striker_batsman->bt_status = 'DNB';
+                $striker_batsman->bt_order = 100;
+                $striker_batsman->bt_runs = 0;
+                $striker_batsman->bt_balls = 0;
+                $striker_batsman->bt_fours = 0;
+                $striker_batsman->bt_sixes = 0;
+                $striker_batsman->update();
+            }
+            else{
+                $nonstriker_batsman->bt_status = 'DNB';
+                $nonstriker_batsman->bt_order = 100;
+                $nonstriker_batsman->bt_runs = 0;
+                $nonstriker_batsman->bt_balls = 0;
+                $nonstriker_batsman->bt_fours = 0;
+                $nonstriker_batsman->bt_sixes = 0;
+                $nonstriker_batsman->update();
+            }
+        }
+        else{
+
             if ($event->previous_ball->batsman_cross) {
 
                 if($nonstriker_batsman) {

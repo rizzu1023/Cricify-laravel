@@ -58,10 +58,10 @@ class currentBatsmanRemoveListener
 
             $current_batsman->bt_runs = $current_batsman->bt_runs + $event->request->run_scored;
             $current_batsman->bt_balls = $current_batsman->bt_balls + 1;
-            $current_batsman->save();
+            $current_batsman->update();
 
             $current_batting_team->score = $current_batting_team->score + $event->request->run_scored;
-            $current_batting_team->save();
+            $current_batting_team->update();
 
             $got_out_batsman = MatchPlayers::where('match_id', $event->request->match_id)
                 ->where('tournament_id', $event->request->tournament)
@@ -95,29 +95,29 @@ class currentBatsmanRemoveListener
 
             if ($got_out_batsman->bt_status == 10 && $event->request->where_batsman_runout == 'strike') {
                 $striker_batsman->bt_status = 10;
-                $striker_batsman->save();
+                $striker_batsman->update();
 
                 if ($new_batsman) {
                     $new_batsman->bt_status = 11;
-                    $new_batsman->save();
+                    $new_batsman->update();
                 }
             } elseif ($got_out_batsman->bt_status == 11 && $event->request->where_batsman_runout == 'strike') {
                 if ($new_batsman) {
                     $new_batsman->bt_status = 11;
-                    $new_batsman->save();
+                    $new_batsman->update();
                 }
             } elseif ($got_out_batsman->bt_status == 10 && $event->request->where_batsman_runout == 'non_strike') {
                 if ($new_batsman) {
                     $new_batsman->bt_status = 10;
-                    $new_batsman->save();
+                    $new_batsman->update();
                 }
             } elseif ($got_out_batsman->bt_status == 11 && $event->request->where_batsman_runout == 'non_strike') {
                 $non_striker_batsman->bt_status = 11;
-                $non_striker_batsman->save();
+                $non_striker_batsman->update();
 
                 if ($new_batsman) {
                     $new_batsman->bt_status = 10;
-                    $new_batsman->save();
+                    $new_batsman->update();
                 }
             }
 
