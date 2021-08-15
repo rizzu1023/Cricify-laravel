@@ -1,33 +1,7 @@
-
-
-{{--    <style>--}}
-{{--        .team-heading {--}}
-{{--            background: #333;--}}
-{{--            color: white;--}}
-{{--            padding: 15px 20px;--}}
-{{--            font-size: 20px;--}}
-{{--        }--}}
-
-{{--        .team-heading .score {--}}
-{{--            float: right;--}}
-{{--            letter-spacing: 1px;--}}
-{{--        }--}}
-
-
-
 @extends('Admin.layouts.base')
 
 @section('content')
-    @php
-        if($matchs->MatchDetail['0']->isBatting){
-            $batting = $matchs->MatchDetail['0']->team_id;
-            $bowling = $matchs->MatchDetail['1']->team_id;
-        }
-        else{
-            $batting = $matchs->MatchDetail['1']->team_id;
-            $bowling = $matchs->MatchDetail['0']->team_id;
-        }
-    @endphp
+
     <div class="page-body">
         <div class="container-fluid">
             <div class="page-title">
@@ -53,14 +27,8 @@
                     >Live Score</a>
                 </div>
                 <div class="card-body">
-                    <div class="team-heading">
-                        @foreach($matchs->MatchDetail as $md)
-                            @if($md->team_id == $batting)
-                                <span>{{$md->Teams->team_name}}</span>
-                                <span class="score">{{$md->score}}-{{$md->wicket}} ({{$md->over}}.{{$md->overball}})<span>
-                            @endif
-                        @endforeach
-                    </div>
+                    <h4 class="score">{{$batting_team->Teams->team_name}} {{$batting_team->score}}-{{$batting_team->wicket}} ({{$batting_team->over}}.{{$batting_team->overball}})</h4>
+
                     <table class="table  table-responsive-sm">
                         <thead>
                         <tr class="bg-light">
@@ -74,9 +42,8 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($matchs->MatchPlayers as $m)
-                            @if($m->team_id == $batting)
-                                <tr>
+                        @foreach($batting_team_players as $m)
+                            <tr>
                                     <td>
                                         @if($m->bt_status == 10 || $m->bt_status == 11)
                                             <b>{{$m->Players->first_name}} {{$m->Players->last_name}}</b>
@@ -98,10 +65,13 @@
                                             <b>st</b> {{$m->wicketSecondary->first_name}} {{$m->wicketSecondary->last_name}}
                                             <b>b</b> {{$m->wicketPrimary->first_name}} {{$m->wicketPrimary->last_name}}
                                         @elseif($m->bt_status == 0 && $m->wicket_type == 'runout')
-                                            @if($m->wicket_secondary == NULL)
-                                                <b>runout</b>({{$m->wicketPrimary->first_name}} {{$m->wicketPrimary->last_name}})
+                                            @if($m->wicket_secondary == NULL || $m->wicket_secondary == '--')
+                                                <b>runout</b>
+                                                ({{$m->wicketPrimary->first_name}} {{$m->wicketPrimary->last_name}})
                                             @else
-                                                <b>runout</b>({{$m->wicketPrimary->first_name}} {{$m->wicketPrimary->last_name}}/{{$m->wicketSecondary->first_name}} {{$m->wicketSecondary->last_name}})
+                                                <b>runout</b>
+                                                ({{$m->wicketPrimary->first_name}} {{$m->wicketPrimary->last_name}}
+                                                /{{$m->wicketSecondary->first_name}} {{$m->wicketSecondary->last_name}})
                                             @endif
                                         @elseif($m->bt_status == 10 || $m->bt_status == 11)
                                             batting
@@ -120,31 +90,22 @@
                                     @endphp
                                     <td>{{$sr}}</td>
                                 </tr>
-                            @endif
                         @endforeach
 
                         <tr style="border-top: 1.5px solid black;">
                             <td>Total</td>
                             <td></td>
-                            @foreach($matchs->MatchDetail as $md)
-                                @if($md->team_id == $batting)
                                     <td colspan="4">
-                                        {{$md->score}} ({{$md->wicket}} wickets, {{$md->over}}.{{$md->overball}} overs)
+                                        {{$batting_team->score}} ({{$batting_team->wicket}} wickets, {{$batting_team->over}}.{{$batting_team->overball}} overs)
                                     </td>
-                                @endif
-                            @endforeach
                         </tr>
                         <tr>
                             <td>Extras</td>
                             <td></td>
-                            @foreach($matchs->MatchDetail as $md)
-                                @if($md->team_id == $batting)
                                     <td colspan="4">
-                                        {{$md->byes + $md->legbyes + $md->no_ball + $md->wide}} (b {{$md->byes}},
-                                        lb {{$md->legbyes}}, w {{$md->wide}}, nb {{$md->no_ball}})
+                                        {{$batting_team->byes + $batting_team->legbyes + $batting_team->no_ball + $batting_team->wide}} (b {{$batting_team->byes}},
+                                        lb {{$batting_team->legbyes}}, w {{$batting_team->wide}}, nb {{$batting_team->no_ball}})
                                     </td>
-                                @endif
-                            @endforeach
                         </tr>
                         </tbody>
                     </table>
@@ -163,10 +124,9 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($matchs->MatchPlayers as $m)
-                            @if($m->team_id == $bowling)
-                                @if($m->bw_status == 1 || $m->bw_status == 11)
-                                    <tr>
+                        @foreach($bowling_team_players as $m)
+                            @if($m->bw_status == 1 || $m->bw_status == 11)
+                                <tr>
                                         <td>
                                             @if($m->bw_status == 11)
                                                 <b>{{$m->Players->first_name}} {{$m->Players->last_name}}</b>
@@ -191,7 +151,6 @@
                                         <td>{{$m->bw_wide}}</td>
                                         <td>{{$sr}}</td>
                                     </tr>
-                                @endif
                             @endif
                         @endforeach
 

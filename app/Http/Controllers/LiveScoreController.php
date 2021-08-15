@@ -278,9 +278,17 @@ class LiveScoreController extends Controller
     public function LiveScoreCard($id, $tournament)
     {
 
-        $matchs = Game::where('match_id', $id)->where('tournament_id', $tournament)->first();
+        $matchs = Game::with('MatchDetail','MatchPlayers')->where('match_id', $id)->where('tournament_id', $tournament)->first();
 
-        return view('Admin/LiveScore/scorecard', compact('matchs'));
+        $batting_team = $matchs->MatchDetail->where('isBatting',1)->first();
+        $bowling_team = $matchs->MatchDetail->where('isBatting',0)->first();
+        $batting = $batting_team->team_id;
+        $bowling = $bowling_team->team_id;
+
+        $batting_team_players = $matchs->MatchPlayers->where('team_id',$batting)->sortBy('bt_order');
+        $bowling_team_players = $matchs->MatchPlayers->where('team_id',$bowling);
+
+        return view('Admin/LiveScore/scorecard', compact('matchs','batting','bowling','batting_team','bowling_team','batting_team_players','bowling_team_players'));
     }
 
     public function MatchData($id, $tournament)

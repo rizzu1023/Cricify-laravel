@@ -25,7 +25,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('optimize')->daily();
-        $schedule->command('telescope:clear')->daily();
+        $schedule->command('telescope:clear')->twiceDaily();
     }
 
     /**
