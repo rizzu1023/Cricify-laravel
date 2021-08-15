@@ -15,19 +15,19 @@ class MasterRoleSeeder extends Seeder
     public function run()
     {
         DB::table('master_roles')->truncate();
-        DB::table('master_roles')->create([
+        DB::table('master_roles')->insert([
             'id' => 1,
             'name' => 'Batsman',
         ]);
-        DB::table('master_roles')->create([
+        DB::table('master_roles')->insert([
             'id' => 2,
             'name' => 'Bowler',
         ]);
-        DB::table('master_roles')->create([
+        DB::table('master_roles')->insert([
             'id' => 3,
             'name' => 'All Rounder',
         ]);
-        DB::table('master_roles')->create([
+        DB::table('master_roles')->insert([
             'id' => 4,
             'name' => 'Wicket Keeper',
         ]);
