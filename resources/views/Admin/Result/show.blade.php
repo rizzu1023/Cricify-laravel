@@ -298,10 +298,11 @@
                         </div>
 
                         <form action="{{route('result.destroy')}}" method="POST">
+                            @method('DELETE')
                             @csrf
                             <input type="hidden" value="{{$match->match_id}}" name="match_id">
                             <input type="hidden" value="{{$match->tournament_id}}" name="tournament">
-                            <button class="btn btn-sm btn-danger">Delete Result</button>
+                            <button class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete it?');">Delete Result</button>
                         </form>
                     </div>
                 </div>
