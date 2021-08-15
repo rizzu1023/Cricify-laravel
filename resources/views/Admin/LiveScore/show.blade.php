@@ -73,9 +73,9 @@
                             <span>Match has Been ended </span>
                             <h4 class="mt-3">{{$game->WON->team_name}} {{$game->description}}</h4>
 
-                            @if($game->mom)
+                            @if($game->mom != NULL && $game->mom != '--')
                                 <h4 class="mt-5">Man of the Match
-                                    : {{ $game->MOM['first_name']}} {{$game->MOM['last_name']}}</h4>
+                                    : {{ $game->MOM ? $game->MOM['first_name'] : NULL}} {{$game->MOM ? $game->MOM['last_name'] : NULL}}</h4>
                             @endif
                             <div class="form-body mt-5">
                                 <form method="POST" action="{{ Route('select.mom') }}">
