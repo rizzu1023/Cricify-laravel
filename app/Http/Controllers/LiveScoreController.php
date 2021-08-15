@@ -217,12 +217,7 @@ class LiveScoreController extends Controller
 
     public function LiveUpdateShow($id, $tournament)
     {
-        $over = MatchTrack::where('match_id', $id)->where('tournament_id', $tournament)
-            ->orderBy('over', 'desc')
-            ->orderBy('overball', 'desc')
-            ->orderBy('created_at', 'desc')
-            ->get()->take(10);
-        $over = $over->reverse();
+
 
         $game = Game::where('match_id', $id)->where('tournament_id', $tournament)->first();
 
@@ -241,6 +236,13 @@ class LiveScoreController extends Controller
             $current_over = $game->MatchDetail['1']->over;
             $current_overball = $game->MatchDetail['1']->overball;
         }
+
+        $over = MatchTrack::where('match_id', $id)->where('team_id',$batting_team_id)->where('tournament_id', $tournament)
+            ->orderBy('over', 'desc')
+            ->orderBy('overball', 'desc')
+            ->orderBy('created_at', 'desc')
+            ->get()->take(10);
+        $over = $over->reverse();
 
         //check for opening
         $opening = true;
