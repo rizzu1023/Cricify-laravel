@@ -46,6 +46,18 @@ use App\Events\reverseThreeRunEvent;
 use App\Events\reverseTwoRunEvent;
 use App\Events\reverseWicketEvent;
 use App\Events\reverseWideZeroRunEvent;
+use App\Events\reverseWideOneRunEvent;
+use App\Events\reverseWideTwoRunEvent;
+use App\Events\reverseWideThreeRunEvent;
+use App\Events\reverseWideFourRunEvent;
+use App\Events\reverseLegByesOneRunEvent;
+use App\Events\reverseLegByesTwoRunEvent;
+use App\Events\reverseLegByesThreeRunEvent;
+use App\Events\reverseLegByesFourRunEvent;
+use App\Events\reverseByesOneRunEvent;
+use App\Events\reverseByesTwoRunEvent;
+use App\Events\reverseByesThreeRunEvent;
+use App\Events\reverseByesFourRunEvent;
 use App\Events\sixRunEvent;
 use App\Events\startInningEvent;
 use App\Events\strikeRotateEvent;
@@ -108,7 +120,7 @@ class LiveScoreController extends Controller
         ]);
 //        return $request->all();
 
-        DB::transaction( function() use($request){
+        DB::transaction(function () use ($request) {
             $m = Game::create([
                 'match_id' => request('id'),
                 'overs' => request('overs'),
@@ -205,8 +217,7 @@ class LiveScoreController extends Controller
 
     public function LiveUpdateShow($id, $tournament)
     {
-        $over = MatchTrack::where('match_id', $id)->where('tournament_id', $tournament)->latest()->get()->take(10);
-        $over = $over->reverse();
+
 
         $game = Game::where('match_id', $id)->where('tournament_id', $tournament)->first();
 
@@ -216,13 +227,22 @@ class LiveScoreController extends Controller
 
             $isOver = $game->MatchDetail['0']->isOver;
             $current_over = $game->MatchDetail['0']->over;
+            $current_overball = $game->MatchDetail['0']->overball;
         } else {
             $batting_team_id = $game->MatchDetail['1']->team_id;
             $bowling_team_id = $game->MatchDetail['0']->team_id;
 
             $isOver = $game->MatchDetail['1']->isOver;
             $current_over = $game->MatchDetail['1']->over;
+            $current_overball = $game->MatchDetail['1']->overball;
         }
+
+        $over = MatchTrack::where('match_id', $id)->where('team_id',$batting_team_id)->where('tournament_id', $tournament)
+            ->orderBy('over', 'desc')
+            ->orderBy('overball', 'desc')
+            ->orderBy('created_at', 'desc')
+            ->get()->take(10);
+        $over = $over->reverse();
 
         //check for opening
         $opening = true;
@@ -231,14 +251,26 @@ class LiveScoreController extends Controller
                 if ($mp->bt_status == 10 || $mp->bt_status == 11)
                     $opening = false;
         }
+        $target = null;
+        if($game->status == 3){
+            $team = $game->MatchDetail->where('isBatting',0)->first();
+            $target = $team ? $team->score + 1 : 0;
+        }
+
+        $batting_team = $game->MatchDetail->where('isBatting',1)->first();
+        $batting_team_score = $batting_team ? $batting_team->score : NULL;
+
 
         $current_batsman = MatchPlayers::whereIn('bt_status', ['10', '11'])->where('team_id', $batting_team_id)->where('match_id', $id)->where('tournament_id', $tournament)->orderBy('bt_order', 'asc')->get();
         $current_bowler = MatchPlayers::where('bw_status', '11')->where('team_id', '<>', $batting_team_id)->where('match_id', $id)->where('tournament_id', $tournament)->first();
 
         $notout_batsman = MatchPlayers::whereIn('bt_status', ['DNB', '12'])->where('team_id', $batting_team_id)->where('match_id', $id)->where('tournament_id', $tournament)->get();
 
-        return view('Admin/LiveScore/show', compact('over', 'game', 'batting_team_id', 'bowling_team_id', 'opening', 'isOver', 'current_over', 'current_batsman', 'current_bowler', 'notout_batsman'));
-
+        $mom = NULL;
+        if($game->MOM){
+            $mom = $game->MOM;
+        }
+        return view('Admin/LiveScore/show', compact('mom','batting_team_score','target','over', 'game', 'batting_team_id', 'bowling_team_id', 'opening', 'isOver', 'current_over','current_overball', 'current_batsman', 'current_bowler', 'notout_batsman'));
     }
 
     public function LiveScoreCard($id, $tournament)
@@ -258,18 +290,34 @@ class LiveScoreController extends Controller
     public function LiveUpdate(Request $request)
     {
 
-        $rules = [
-            'player_id' => 'required',
-            'non_striker_id' => 'required',
-            'attacker_id' => 'required',
-            'bt_team_id' => 'required',
-            'bw_team_id' => 'required',
-            'match_id' => 'required',
-            'tournament' => 'required',
-            'value' => 'required',
-        ];
+        if ($request->has('startInning')) {
+            if ($request->startInning == 1) {
 
-        $validator = Validator::make($request->all(), $rules);
+                $request->validate([
+                    'nonstrike_id' => 'required',
+                    'strike_id' => 'required',
+                    'attacker_id' => 'required',
+                    'bt_team_id' => 'required',
+                    'bw_team_id' => 'required',
+                    'match_id' => 'required',
+                    'tournament' => 'required',
+                ]);
+            }
+        }
+
+        if ($request->has('newOver')) {
+            if($request->newOver == 1 || $request->newOver == '1'){
+                $request->validate([
+                    'newBowler_id' => 'required',
+                    'bt_team_id' => 'required',
+                    'bw_team_id' => 'required',
+                    'match_id' => 'required',
+                    'tournament' => 'required',
+                ]);
+            }
+        }
+
+
         if ($request->ajax()) {
             if ($request->startInning) event(new startInningEvent($request));
             if ($request->newOver) event(new newOverEvent($request));
@@ -322,7 +370,11 @@ class LiveScoreController extends Controller
             if ($request->value == 'reverse_inning') event(new reverseEndInningEvent($request));
 
             if ($request->value == 'undo') {
-                $previous_ball = MatchTrack::where('team_id', $request->bt_team_id)->where('match_id', $request->match_id)->where('tournament_id', $request->tournament)->latest()->first();
+                $previous_ball = MatchTrack::where('team_id', $request->bt_team_id)->where('match_id', $request->match_id)->where('tournament_id', $request->tournament)
+                    ->orderBy('over', 'desc')
+                    ->orderBy('overball', 'desc')
+                    ->orderBy('created_at', 'desc')
+                    ->first();
                 if ($previous_ball->action == 'zero') event(new reverseDotBallEvent($request, $previous_ball));
                 if ($previous_ball->action == 'one') event(new reverseOneRunEvent($request, $previous_ball));
                 if ($previous_ball->action == 'two') event(new reverseTwoRunEvent($request, $previous_ball));
@@ -331,6 +383,10 @@ class LiveScoreController extends Controller
                 if ($previous_ball->action == 'five') event(new reverseFiveRunEvent($request, $previous_ball));
                 if ($previous_ball->action == 'six') event(new reverseSixRunEvent($request, $previous_ball));
                 if ($previous_ball->action == 'wd') event(new reverseWideZeroRunEvent($request, $previous_ball));
+                if ($previous_ball->action == 'wd1') event(new reverseWideOneRunEvent($request, $previous_ball));
+                if ($previous_ball->action == 'wd2') event(new reverseWideTwoRunEvent($request, $previous_ball));
+                if ($previous_ball->action == 'wd3') event(new reverseWideThreeRunEvent($request, $previous_ball));
+                if ($previous_ball->action == 'wd4') event(new reverseWideFourRunEvent($request, $previous_ball));
                 if ($previous_ball->action == 'wicket') event(new reverseWicketEvent($request, $previous_ball));
                 if ($previous_ball->action == 'nb') event(new reverseNoballZeroRunEvent($request, $previous_ball));
                 if ($previous_ball->action == 'nb1') event(new reverseNoballOneRunEvent($request, $previous_ball));
@@ -339,14 +395,39 @@ class LiveScoreController extends Controller
                 if ($previous_ball->action == 'nb4') event(new reverseNoballFourRunEvent($request, $previous_ball));
                 if ($previous_ball->action == 'nb5') event(new reverseNoballFiveRunEvent($request, $previous_ball));
                 if ($previous_ball->action == 'nb6') event(new reverseNoballSixRunEvent($request, $previous_ball));
+                if ($previous_ball->action == 'lb1') event(new reverseLegByesOneRunEvent($request, $previous_ball));
+                if ($previous_ball->action == 'lb2') event(new reverseLegByesTwoRunEvent($request, $previous_ball));
+                if ($previous_ball->action == 'lb3') event(new reverseLegByesThreeRunEvent($request, $previous_ball));
+                if ($previous_ball->action == 'lb4') event(new reverseLegByesFourRunEvent($request, $previous_ball));
+                if ($previous_ball->action == 'b1') event(new reverseByesOneRunEvent($request, $previous_ball));
+                if ($previous_ball->action == 'b2') event(new reverseByesTwoRunEvent($request, $previous_ball));
+                if ($previous_ball->action == 'b3') event(new reverseByesThreeRunEvent($request, $previous_ball));
+                if ($previous_ball->action == 'b4') event(new reverseByesFourRunEvent($request, $previous_ball));
             }
 
 
-            $check_for_over = MatchDetail::where('match_id', $request->match_id)
+            $match = Game::where('match_id', $request->match_id)
+                ->where('tournament_id', $request->tournament)->first();
+            $match_detail = MatchDetail::where('match_id', $request->match_id)
                 ->where('tournament_id', $request->tournament)
                 ->where('team_id', $request->bt_team_id)->first();
-            $isOver = $check_for_over->isOver;
-            return response()->json(['message' => 'success', 'value' => $request->value, 'isOver' => $isOver]);
+            $isOver = $match_detail->isOver;
+            $isEndInning = false;
+            if($match->overs == $match_detail->over){
+                $isEndInning = true;
+            }
+            $target = NULL;
+
+            if($match->status == 3){
+                $team = $match->MatchDetail->where('isBatting',0)->first();
+                $target = $team ? $team->score + 1 : 0;
+            }
+            $batting_team = $match->MatchDetail->where('isBatting',1)->first();
+            $batting_team_score = $batting_team ? $batting_team->score : NULL;
+
+
+
+            return response()->json(['message' => 'success', 'value' => $request->value, 'isOver' => $isOver,'isEndInning' => $isEndInning,'target' => $target,'batting_team_score' => $batting_team_score]);
         }
     }
 
@@ -362,20 +443,6 @@ class LiveScoreController extends Controller
         return back()->with('message', 'Man of the match successfully selected');
     }
 }
-
-// bt_status
-// 11 = striker
-// 10 = non striker
-// DNB = Did not bat
-
-// 12 = retired hurt
-// 0 = out
-// 1 = notout
-
-//bw_status
-// 11 = attacker
-// 1 = inning yes
-// DNB = Did not ball
 
 
 

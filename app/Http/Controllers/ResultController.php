@@ -61,7 +61,7 @@ class ResultController extends Controller
             $g = MatchTrack::where('match_id',$match_id)->first();
             $g->delete();
         }
-        return back()->with('message','Success');
+        return redirect('/admin/tournaments/'.$request->tournament.'/results')->with('message','Successfully Deleted');
 //        return redirect::route('BrowseResult',compact('result'));
     }
 

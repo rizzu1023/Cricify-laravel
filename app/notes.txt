@@ -1,1 +1,14 @@
-.page-body>.(container>.page-title>.col-md-6*2)+.container-fluid>.row>.col-sm-12>.card>.card-header+.card-body
+
+// bt_status
+// 11 = striker
+// 10 = non striker
+// DNB = Did not bat
+
+// 12 = retired hurt
+// 0 = out
+// 1 = notout
+
+//bw_status
+// 11 = attacker
+// 1 = inning yes
+// DNB = Did not ball

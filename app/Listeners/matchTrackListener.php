@@ -4,6 +4,7 @@ namespace App\Listeners;
 
 use App\MatchDetail;
 use App\MatchTrack;
+use App\MatchPlayers;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
@@ -130,13 +131,28 @@ class matchTrackListener
             }
         }
 
+        $striker = MatchPlayers::where('match_id', $event->request->match_id)
+            ->where('tournament_id', $event->request->tournament)
+            ->where('team_id', $event->request->bt_team_id)
+            ->where('bt_status', 11)->first();
+
+        $non_striker = MatchPlayers::where('match_id', $event->request->match_id)
+            ->where('tournament_id', $event->request->tournament)
+            ->where('team_id', $event->request->bt_team_id)
+            ->where('bt_status', 10)->first();
+
+        $attacker = MatchPlayers::where('match_id', $event->request->match_id)
+            ->where('tournament_id', $event->request->tournament)
+            ->where('team_id', $event->request->bw_team_id)
+            ->where('bw_status', 11)->first();
+
             if ($match_detail) {
                 MatchTrack::create([
                     'match_id' => $event->request->match_id,
                     'team_id' => $event->request->bt_team_id,
-                    'player_id' => $event->request->player_id,
-                    'attacker_id' => $event->request->attacker_id,
-                    'non_striker_id' => $event->request->non_striker_id,
+                    'player_id' => $striker->player_id,
+                    'attacker_id' => $attacker->player_id,
+                    'non_striker_id' => $non_striker->player_id,
                     'score' => $match_detail->score,
                     'wickets' => $match_detail->wicket,
                     'action' => $action,

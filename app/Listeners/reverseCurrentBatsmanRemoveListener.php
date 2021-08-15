@@ -46,7 +46,7 @@ class reverseCurrentBatsmanRemoveListener
             $dismissed_batsman->wicket_secondary = NULL;
             $dismissed_batsman->bt_balls = $dismissed_batsman->bt_balls - 1;
             $dismissed_batsman->bt_status = 11;
-            $dismissed_batsman->save();
+            $dismissed_batsman->update();
 //        }
     }
 }

@@ -34,12 +34,15 @@ class ScheduleResource extends JsonResource
         $choose = NULL;
         $won = NULL;
         $toss = NULL;
+        $batting_team = NULL;
         if ($this->Game) {
 
             $status = $this->Game['status'];
             $description = $this->Game['description'];
             $choose = $this->Game['choose'];
             $toss = $this->Game->Toss['team_code'];
+            $batting_team_id= optional($this->Game->MatchDetail->where('isBatting',1)->first())->team_id;
+            $batting_team = Teams::where('id',$batting_team_id)->first();
 
             if ($this->Game['status'] == 3) {
                 if ($this->MatchDetail['0']->isBatting == '1') {
@@ -86,13 +89,14 @@ class ScheduleResource extends JsonResource
             'choose' => $choose,
             'balls_required' => $required_balls,
             'runs_required' => $required_runs,
+            'batting_team' => TeamResource::make($batting_team),
             'won' => $won,
             'description' => $description,
             'match_detail' => $this->MatchDetail,
             'id' => $this->id,
             'match_no' => $this->match_no,
-            'team1_id' => $this->Teams1,
-            'team2_id' => $this->Teams2,
+            'team1_id' => TeamResource::make($this->Teams1),
+            'team2_id' => TeamResource::make($this->Teams2),
             'times' => $times,
             'dates' => $dates,
             'day' => $day,
