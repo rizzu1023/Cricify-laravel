@@ -1,4 +1,6 @@
 @section('css')
+    <style>
+    </style>
 @endsection
 @extends('Admin.layouts.base')
 
@@ -677,20 +679,17 @@
                             <a class="btn btn-outline-success btn-square btn-sm mt-1 py-3 px-4 score-button"
                                onclick="livescore_function(6)">6</a>
 
+                            <a class="btn btn-outline-danger btn-square btn-sm mt-1 score-button py-2" id="undo_button"
+                               onclick="livescore_function('undo')"><i data-feather="refresh-ccw" class="mr-2"></i><span>Undo</span></a>
                             <br><br>
 
                             <a class="btn btn-outline-danger btn-square btn-sm mt-1 score-button" onclick="livescore_function('wd')">wd</a>
                             <a class="btn btn-outline-danger btn-square btn-sm mt-1 score-button" onclick="livescore_function('nb')">nb</a>
                             <a id="wicket_button" class="btn btn-outline-danger btn-square btn-sm mt-1 score-button"
                                onclick="reset_form()">Wicket</a>
-                            <a class="btn btn-outline-danger btn-square btn-sm mt-1 score-button" id="undo_button"
-                               onclick="livescore_function('undo')">undo</a>
 
-                            <br><br>
 
-                            <a class="btn btn-outline-primary btn-square btn-sm mt-1 score-button"
-                               onclick="livescore_function('sr')">Strike Rotate</a>
-                            <a class="btn btn-outline-primary btn-square btn-sm mt-1 score-button" id="retired_hurt">Retired Hurt</a>
+
 
                             <br><br>
 
@@ -741,6 +740,11 @@
                                onclick="livescore_function('b4')">4 b</a>
 
                             <br><br>
+
+
+                            <a class="btn btn-outline-primary btn-square btn-sm mt-1 score-button"
+                               onclick="livescore_function('sr')">Strike Rotate</a>
+                            <a class="btn btn-outline-primary btn-square btn-sm mt-1 score-button" id="retired_hurt">Retired Hurt</a>
 
 
                         </form>
@@ -1089,100 +1093,106 @@
                 success: function (data) {
                     $('.score-button').removeClass('disabled');
                     $('#newBatsmanForm').trigger('reset');
+                    if(data.status){
+                        if (data.value === '8' || data.value === '1' || data.value === '2' || data.value === '3' || data.value === '4' || data.value === '5' || data.value === '6') {
+                            if (data.value == '8') {
+                                $('#current-over').append("<span>0 </span>");
+
+                            }
+
+                            if (data.value != '8') {
+
+                                $('#current-over').append("<span>" + data.value + " </span>");
+
+                                var batsman_runs = $('#11').find('#batsman-runs').text();
+
+                                $('#11').find("#batsman-runs").text(parseInt(batsman_runs) + parseInt(data.value));
+
+                                var bowler_runs = $('#bowler-runs').text();
+                                $('#bowler-runs').text(parseInt(bowler_runs) + parseInt(data.value));
+
+                                var team_score = $('#team-score').text();
+                                $('#team-score').text(parseInt(team_score) + parseInt(data.value));
+                            }
 
 
-                    if (data.value === '8' || data.value === '1' || data.value === '2' || data.value === '3' || data.value === '4' || data.value === '5' || data.value === '6') {
-                        if (data.value == '8') {
-                            $('#current-over').append("<span>0 </span>");
+                            var batsman_balls = $('#11').find('#batsman-balls').text();
+                            $('#11').find("#batsman-balls").text(parseInt(batsman_balls) + 1);
 
-                        }
 
-                        if (data.value != '8') {
+                            var bowler_balls = $('#bowler-overball').text();
+                            $('#bowler-overball').text(parseInt(bowler_balls) + 1);
 
+
+                            var team_overball = $('#team-overball').text();
+                            $('#team-overball').text(parseInt(team_overball) + 1);
+
+
+                            if (data.value === '1' || data.value === '3' || data.value === '5') {
+                                $('#10').find('input').prop('checked', true);
+
+                                $('#10').attr('id', 'temp');
+                                $('#11').attr('id', '10');
+                                $('#temp').attr('id', '11');
+                            }
+
+
+                            if (data.isEndInning === true){
+                                $('#endInningForm').submit();
+                            }
+                            else{
+                                if (data.isOver === 1) {
+                                    $("#overModal").modal('show');
+                                }
+                            }
+
+                            if(data.target && data.batting_team_score){
+                                if(data.target <= data.batting_team_score){
+                                    $('#endInningForm').submit();
+                                }
+                            }
+
+
+                        } else if (data.value === 'wd') {
                             $('#current-over').append("<span>" + data.value + " </span>");
 
-                            var batsman_runs = $('#11').find('#batsman-runs').text();
+                            var team_score = $('#team-score').text();
+                            $('#team-score').text(parseInt(team_score) + parseInt('1'));
 
-                            $('#11').find("#batsman-runs").text(parseInt(batsman_runs) + parseInt(data.value));
 
                             var bowler_runs = $('#bowler-runs').text();
-                            $('#bowler-runs').text(parseInt(bowler_runs) + parseInt(data.value));
+                            $('#bowler-runs').text(parseInt(bowler_runs) + parseInt('1'));
+
+                        } else if (data.value === 'nb') {
+                            $('#current-over').append("<span>" + data.value + " </span>");
 
                             var team_score = $('#team-score').text();
-                            $('#team-score').text(parseInt(team_score) + parseInt(data.value));
-                        }
+                            $('#team-score').text(parseInt(team_score) + 1);
 
 
-                        var batsman_balls = $('#11').find('#batsman-balls').text();
-                        $('#11').find("#batsman-balls").text(parseInt(batsman_balls) + 1);
+                            var bowler_runs = $('#bowler-runs').text();
+                            $('#bowler-runs').text(parseInt(bowler_runs) + 1);
 
+                            var batsman_balls = $('#11').find('#batsman-balls').text();
+                            $('#11').find("#batsman-balls").text(parseInt(batsman_balls) + 1);
 
-                        var bowler_balls = $('#bowler-overball').text();
-                        $('#bowler-overball').text(parseInt(bowler_balls) + 1);
-
-
-                        var team_overball = $('#team-overball').text();
-                        $('#team-overball').text(parseInt(team_overball) + 1);
-
-
-                        if (data.value === '1' || data.value === '3' || data.value === '5') {
+                        } else if (data.value === 'sr') {
                             $('#10').find('input').prop('checked', true);
 
                             $('#10').attr('id', 'temp');
                             $('#11').attr('id', '10');
                             $('#temp').attr('id', '11');
+                        } else {
+                            location.reload(true);
+
                         }
-
-
-                        if (data.isEndInning === true){
-                            $('#endInningForm').submit();
-                        }
-                        else{
-                            if (data.isOver === 1) {
-                                $("#overModal").modal('show');
-                            }
-                        }
-
-                        if(data.target && data.batting_team_score){
-                            if(data.target <= data.batting_team_score){
-                                $('#endInningForm').submit();
-                            }
-                        }
-
-
-                    } else if (data.value === 'wd') {
-                        $('#current-over').append("<span>" + data.value + " </span>");
-
-                        var team_score = $('#team-score').text();
-                        $('#team-score').text(parseInt(team_score) + parseInt('1'));
-
-
-                        var bowler_runs = $('#bowler-runs').text();
-                        $('#bowler-runs').text(parseInt(bowler_runs) + parseInt('1'));
-
-                    } else if (data.value === 'nb') {
-                        $('#current-over').append("<span>" + data.value + " </span>");
-
-                        var team_score = $('#team-score').text();
-                        $('#team-score').text(parseInt(team_score) + 1);
-
-
-                        var bowler_runs = $('#bowler-runs').text();
-                        $('#bowler-runs').text(parseInt(bowler_runs) + 1);
-
-                        var batsman_balls = $('#11').find('#batsman-balls').text();
-                        $('#11').find("#batsman-balls").text(parseInt(batsman_balls) + 1);
-
-                    } else if (data.value === 'sr') {
-                        $('#10').find('input').prop('checked', true);
-
-                        $('#10').attr('id', 'temp');
-                        $('#11').attr('id', '10');
-                        $('#temp').attr('id', '11');
-                    } else {
-                        location.reload(true);
-
                     }
+                    else{
+                        alert(data.message);
+                    }
+
+
+
                 },
                 error: function (data) {
                     $('.score-button').removeClass('disabled');

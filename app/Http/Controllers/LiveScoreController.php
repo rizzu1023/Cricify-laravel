@@ -395,6 +395,8 @@ class LiveScoreController extends Controller
                     ->orderBy('overball', 'desc')
                     ->orderBy('created_at', 'desc')
                     ->first();
+
+                if(!$previous_ball) return response()->json(['status' => false,'message' => 'Invalid Option']);
                 if ($previous_ball->action == 'zero') event(new reverseDotBallEvent($request, $previous_ball));
                 if ($previous_ball->action == 'one') event(new reverseOneRunEvent($request, $previous_ball));
                 if ($previous_ball->action == 'two') event(new reverseTwoRunEvent($request, $previous_ball));
@@ -447,7 +449,7 @@ class LiveScoreController extends Controller
 
 
 
-            return response()->json(['message' => 'success', 'value' => $request->value, 'isOver' => $isOver,'isEndInning' => $isEndInning,'target' => $target,'batting_team_score' => $batting_team_score]);
+            return response()->json(['status' => true,'message' => 'success', 'value' => $request->value, 'isOver' => $isOver,'isEndInning' => $isEndInning,'target' => $target,'batting_team_score' => $batting_team_score]);
         }
     }
 
