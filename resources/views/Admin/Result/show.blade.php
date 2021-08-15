@@ -79,6 +79,8 @@
                                     <div class="stats">
                                         <span>Toss</span>
                                         <h5><strong>{{$match->Teams->team_code}}</strong></h5>
+                                        @if($match->status == 0)
+
                                         <form method="post" action="{{ Route("update.toss") }}">
                                             @csrf
                                             <select name="toss" onchange="this.form.submit();">
@@ -89,6 +91,7 @@
                                             </select>
                                             <input type="hidden" value="{{$match->match_id}}" name="match_id">
                                         </form>
+                                            @endif
                                     </div>
                                 </div>
                             </div>
@@ -97,6 +100,7 @@
                                     <div class="stats">
                                         <span>First</span>
                                         <h5><strong>{{$match->choose}}</strong></h5>
+                                        @if($match->status == 0)
                                         <form method="post" action="{{ Route("update.choose") }}">
                                             @csrf
                                             <select name="choose" onchange="this.form.submit();">
@@ -106,6 +110,7 @@
                                             </select>
                                             <input type="hidden" value="{{$match->match_id}}" name="match_id">
                                         </form>
+                                            @endif
                                     </div>
                                 </div>
                             </div>
@@ -116,12 +121,16 @@
                                     <div class="stats">
                                         <span>Overs</span>
                                         {{--                      <h5><strong>{{$match->overs}}</strong></h5>--}}
+                                        @if($match->status == 0)
                                         <form method="post" action="{{ Route('update.overs') }}">
                                             @csrf
                                             <h5><input type="number" value="{{$match->overs}}" name="overs"/></h5>
                                             <input type="hidden" name="match_id" value="{{$match->match_id}}">
                                             <button type="submit" class="btn btn-sm btn-success">Update</button>
                                         </form>
+                                            @else
+                                            <h4>{{$match->overs}}</h4>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -150,7 +159,7 @@
                     <div class="col-md-12">
                         <div class="r3_counter_ox" style="height:30px;background:white;">
                             <div class="text-center">
-							<span>India Beat Australia by 31 runs<span>
+{{--							<span>India Beat Australia by 31 runs<span>--}}
                             </div>
                         </div>
                         <!-- </div> -->
