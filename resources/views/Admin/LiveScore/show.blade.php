@@ -635,7 +635,7 @@
                                 </tbody>
                             </table>
                             <div id="current-over">
-                                <span><h6 style="display:inline-block;font-weight: bold">Current Over : </h6></span>
+                                <span><h6 style="display:inline-block;font-weight: bold">Last 10 balls : </h6></span>
                                 @foreach($over as $o)
 
                                     @if($o->action == 'zero')
@@ -657,7 +657,7 @@
                                     @else
                                         <span>{{$o->action}}</span>
                                     @endif
-                                    @if($o->overball == 6)
+                                    @if($o->overball == 5)
                                         <span style="font-weight: bold; color: red"> | </span>
                                     @endif
 

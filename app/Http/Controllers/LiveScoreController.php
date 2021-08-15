@@ -237,12 +237,14 @@ class LiveScoreController extends Controller
             $current_overball = $game->MatchDetail['1']->overball;
         }
 
-        $over = MatchTrack::where('match_id', $id)->where('team_id', $batting_team_id)->where('tournament_id', $tournament)
+        $over = MatchTrack::select('action','over','overball')->where('match_id', $id)->where('team_id', $batting_team_id)->where('tournament_id', $tournament)
             ->orderBy('over', 'desc')
             ->orderBy('overball', 'desc')
             ->orderBy('created_at', 'desc')
             ->get()->take(10);
         $over = $over->reverse();
+
+//        return $over;
 
         //check for opening
         $opening = true;
