@@ -762,15 +762,19 @@
             var isOver = {!! str_replace("'", "\'", json_encode($isOver)) !!};
             var total_over = {!! str_replace("'", "\'", json_encode($game->overs)) !!};
             var current_over = {!! str_replace("'", "\'", json_encode($current_over)) !!};
+            var current_overball = {!! str_replace("'", "\'", json_encode($current_overball)) !!};
 
-            if (current_over == total_over) {
+            if ((total_over == current_over - 1 && current_overball == 6) || total_over == current_over) {
                 $('#endInningForm').submit();
             }
-
-
-            if (isOver) {
-                $("#overModal").modal('show');
+            else{
+                if (isOver) {
+                    $("#overModal").modal('show');
+                }
             }
+
+
+
 
             $('.startInningButton').on('click', function () {
                 $("#openingModal").modal('show');
@@ -1108,8 +1112,14 @@
                             $('#temp').attr('id', '11');
                         }
 
-                        if (data.isOver === 1) {
-                            $("#overModal").modal('show');
+
+                        if (data.isEndInning === true){
+                            $('#endInningForm').submit();
+                        }
+                        else{
+                            if (data.isOver === 1) {
+                                $("#overModal").modal('show');
+                            }
                         }
 
 

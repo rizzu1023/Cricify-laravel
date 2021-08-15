@@ -232,12 +232,14 @@ class LiveScoreController extends Controller
 
             $isOver = $game->MatchDetail['0']->isOver;
             $current_over = $game->MatchDetail['0']->over;
+            $current_overball = $game->MatchDetail['0']->overball;
         } else {
             $batting_team_id = $game->MatchDetail['1']->team_id;
             $bowling_team_id = $game->MatchDetail['0']->team_id;
 
             $isOver = $game->MatchDetail['1']->isOver;
             $current_over = $game->MatchDetail['1']->over;
+            $current_overball = $game->MatchDetail['1']->overball;
         }
 
         //check for opening
@@ -253,7 +255,7 @@ class LiveScoreController extends Controller
 
         $notout_batsman = MatchPlayers::whereIn('bt_status', ['DNB', '12'])->where('team_id', $batting_team_id)->where('match_id', $id)->where('tournament_id', $tournament)->get();
 
-        return view('Admin/LiveScore/show', compact('over', 'game', 'batting_team_id', 'bowling_team_id', 'opening', 'isOver', 'current_over', 'current_batsman', 'current_bowler', 'notout_batsman'));
+        return view('Admin/LiveScore/show', compact('over', 'game', 'batting_team_id', 'bowling_team_id', 'opening', 'isOver', 'current_over','current_overball', 'current_batsman', 'current_bowler', 'notout_batsman'));
 
     }
 
@@ -390,11 +392,19 @@ class LiveScoreController extends Controller
             }
 
 
-            $check_for_over = MatchDetail::where('match_id', $request->match_id)
+            $match = Game::where('match_id', $request->match_id)
+                ->where('tournament_id', $request->tournament)->first();
+            $match_detail = MatchDetail::where('match_id', $request->match_id)
                 ->where('tournament_id', $request->tournament)
                 ->where('team_id', $request->bt_team_id)->first();
-            $isOver = $check_for_over->isOver;
-            return response()->json(['message' => 'success', 'value' => $request->value, 'isOver' => $isOver]);
+            $isOver = $match_detail->isOver;
+            $isEndInning = false;
+            if($match->overs == $match_detail->over){
+                $isEndInning = true;
+            }
+
+
+            return response()->json(['message' => 'success', 'value' => $request->value, 'isOver' => $isOver,'isEndInning' => $isEndInning]);
         }
     }
 
