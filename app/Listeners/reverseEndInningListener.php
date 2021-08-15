@@ -35,7 +35,7 @@ class reverseEndInningListener
 
         if($game->status == 2 || $game->status = 4){
             $game->status = $game->status - 1;
-            $game->mom = '--';
+            $game->mom = NULL;
             $game->update();
 
             $match = Game::with('MatchDetail')->where('match_id',$event->request->match_id)->first();

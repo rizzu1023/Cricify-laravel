@@ -70,7 +70,7 @@
                         <span>Match has Been ended </span>
                         <h4 class="mt-3">{{$game->WON->team_name}} {{$game->description}}</h4>
 
-                        @if($game->mom != '--')
+                        @if($game->mom)
                             <h4 class="mt-5">Man of the Match
                                 : {{$game->MOM['first_name']}} {{$game->MOM['last_name']}}</h4>
                         @endif
@@ -570,7 +570,7 @@
                         @endforeach
                         </div>
                         <div class="col-4">
-                            @if($target != 0)
+                            @if($target)
                                 <h6>Target : {{$target}}</h6>
                             @endif
                         </div>
@@ -770,6 +770,8 @@
             var isOver = {!! str_replace("'", "\'", json_encode($isOver)) !!};
             var total_over = {!! str_replace("'", "\'", json_encode($game->overs)) !!};
             var current_over = {!! str_replace("'", "\'", json_encode($current_over)) !!};
+            var batting_team_score = {!! str_replace("'", "\'", json_encode($batting_team_score)) !!};
+            var target = {!! str_replace("'", "\'", json_encode($target)) !!};
             var current_overball = {!! str_replace("'", "\'", json_encode($current_overball)) !!};
 
             if ((total_over == current_over - 1 && current_overball == 6) || total_over == current_over) {
@@ -778,6 +780,12 @@
             else{
                 if (isOver) {
                     $("#overModal").modal('show');
+                }
+            }
+
+            if(batting_team_score && target){
+                if(batting_team_score >= target){
+                    $('#endInningForm').submit();
                 }
             }
 
@@ -1127,6 +1135,12 @@
                         else{
                             if (data.isOver === 1) {
                                 $("#overModal").modal('show');
+                            }
+                        }
+
+                        if(data.target && data.batting_team_score){
+                            if(data.target <= data.batting_team_score){
+                                $('#endInningForm').submit();
                             }
                         }
 
