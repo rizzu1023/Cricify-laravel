@@ -120,7 +120,7 @@ class LiveScoreController extends Controller
         ]);
 //        return $request->all();
 
-        DB::transaction( function() use($request){
+        DB::transaction(function () use ($request) {
             $m = Game::create([
                 'match_id' => request('id'),
                 'overs' => request('overs'),
@@ -218,9 +218,9 @@ class LiveScoreController extends Controller
     public function LiveUpdateShow($id, $tournament)
     {
         $over = MatchTrack::where('match_id', $id)->where('tournament_id', $tournament)
-            ->orderBy('over','desc')
-            ->orderBy('overball','desc')
-            ->orderBy('created_at','desc')
+            ->orderBy('over', 'desc')
+            ->orderBy('overball', 'desc')
+            ->orderBy('created_at', 'desc')
             ->get()->take(10);
         $over = $over->reverse();
 
@@ -274,18 +274,22 @@ class LiveScoreController extends Controller
     public function LiveUpdate(Request $request)
     {
 
-        $rules = [
-            'player_id' => 'required',
-            'non_striker_id' => 'required',
-            'attacker_id' => 'required',
-            'bt_team_id' => 'required',
-            'bw_team_id' => 'required',
-            'match_id' => 'required',
-            'tournament' => 'required',
-            'value' => 'required',
-        ];
+        if ($request->has('startInning')) {
+            if ($request->startInning == 1) {
 
-        $validator = Validator::make($request->all(), $rules);
+                $request->validate([
+                    'nonstrike_id' => 'required',
+                    'strike_id' => 'required',
+                    'attacker_id' => 'required',
+                    'bt_team_id' => 'required',
+                    'bw_team_id' => 'required',
+                    'match_id' => 'required',
+                    'tournament' => 'required',
+                ]);
+            }
+        }
+
+
         if ($request->ajax()) {
             if ($request->startInning) event(new startInningEvent($request));
             if ($request->newOver) event(new newOverEvent($request));
@@ -339,9 +343,9 @@ class LiveScoreController extends Controller
 
             if ($request->value == 'undo') {
                 $previous_ball = MatchTrack::where('team_id', $request->bt_team_id)->where('match_id', $request->match_id)->where('tournament_id', $request->tournament)
-                    ->orderBy('over','desc')
-                    ->orderBy('overball','desc')
-                    ->orderBy('created_at','desc')
+                    ->orderBy('over', 'desc')
+                    ->orderBy('overball', 'desc')
+                    ->orderBy('created_at', 'desc')
                     ->first();
                 if ($previous_ball->action == 'zero') event(new reverseDotBallEvent($request, $previous_ball));
                 if ($previous_ball->action == 'one') event(new reverseOneRunEvent($request, $previous_ball));

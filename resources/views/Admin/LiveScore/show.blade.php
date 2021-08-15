@@ -917,6 +917,7 @@
                     //  alert(data.message);
                     location.reload(true);
                 }
+
             });
         });
 
@@ -975,6 +976,9 @@
                     $('#retiredHurtModal').modal('hide');
                     //  alert(data.message);
                     location.reload(true);
+                },
+                error : function (data){
+                    alert(data.data);
                 }
             });
         });
@@ -997,6 +1001,11 @@
                     success: function (data) {
                         $('#bowlerModal').modal('hide');
                         location.reload(true);
+                    },
+                    error : function (data){
+                        if(data.status === 422){
+                            alert('Please select proper data');
+                        }
                     }
                 });
             }
