@@ -202,7 +202,6 @@
                 @if($game->status == '1' || $game->status == '3')
                     <!-- <div class="container"> -->
 
-                        <!-- Over Modal -->
                         <div class="modal  " id="overModal" tabindex="-1" data-backdrop="false" role="dialog"
                              aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered" role="document">
