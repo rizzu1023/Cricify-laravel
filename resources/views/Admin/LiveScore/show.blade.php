@@ -197,7 +197,13 @@
                         {{--                <input type="hidden" name="match_id" value="{{$game['match_id']}}">--}}
                         {{--                <input type="hidden" name="tournament" value="{{$game['tournament_id']}}">--}}
                         @if($game->status == '0')
-                            <button class="btn btn-success btn-md startInningButton">Start 1st Inning</button>
+                            <div class="col-6">
+                                <button class="btn btn-success btn-md startInningButton">Start 1st Inning</button>
+                            </div>
+                            <div class="col-6">
+                                <a class="btn btn-success btn-sm"
+                                   href="/admin/result/{{$game->tournament_id}}/{{$game->match_id}}/show">Edit</a>
+                            </div>
                         @elseif($game->status == '2')
                             <button class="btn btn-success btn-md startInningButton">Start 2nd Inning</button>
                             <a class="btn btn-outline-success btn-square btn-sm mt-1"
