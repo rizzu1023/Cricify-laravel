@@ -204,8 +204,6 @@
                                onclick="livescore_function('reverse_inning')">Undo</a>
 
                         @endif
-
-
                         {{--            </from>--}}
                     @endif
 
