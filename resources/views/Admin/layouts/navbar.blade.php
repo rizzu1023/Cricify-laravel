@@ -17,7 +17,7 @@
                 </form>
                 <div class="header-logo-wrapper">
                     <div class="logo-wrapper"><a href="index.html"><img class="img-fluid"
-                                src="{{asset('Assets/Admin/images/logo/logo.png')}}" alt=""></a></div>
+                                src="{{asset('assets/Admin/images/logo/logo.png')}}" alt=""></a></div>
                     <div class="toggle-sidebar"><i class="status_toggle middle" data-feather="grid" id="sidebar-toggle">
                         </i></div>
                 </div>
@@ -110,7 +110,7 @@
 {{--                                    data-feather="maximize"></i></a></li>--}}
                         <li class="profile-nav onhover-dropdown p-0 mr-0">
                             <div class="media profile-media"><img class="b-r-10"
-                                    src="{{asset('Assets/Admin/images/dashboard/wanc_logo.jpeg')}}" alt="" width="38px">
+                                    src="{{asset('assets/Admin/images/dashboard/wanc_logo.jpeg')}}" alt="" width="38px">
                                 <div class="media-body"><span>CRICIFY</span>
                                     <p class="mb-0 font-roboto">Admin <i class="middle fa fa-angle-down"></i></p>
                                 </div>
