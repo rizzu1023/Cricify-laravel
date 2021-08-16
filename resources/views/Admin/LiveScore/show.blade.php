@@ -205,7 +205,7 @@
                                 href="/admin/result/{{$game->tournament_id}}/{{$game->match_id}}/show">Edit</a>
                         @elseif($game->status == '2')
                             <button class="btn btn-success btn-md startInningButton">Start 2nd Inning</button>
-                            <a class="btn btn-outline-success btn-square btn-sm mt-1"
+                            <a class="btn btn-outline-success btn-square btn-sm mt-1 undo-button"
                                onclick="livescore_function('reverse_inning')">Undo</a>
 
                         @endif
@@ -214,7 +214,7 @@
 
                     @if($game->status == '4')
                         {{--                <h4>xyz won by 20 runs</h4>--}}
-                        <a class="btn btn-secondary btn-square btn-md mt-1"
+                        <a class="btn btn-outline-secondary btn-square btn-md mt-1 undo-button"
                            onclick="livescore_function('reverse_inning')">Undo</a>
                         <a href="/admin/result/{{$game->tournament_id}}/{{$game->match_id}}/show"
                            class="btn btn-primary btn-square btn-md mt-1">Result</a>
@@ -1090,6 +1090,7 @@
 
 
             $('.score-button').addClass('disabled');
+            $('.undo-button').addClass('disabled');
 
 
             $.ajax({
@@ -1109,6 +1110,7 @@
                 },
                 success: function (data) {
                     $('.score-button').removeClass('disabled');
+
                     $('#newBatsmanForm').trigger('reset');
                     if (data.status) {
                         if (data.value === '8' || data.value === '1' || data.value === '2' || data.value === '3' || data.value === '4' || data.value === '5' || data.value === '6') {
@@ -1155,6 +1157,7 @@
 
 
                             if (data.isEndInning === true) {
+                                $('.score-button').addClass('disabled');
                                 $('#endInningForm').submit();
                             } else {
                                 if (data.isOver === 1) {
@@ -1164,6 +1167,7 @@
 
                             if (data.target && data.batting_team_score) {
                                 if (data.target <= data.batting_team_score) {
+                                    $('.score-button').addClass('disabled');
                                     $('#endInningForm').submit();
                                 }
                             }
@@ -1210,6 +1214,8 @@
                 },
                 error: function (data) {
                     $('.score-button').removeClass('disabled');
+                    $('.undo-button').removeClass('disabled');
+
                     if (data.status === 422) {
                         alert('please select proper data');
                     } else {

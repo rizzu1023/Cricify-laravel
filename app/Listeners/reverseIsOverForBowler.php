@@ -30,7 +30,7 @@ class reverseIsOverForBowler
         $current_bowler = MatchPlayers::where('match_id', $event->request->match_id)
             ->where('tournament_id', $event->request->tournament)
             ->where('team_id', $event->request->bw_team_id)
-            ->where('player_id', $event->request->attacker_id)->first();
+            ->where('bw_status',11)->first();
 
 
 
@@ -53,7 +53,7 @@ class reverseIsOverForBowler
             $previous_bowler->bw_status = 11;
             $previous_bowler->bw_overball = 6;
             $previous_bowler->bw_over = $previous_bowler->bw_over - 1;
-            $previous_bowler->save();
+            $previous_bowler->update();
 
 //            MatchPlayers::where('match_id', $event->request->match_id)
 //                ->where('tournament_id', $event->request->tournament)

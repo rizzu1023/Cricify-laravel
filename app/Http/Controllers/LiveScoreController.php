@@ -2,9 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
 use App\Events\byesFourRunEvent;
 use App\Events\byesOneRunEvent;
 use App\Events\byesThreeRunEvent;
@@ -29,10 +26,18 @@ use App\Events\noballZeroRunEvent;
 use App\Events\oneRunEvent;
 use App\Events\resetInningEvent;
 use App\Events\RetiredHurtBatsmanEvent;
+use App\Events\reverseByesFourRunEvent;
+use App\Events\reverseByesOneRunEvent;
+use App\Events\reverseByesThreeRunEvent;
+use App\Events\reverseByesTwoRunEvent;
 use App\Events\reverseDotBallEvent;
 use App\Events\reverseEndInningEvent;
 use App\Events\reverseFiveRunEvent;
 use App\Events\reverseFourRunEvent;
+use App\Events\reverseLegByesFourRunEvent;
+use App\Events\reverseLegByesOneRunEvent;
+use App\Events\reverseLegByesThreeRunEvent;
+use App\Events\reverseLegByesTwoRunEvent;
 use App\Events\reverseNoballFiveRunEvent;
 use App\Events\reverseNoballFourRunEvent;
 use App\Events\reverseNoballOneRunEvent;
@@ -45,19 +50,11 @@ use App\Events\reverseSixRunEvent;
 use App\Events\reverseThreeRunEvent;
 use App\Events\reverseTwoRunEvent;
 use App\Events\reverseWicketEvent;
-use App\Events\reverseWideZeroRunEvent;
-use App\Events\reverseWideOneRunEvent;
-use App\Events\reverseWideTwoRunEvent;
-use App\Events\reverseWideThreeRunEvent;
 use App\Events\reverseWideFourRunEvent;
-use App\Events\reverseLegByesOneRunEvent;
-use App\Events\reverseLegByesTwoRunEvent;
-use App\Events\reverseLegByesThreeRunEvent;
-use App\Events\reverseLegByesFourRunEvent;
-use App\Events\reverseByesOneRunEvent;
-use App\Events\reverseByesTwoRunEvent;
-use App\Events\reverseByesThreeRunEvent;
-use App\Events\reverseByesFourRunEvent;
+use App\Events\reverseWideOneRunEvent;
+use App\Events\reverseWideThreeRunEvent;
+use App\Events\reverseWideTwoRunEvent;
+use App\Events\reverseWideZeroRunEvent;
 use App\Events\sixRunEvent;
 use App\Events\startInningEvent;
 use App\Events\strikeRotateEvent;
@@ -77,6 +74,8 @@ use App\MatchTrack;
 use App\Players;
 use App\Schedule;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\DB;
 
 
 class LiveScoreController extends Controller
@@ -104,21 +103,43 @@ class LiveScoreController extends Controller
             $query->where('team_id', $team2_id);
         })->get();
 
-        return view('Admin/LiveScore/StartScore', compact('schedule', 'players1', 'players2'));
+        $player_max_limit = (int)Config::get('app.player_max_limit');
+
+        return view('Admin/LiveScore/StartScore', compact('schedule', 'players1', 'players2','player_max_limit'));
     }
 
     public function ScoreDetails(Request $request)
     {
+
+        $player_min_limit = (int)Config::get('app.player_min_limit');
+        $player_max_limit = (int)Config::get('app.player_max_limit');
+
+
         $request->validate([
             'id' => 'required',
-            'overs' => 'required',
+            'overs' => 'required|integer',
             'tournament_id' => 'required',
             'toss' => 'required',
             'choose' => 'required',
             'team1' => 'required|array',
             'team2' => 'required|array',
         ]);
-//        return $request->all();
+
+        if(sizeOf($request->team1) < $player_min_limit || sizeOf($request->team1) > $player_max_limit){
+            return response()->json(['status' => false, 'message' => 'Please select at least ' . $player_min_limit . ' players in Team 1.']);
+        }
+        if(sizeOf($request->team2) < $player_min_limit || sizeOf($request->team2) > $player_max_limit){
+            return response()->json(['status' => false, 'message' => 'Please select at least ' . $player_min_limit . ' players in Team 2.']);
+        }
+        if($request->overs < 1){
+            return response()->json(['status' => false, 'message' => 'Overs should be more than 0']);
+        }
+
+        $game = Game::where('match_id',$request->id)->first();
+        if($game){
+            return response()->json(['status' => false, 'message' => 'Match Details Already Submitted']);
+        }
+
 
         DB::transaction(function () use ($request) {
             $m = Game::create([
@@ -209,9 +230,7 @@ class LiveScoreController extends Controller
                 ]);
             }
         });
-
-
-        return redirect('/admin/tournaments/' . request('tournament_id') . '/schedules');
+        return response()->json(['status' => true, 'tournament_id' => $request->tournament_id, 'match_id' => $request->id]);
     }
 
 
@@ -415,14 +434,45 @@ class LiveScoreController extends Controller
             if ($request->value == 'rh') event(new RetiredHurtBatsmanEvent($request));
             if ($request->value == 'sr') event(new strikeRotateEvent($request));
 
-            if ($request->value == 'reverse_inning') event(new reverseEndInningEvent($request));
 
-            if ($request->value == 'undo') {
-                $previous_ball = MatchTrack::where('team_id', $request->bt_team_id)->where('match_id', $request->match_id)->where('tournament_id', $request->tournament)
-                    ->orderBy('over', 'desc')
-                    ->orderBy('overball', 'desc')
-                    ->orderBy('created_at', 'desc')
-                    ->first();
+            if ($request->value == 'undo' || $request->value == 'reverse_inning') {
+
+                if($request->value == 'reverse_inning'){
+                    event(new reverseEndInningEvent($request));
+
+                    $game = Game::where('match_id', $request->match_id)
+                        ->where('tournament_id', $request->tournament)->first();
+
+                    if($game->status == 1){
+                        $temp = $request->bt_team_id;
+                        $request->bt_team_id = $request->bw_team_id;
+                        $request->bw_team_id = $temp;
+                    }
+
+
+                    $previous_ball = MatchTrack::where('team_id',$request->bt_team_id)
+                        ->where('match_id', $request->match_id)
+                        ->where('tournament_id', $request->tournament)
+                        ->orderBy('over', 'desc')
+                        ->orderBy('overball', 'desc')
+                        ->orderBy('created_at', 'desc')
+                        ->first();
+
+                    MatchDetail::where('match_id', $request->match_id)
+                        ->where('tournament_id', $request->tournament)
+                        ->where('team_id', $request->bt_team_id)
+                        ->update(['isOver' => 0]);
+                }
+
+                else{
+                    $previous_ball = MatchTrack::where('team_id', $request->bt_team_id)->where('match_id', $request->match_id)->where('tournament_id', $request->tournament)
+                        ->orderBy('over', 'desc')
+                        ->orderBy('overball', 'desc')
+                        ->orderBy('created_at', 'desc')
+                        ->first();
+                }
+
+
 
                 if (!$previous_ball) return response()->json(['status' => false, 'message' => 'Invalid Option']);
                 if ($previous_ball->action == 'zero') event(new reverseDotBallEvent($request, $previous_ball));

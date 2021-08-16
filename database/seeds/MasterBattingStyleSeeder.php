@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\MasterBattingStyle;
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -14,14 +16,18 @@ class MasterBattingStyleSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('master_batting_styles')->truncate();
-        DB::table('master_batting_styles')->insert([
-            'id' => 1,
+        MasterBattingStyle::truncate();
+        MasterBattingStyle::create([
             'name' => 'Right Hand Batsman',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ]);
-        DB::table('master_batting_styles')->insert([
-            'id' => 2,
+        MasterBattingStyle::create([
             'name' => 'Left Hand Batsman',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ]);
+
+
     }
 }

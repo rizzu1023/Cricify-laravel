@@ -56,6 +56,9 @@ return [
 
     'asset_url' => env('ASSET_URL', null),
 
+    'player_max_limit' => env('PLAYER_MAX_LIMIT',11),
+    'player_min_limit' => env('PLAYER_MIN_LIMIT',11),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone

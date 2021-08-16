@@ -41,10 +41,7 @@ class reverseIsOverForTeam
                 'over' => $over->over - 1,
             ]);
 
-//            MatchDetail::where('match_id', $event->request->match_id)
-//                ->where('tournament_id', $event->request->tournament)
-//                ->where('team_id', $event->request->bt_team_id)
-//                ->update(['isOver' => 1]);
+
 
             //strike Rotation
 

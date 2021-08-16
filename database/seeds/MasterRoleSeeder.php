@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use App\Models\MasterRole;
 
 class MasterRoleSeeder extends Seeder
 {
@@ -14,22 +16,31 @@ class MasterRoleSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('master_roles')->truncate();
-        DB::table('master_roles')->insert([
-            'id' => 1,
+        MasterRole::truncate();
+        MasterRole::create([
             'name' => 'Batsman',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ]);
-        DB::table('master_roles')->insert([
-            'id' => 2,
+        MasterRole::create([
             'name' => 'Bowler',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ]);
-        DB::table('master_roles')->insert([
-            'id' => 3,
-            'name' => 'All Rounder',
+        MasterRole::create([
+            'name' => 'WK-Batsman',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ]);
-        DB::table('master_roles')->insert([
-            'id' => 4,
-            'name' => 'Wicket Keeper',
+        MasterRole::create([
+            'name' => 'Batting AllRounder',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
+        MasterRole::create([
+            'name' => 'Bowling AllRounder',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ]);
     }
 }

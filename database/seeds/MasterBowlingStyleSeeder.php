@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use App\Models\MasterBowlingStyle;
 
 class MasterBowlingStyleSeeder extends Seeder
 {
@@ -14,30 +16,36 @@ class MasterBowlingStyleSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('master_bowling_styles')->truncate();
-        DB::table('master_bowling_styles')->insert([
-            'id' => 1,
+        MasterBowlingStyle::truncate();
+        MasterBowlingStyle::create([
             'name' => 'Right Arm Faster',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ]);
-        DB::table('master_bowling_styles')->insert([
-            'id' => 2,
+        MasterBowlingStyle::create([
             'name' => 'Right Arm Medium Faster',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ]);
-        DB::table('master_bowling_styles')->insert([
-            'id' => 3,
+        MasterBowlingStyle::create([
             'name' => 'Left Arm Faster',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ]);
-        DB::table('master_bowling_styles')->insert([
-            'id' => 4,
+        MasterBowlingStyle::create([
             'name' => 'Left Arm Medium Faster',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ]);
-        DB::table('master_bowling_styles')->insert([
-            'id' => 5,
+        MasterBowlingStyle::create([
             'name' => 'Right Arm Spinner',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ]);
-        DB::table('master_bowling_styles')->insert([
-            'id' => 6,
+        MasterBowlingStyle::create([
             'name' => 'Left Arm Spinner',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ]);
     }
 }
