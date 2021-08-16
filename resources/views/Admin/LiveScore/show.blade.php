@@ -70,13 +70,15 @@
                         @elseif($game->status == '2')
                             <span>First Inning has Been ended</span>
                         @elseif($game->status == '4')
-                            <span>Match has Been ended </span>
-                            <h4 class="mt-3">{{$game->WON->team_name}} {{$game->description}}</h4>
+                            <h4 class="mt-3">{{ $game->WON ? $game->WON->team_name : NULL}} {{$game->description}}</h4>
 
                             @if($game->mom != NULL && $game->mom != '--')
                                 <h4 class="mt-5">Man of the Match
                                     : {{ $game->MOM ? $game->MOM['first_name'] : NULL}} {{$game->MOM ? $game->MOM['last_name'] : NULL}}</h4>
+
                             @endif
+                            @if($game->WON)
+
                             <div class="form-body mt-5">
                                 <form method="POST" action="{{ Route('select.mom') }}">
                                     @csrf
@@ -111,6 +113,7 @@
 
                                 </form>
                             </div>
+                                @endif
                         @endif
                     </div>
                 </div>
@@ -1156,19 +1159,22 @@
                             }
 
 
-                            if (data.isEndInning === true) {
-                                $('.score-button').addClass('disabled');
-                                $('#endInningForm').submit();
-                            } else {
-                                if (data.isOver === 1) {
-                                    $("#overModal").modal('show');
-                                }
-                            }
+
 
                             if (data.target && data.batting_team_score) {
                                 if (data.target <= data.batting_team_score) {
                                     $('.score-button').addClass('disabled');
                                     $('#endInningForm').submit();
+                                }
+                            }
+                            else{
+                                if (data.isEndInning === true) {
+                                    $('.score-button').addClass('disabled');
+                                    $('#endInningForm').submit();
+                                } else {
+                                    if (data.isOver === 1) {
+                                        $("#overModal").modal('show');
+                                    }
                                 }
                             }
 
