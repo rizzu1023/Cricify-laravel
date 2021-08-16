@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Game;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\FowResource;
 use App\Http\Resources\MatchDetailResource;
@@ -16,75 +15,40 @@ use App\MatchTrack;
 use App\Schedule;
 use App\Teams;
 use App\Tournament;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class MatchController extends Controller
 {
-    public function calculating_balls($max_over, $min_over, $max_overball, $min_overball)
-    {
-        $min_over = $min_over . "." . $min_overball;
-        $max_over = $max_over . "." . $max_overball;
 
-        $max_int = (int)$max_over;
-        $min_int = (int)$min_over;
 
-        $max_frac = explode('.', number_format($max_over, 1))[1];
-        $min_frac = explode('.', number_format($min_over, 1))[1];
-
-        $min_balls = ($min_int * 6) + $min_frac;
-        $max_balls = ($max_int * 6) + $max_frac;
-        return $max_balls - $min_balls;
-    }
-
-    public function calculate_crr($runs, $overs, $balls)
-    {
-        $over = $overs + ($balls * 10) / 60;
-        if ($overs == 0 && $balls == 0) {
-            return $crr = 0;
-        } elseif ($overs == 0) {
-            $crr = ($runs / $balls) * 6;
-            return (float)number_format((float)$crr, 2, '.', '');
-        } else {
-            $crr = $runs / $over;
-            return (float)number_format((float)$crr, 2, '.', '');
-        }
-    }
-
-    public function calculate_rrr($remaining_runs, $remaining_balls)
-    {
-        $over = (int)($remaining_balls / 6);
-        $balls = $remaining_balls % 6;
-        $overs = $over + ($balls * 10) / 60;
-        if ($overs == 0) {
-            return $rrr = 0;
-        }
-        $rrr = ($remaining_runs / $overs);
-        return (float)number_format((float)$rrr, 2, '.', '');
-    }
-
-    public function match_info(Tournament $tournament, $match_id)
+    public function matchInfo(Tournament $tournament, $match_id)
     {
         $schedule = Schedule::with('Game', 'Teams1', 'Teams2')->where('id', $match_id)->where('tournament_id', $tournament->id)->first();
-//        $team1 = Teams::select('id', 'team_code', 'team_name')->where('id', $team1_id)->first();
-//        $team2 = Teams::select('id', 'team_code', 'team_name')->where('id', $team2_id)->first();
 
         $team1 = new TeamResource($schedule->Teams1);
         $team2 = new TeamResource($schedule->Teams2);
 
-        $format_time = date('h:i A', strtotime($schedule->times));
-        $format_date = date('d M Y', strtotime($schedule->dates));
-        $date = $schedule->dates;
-        $d = new \DateTime($date);
-        $dy = $d->format('D');
-        $day = strtoupper($dy);
-
+        $format_time = Carbon::parse($schedule->times)->format('h:i A');
+        $format_date = Carbon::parse($schedule->dates)->format('d M Y');
+        $day = strtoupper(Carbon::parse($schedule->dates)->format('l'));
 
         $toss = $schedule->Game;
         $toss_team = NULL;
+        $venue = NULL;
         $choose = NULL;
+        $umpires = NULL;
+        if ($schedule->Game->umpire_1 && $schedule->Game->umpire_2) {
+            $umpires = $schedule->Game->umpire_1 . ' , ' . $schedule->Game->umpire_2;
+        } elseif ($schedule->Game->umpire_1) {
+            $umpires = $schedule->Game->umpire_1;
+        } elseif ($schedule->Game->umpire_2) {
+            $umpires = $schedule->Game->umpire_2;
+        }
+
         if ($toss) {
             $toss_team = $team1->id == $toss->toss ? $team1 : $team2;
-            $choose = $toss->choose;
+            $choose = $toss->choose == 'Bat' ? 'Batting' : 'Bowling';
 
             return [
                 'match_status' => true,
@@ -97,6 +61,8 @@ class MatchController extends Controller
                 'times' => $format_time,
                 'toss' => $toss_team,
                 'choose' => $choose,
+                'umpires' => $umpires,
+                'venue' => $venue,
             ];
         }
 
@@ -112,7 +78,7 @@ class MatchController extends Controller
         ];
     }
 
-    public function match_live(Tournament $tournament, $match_id)
+    public function matchLive(Tournament $tournament, $match_id)
     {
         $schedule = Schedule::with('Game', 'Teams1', 'Teams2')->where('id', $match_id)->where('tournament_id', $tournament->id)->first();
 
@@ -182,12 +148,12 @@ class MatchController extends Controller
                     $batting_team_overs = $batting_team->over;
                     $batting_team_balls = $batting_team->overball;
                     //calculating remaining ball of current team
-                    $remaining_balls = $this->calculating_balls($total_overs, $batting_team_overs, 0, $batting_team_balls);
+                    $remaining_balls = calculateBalls($total_overs, $batting_team_overs, 0, $batting_team_balls);
 
 
                     $partnership = [];
 
-                    $partnership_query = MatchTrack::select('score', 'over', 'overball', 'wickets')->whereIn('wickets', [$match_detail->wicket -1, $match_detail->wicket])->where('team_id', $match_detail->team_id)->where('match_id', $match_id)->where('tournament_id', $tournament->id)->orderBy('wickets')->orderBy('score')->orderBy('over')->orderBy('overball')->get();
+                    $partnership_query = MatchTrack::select('score', 'over', 'overball', 'wickets')->whereIn('wickets', [$match_detail->wicket - 1, $match_detail->wicket])->where('team_id', $match_detail->team_id)->where('match_id', $match_id)->where('tournament_id', $tournament->id)->orderBy('wickets')->orderBy('score')->orderBy('over')->orderBy('overball')->get();
 
                     $p0 = $partnership_query->where('wickets', $match_detail->wicket - 1)->last();
                     $p1 = $partnership_query->where('wickets', $match_detail->wicket)->last();
@@ -195,12 +161,12 @@ class MatchController extends Controller
                     if ($p1) {
                         if ($p1 && $p0) {
                             $score = $p1->score - $p0->score;
-                            $balls = $this->calculating_balls($p1->over, $p0->over, $p1->overball, $p0->overball + 1);
+                            $balls = calculateBalls($p1->over, $p0->over, $p1->overball, $p0->overball + 1);
                             $partnership['score'] = $score;
                             $partnership['balls'] = $balls;
                         } else {
                             $score = $p1->score - 0;
-                            $balls = $this->calculating_balls($p1->over, 0, $p1->overball, 0);
+                            $balls = calculateBalls($p1->over, 0, $p1->overball, 0);
                             $partnership['score'] = $score;
                             $partnership['balls'] = $balls;
                         }
@@ -210,11 +176,10 @@ class MatchController extends Controller
                     }
 
 
-
                 }
                 $remaining_runs = $target - $batting_team->score + 1;
-                $crr = $this->calculate_crr($match_detail->score, $match_detail->over, $match_detail->overball);
-                $rrr = $this->calculate_rrr($remaining_runs, $remaining_balls);
+                $crr = calculateCRR($match_detail->score, $match_detail->over, $match_detail->overball);
+                $rrr = calculateRRR($remaining_runs, $remaining_balls);
 
                 //TODO :: only when inning breaks
                 if ($match_status == 2) {
@@ -245,7 +210,7 @@ class MatchController extends Controller
         }
     }
 
-    public function match_scorecard(Tournament $tournament, $match_id)
+    public function matchScorecard(Tournament $tournament, $match_id)
     {
         $schedule = Schedule::with('Game', 'Teams1', 'Teams2')->where('id', $match_id)->where('tournament_id', $tournament->id)->first();
 
@@ -308,8 +273,8 @@ class MatchController extends Controller
 
 
         if ($match) {
-            $match_players_query = MatchPlayers::with(['Players' => function($query){
-                return $query->with('media','Role','BattingStyle','BowlingStyle');
+            $match_players_query = MatchPlayers::with(['Players' => function ($query) {
+                return $query->with('media', 'Role', 'BattingStyle', 'BowlingStyle');
             }, 'wicketPrimary', 'wicketSecondary'])->where('match_id', $match_id)->where('tournament_id', $tournament->id)->orderBy('bt_order', 'asc')->get();
             $match_details_query = MatchDetail::select('score', 'wicket', 'over', 'overball', 'no_ball', 'wide', 'byes', 'legbyes', 'team_id')->where('match_id', $match_id)->where('tournament_id', $tournament->id)->get();
             $match_track_query = MatchTrack::with('Batsman')->select('player_id', 'score', 'wickets', 'over', 'overball', 'team_id')->where('action', 'wicket')->where('match_id', $match_id)->where('tournament_id', $tournament->id)->orderBy('wickets', 'asc')->get();
@@ -369,7 +334,7 @@ class MatchController extends Controller
 
     }
 
-    public function match_overs(Tournament $tournament, $match_id)
+    public function matchOvers(Tournament $tournament, $match_id)
     {
         $schedule = Schedule::with('Game', 'Teams1', 'Teams2')->where('id', $match_id)->where('tournament_id', $tournament->id)->first();
 
@@ -462,8 +427,7 @@ class MatchController extends Controller
                 ];
 
             }
-        }
-        else{
+        } else {
             return [
                 'isMatch' => 'not_found',
             ];

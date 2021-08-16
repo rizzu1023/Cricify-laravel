@@ -51,10 +51,10 @@ Route::get('/tournaments/{tournament}/teams',[\App\Http\Controllers\API\Tourname
 Route::get('/tournaments/{tournament}/stats/{stats_type}',[\App\Http\Controllers\API\StatsController::class,'data']);
 Route::get('/tournaments/{tournament}/points-table',[\App\Http\Controllers\API\TournamentController::class,'points_table']);
 
-Route::get('/tournaments/{tournament}/matches/{match_id}/match-info',[\App\Http\Controllers\API\MatchController::class,'match_info']);
-Route::get('/tournaments/{tournament}/matches/{match_id}/match-live',[\App\Http\Controllers\API\MatchController::class,'match_live']);
-Route::get('/tournaments/{tournament}/matches/{match_id}/match-scorecard',[\App\Http\Controllers\API\MatchController::class,'match_scorecard']);
-Route::get('/tournaments/{tournament}/matches/{match_id}/match-overs',[\App\Http\Controllers\API\MatchController::class,'match_overs']);
+Route::get('/tournaments/{tournament}/matches/{match_id}/match-info',[\App\Http\Controllers\API\MatchController::class,'matchInfo']);
+Route::get('/tournaments/{tournament}/matches/{match_id}/match-live',[\App\Http\Controllers\API\MatchController::class,'matchLive']);
+Route::get('/tournaments/{tournament}/matches/{match_id}/match-scorecard',[\App\Http\Controllers\API\MatchController::class,'matchScorecard']);
+Route::get('/tournaments/{tournament}/matches/{match_id}/match-overs',[\App\Http\Controllers\API\MatchController::class,'matchOvers']);
 
 Route::get('/teams/{team}/players',[\App\Http\Controllers\API\PlayersController::class,'index']);
 Route::get('/players/{player}',[\App\Http\Controllers\API\PlayersController::class,'show']);

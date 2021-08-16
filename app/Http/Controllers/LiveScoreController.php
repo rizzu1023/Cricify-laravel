@@ -150,6 +150,8 @@ class LiveScoreController extends Controller
             $game->tournament_id = $request->tournament_id;
             $game->toss = $request->toss;
             $game->choose = $request->choose;
+            $game->umpire_1 = $request->has('umpire_1') ? $request->umpire_1 : NULL;
+            $game->umpire_2 = $request->has('umpire_2') ? $request->umpire_2 : NULL;
             $game->save();
 
             $matchDetail1 = new MatchDetail();

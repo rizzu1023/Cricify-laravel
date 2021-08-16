@@ -44,13 +44,34 @@
                     <div class="main-page">
                         <form method="POST" action="{{route('ScoreDetails')}}" id="score-detail-form">
                             @csrf
-                            @php
-                                $str = "t1p";
-                                $i = 1
-                            @endphp
                             <div class="row">
-                                <div class="col-md-6 single-div">
-                                    <h3 class="title1">{{$schedule->Teams1->team_name}} XI</h3>
+                                <div class="form-group col-md-4">
+                                    <label for="field1">Overs</label>
+                                    <input type="number" class="form-control" name="overs" value="20" required>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="exampleFormControlSelect2">Who won the Toss</label>
+                                    <select class="form-control" id="exampleFormControlSelect2" name="toss" required>
+                                        <option disabled selected>Select Team</option>
+                                        <option
+                                            value="{{$schedule->team1_id}}">{{$schedule->Teams1->team_name}}</option>
+                                        <option
+                                            value="{{$schedule->team2_id}}">{{$schedule->Teams2->team_name}}</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="exampleFormControlSelect2">Choose To</label>
+                                    <select class="form-control" id="exampleFormControlSelect2" name="choose" required>
+                                        <option disabled selected>Choose</option>
+                                        <option value="Bat">Batting</option>
+                                        <option value="Bowl">Bowling</option>
+                                    </select>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 single-div mt-3">
+                                    <h5 class="title1 mb-3">SELECT {{$schedule->Teams1->team_name}} XI</h5>
                                     @foreach($players1 as $p1)
                                         <div class="custom-control custom-switch mt-2">
                                             <input type="checkbox" class="team1-checkbox custom-control-input"
@@ -65,8 +86,8 @@
                                 </div>
 
 
-                                <div class="col-md-6 single-div">
-                                    <h3 class="title1">{{$schedule->Teams2->team_name}} XI</h3>
+                                <div class="col-md-6 single-div mt-3">
+                                    <h5 class="title1 mb-3">SELECT {{$schedule->Teams2->team_name}} XI</h5>
 
                                     @foreach($players2 as $p2)
                                         <div class="custom-control custom-switch mt-2">
@@ -83,30 +104,18 @@
                                     @endforeach
                                 </div>
                             </div>
-                            <div class="row">
+
+                            <div class="row mt-3">
                                 <div class="form-group col-md-6">
-                                    <label for="exampleFormControlSelect2">Who won the Toss</label>
-                                    <select class="form-control" id="exampleFormControlSelect2" name="toss" required>
-                                        <option disabled selected>Select Team</option>
-                                        <option
-                                            value="{{$schedule->team1_id}}">{{$schedule->Teams1->team_name}}</option>
-                                        <option
-                                            value="{{$schedule->team2_id}}">{{$schedule->Teams2->team_name}}</option>
-                                    </select>
+                                    <label for="field1">1st Umpire Name (optional)</label>
+                                    <input type="text" class="form-control" name="umpire_1">
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="exampleFormControlSelect2">Choose To</label>
-                                    <select class="form-control" id="exampleFormControlSelect2" name="choose" required>
-                                        <option disabled selected>Choose</option>
-                                        <option value="Bat">Batting</option>
-                                        <option value="Bowl">Bowling</option>
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="field1">Overs</label>
-                                    <input type="number" class="form-control" name="overs" value="20" required>
+                                    <label for="field1">2nd Umpire Name (optional)</label>
+                                    <input type="text" class="form-control" name="umpire_2">
                                 </div>
                             </div>
+
 
                             <input type="hidden" name="id" value="{{$schedule->id}}">
                             <input type="hidden" name="team1_id" value="{{$schedule->team1_id}}">
@@ -114,7 +123,7 @@
                             <input type="hidden" name="tournament_id" value="{{$schedule->tournament_id}}">
 
 {{--                            <button class="btn btn-primary" id="save">Save</button>--}}
-                            <button class="btn btn-primary" id="start">Start Match</button>
+                            <button class="btn btn-primary mt-3" id="start">Start Match</button>
 
                         </form>
                     </div>
