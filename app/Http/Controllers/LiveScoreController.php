@@ -236,9 +236,7 @@ class LiveScoreController extends Controller
 
     public function LiveUpdateShow($id, $tournament)
     {
-
-
-        $game = Game::with('MatchDetail','MatchPlayers')->where('match_id', $id)->where('tournament_id', $tournament)->first();
+        $game = Game::with('MatchDetail','MatchPlayers.Players')->where('match_id', $id)->where('tournament_id', $tournament)->first();
         $match_detail = $game->MatchDetail;
 
         $batting_team = $match_detail->where('isBatting',1)->first();
@@ -269,35 +267,44 @@ class LiveScoreController extends Controller
 
 //        return $over;
 
-        //check for opening
-        $opening = true;
-        foreach ($game->MatchPlayers as $mp) {
-            if ($mp->team_id == $batting_team_id)
-                if ($mp->bt_status == 10 || $mp->bt_status == 11)
-                    $opening = false;
+        $opening = false;
+        $any_batsman = $game->MatchPlayers->where('team_id',$batting_team_id)->where('bt_status','!=','DNB')->first();
+        if($any_batsman){
+            $opening = true;
         }
-        $target = null;
+
+        $target = NULL;
         if ($game->status == 3) {
             $team = $game->MatchDetail->where('isBatting', 0)->first();
-            $target = $team ? $team->score + 1 : 0;
+            $target = $team ? $team->score + 1 : NULL;
         }
 
         $batting_team = $game->MatchDetail->where('isBatting', 1)->first();
         $batting_team_score = $batting_team ? $batting_team->score : NULL;
 
-        $players = MatchPlayers::with('Players')->where(function($query){
-            $query->whereIn('bt_status', ['10','11','DNB','12'])->orWhere('bw_status','11');
-        })->where('match_id', $id)->where('tournament_id', $tournament)->get();
+        $current_batsman = $game->MatchPlayers->whereIn('bt_status', ['10','11'])->where('team_id', $batting_team_id)->sortBy('bt_order');
+        $current_bowler = $game->MatchPlayers->where('bw_status', '11')->where('team_id', '<>', $batting_team_id)->first();
 
-        $current_batsman = $players->whereIn('bt_status', ['10','11'])->where('team_id', $batting_team_id)->sortBy('bt_order');
-        $current_bowler = $players->where('bw_status', '11')->where('team_id', '<>', $batting_team_id)->first();
-        $notout_batsman = $players->whereIn('bt_status', ['DNB', '12'])->where('team_id', $batting_team_id);
+        $notout_batsman = $game->MatchPlayers->whereIn('bt_status', ['DNB', '12'])->where('team_id', $batting_team_id)->sortBy(function($player){
+            return array_search($player->Players->role_id, [1,3,4,5,2]);
+        });
+
+        $batting_team_players = $game->MatchPlayers->where('team_id',$batting_team_id)->sortBy(function($player){
+            return array_search($player->Players->role_id, [1,3,4,5,2]);
+        });
+
+        $bowling_team_players = $game->MatchPlayers->where('team_id',$bowling_team_id)->sortBy(function($player){
+            return array_search($player->Players->role_id, [1,3,4,5,2]);
+        });
+
+        $status = optional($game)->status;
+        $tournament_id = optional($game)->tournament_id;
+        $match_id = optional($game)->match_id;
 
         $mom = NULL;
-        if ($game->MOM) {
-            $mom = $game->MOM;
-        }
-        return view('Admin/LiveScore/show', compact('mom', 'batting_team_score', 'target', 'over', 'game', 'batting_team_id', 'bowling_team_id', 'opening', 'isOver', 'current_over', 'current_overball', 'current_batsman', 'current_bowler', 'notout_batsman'));
+        if ($game->MOM) $mom = $game->MOM;
+
+        return view('Admin/LiveScore/show', compact('batting_team','status','tournament_id','match_id','batting_team_players','bowling_team_players','mom', 'batting_team_score', 'target', 'over', 'game', 'batting_team_id', 'bowling_team_id', 'opening', 'isOver', 'current_over', 'current_overball', 'current_batsman', 'current_bowler', 'notout_batsman'));
     }
 
     public function LiveScoreCard($id, $tournament)

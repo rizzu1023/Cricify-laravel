@@ -29,23 +29,23 @@
                     @include('Admin.layouts.message')
                     <div class="row">
 
-                        @if($game->status == '1' || $game->status == '3')
+                        @if($status == '1' || $status == '3')
                             <div class="col-6">
-                                <a href="/admin/LiveScoreCard/{{$game->match_id}}/{{$game->tournament_id}}"
+                                <a href="/admin/LiveScoreCard/{{$match_id}}/{{$tournament_id}}"
                                    class="btn btn-info btn-sm"
                                 >Scorecard</a>
                             </div>
                             <div class="col-6 text-right">
                                 <a class="btn btn-success btn-sm"
-                                   href="/admin/result/{{$game->tournament_id}}/{{$game->match_id}}/show">Edit</a>
+                                   href="/admin/result/{{$tournament_id}}/{{$match_id}}/show">Edit</a>
                             </div>
 
                             <div class="col-6 mt-1">
                                 <form id="resetInningForm" style="display: inline-block;">
                                     @csrf
                                     <input type="hidden" name="resetInning" value="1">
-                                    <input type="hidden" name="match_id" value="{{$game['match_id']}}">
-                                    <input type="hidden" name="tournament" value="{{$game['tournament_id']}}">
+                                    <input type="hidden" name="match_id" value="{{$match_id}}">
+                                    <input type="hidden" name="tournament" value="{{$tournament_id}}">
                                     <input type="hidden" name="bt_team_id" value="{{$batting_team_id}}">
                                     <input type="hidden" name="bw_team_id" value="{{$bowling_team_id}}">
                                     <button type="submit" class="btn btn-secondary btn-sm"
@@ -57,8 +57,8 @@
                                 <form id="endInningForm" style="display: inline-block;">
                                     @csrf
                                     <input type="hidden" name="endInning" value="1">
-                                    <input type="hidden" name="match_id" value="{{$game['match_id']}}">
-                                    <input type="hidden" name="tournament" value="{{$game['tournament_id']}}">
+                                    <input type="hidden" name="match_id" value="{{$match_id}}">
+                                    <input type="hidden" name="tournament" value="{{$tournament_id}}">
                                     <button type="submit" class="btn btn-danger btn-sm"
                                             onclick="return confirm('Are you sure?')">End Inning
                                     </button>
@@ -67,9 +67,9 @@
 
 
 
-                        @elseif($game->status == '2')
+                        @elseif($status == '2')
                             <span>First Inning has Been ended</span>
-                        @elseif($game->status == '4')
+                        @elseif($status == '4')
                             <h4 class="mt-3">{{ $game->WON ? $game->WON->team_name : NULL}} {{$game->description}}</h4>
 
                             @if($game->mom != NULL && $game->mom != '--')
@@ -79,41 +79,42 @@
                             @endif
                             @if($game->WON)
 
-                            <div class="form-body mt-5">
-                                <form method="POST" action="{{ Route('select.mom') }}">
-                                    @csrf
-                                    <div class="row">
-                                        <div class="col-8">
-                                            <div class="form-group">
-                                                <select class="form-control" id="exampleFormControlSelect2" name="mom"
-                                                        required>
-                                                    <option value="">Select Man of the Match</option>
-                                                    @foreach($game->MatchPlayers as $mp)
-                                                        @if($mp->team_id == $game->won)
-                                                            <option
-                                                                value="{{$mp->player_id}}">{{ $mp->Players['first_name'] }} {{ $mp->Players['last_name'] }}</option>
-                                                        @endif
-                                                    @endforeach
-                                                </select>
-                                                <input type="hidden" name="match_id" value="{{$game['match_id']}}">
-                                                <input type="hidden" name="tournament_id"
-                                                       value="{{$game['tournament_id']}}">
+                                <div class="form-body mt-5">
+                                    <form method="POST" action="{{ Route('select.mom') }}">
+                                        @csrf
+                                        <div class="row">
+                                            <div class="col-8">
+                                                <div class="form-group">
+                                                    <select class="form-control" id="exampleFormControlSelect2"
+                                                            name="mom"
+                                                            required>
+                                                        <option value="">Select Man of the Match</option>
+                                                        @foreach($game->MatchPlayers as $mp)
+                                                            @if($mp->team_id == $game->won)
+                                                                <option
+                                                                    value="{{$mp->player_id}}">{{ $mp->Players['first_name'] }} {{ $mp->Players['last_name'] }}</option>
+                                                            @endif
+                                                        @endforeach
+                                                    </select>
+                                                    <input type="hidden" name="match_id" value="{{$match_id}}">
+                                                    <input type="hidden" name="tournament_id"
+                                                           value="{{$tournament_id}}">
+
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                @if($game->mom == NULL)
+                                                    <button type="submit" class="btn  btn-success">Select</button>
+                                                @else
+                                                    <button type="submit" class="btn  btn-success">Change</button>
+                                                @endif
 
                                             </div>
                                         </div>
-                                        <div class="col-4">
-                                            @if($game->mom == NULL)
-                                                <button type="submit" class="btn  btn-success">Select</button>
-                                            @else
-                                                <button type="submit" class="btn  btn-success">Change</button>
-                                            @endif
 
-                                        </div>
-                                    </div>
-
-                                </form>
-                            </div>
-                                @endif
+                                    </form>
+                                </div>
+                            @endif
                         @endif
                     </div>
                 </div>
@@ -141,12 +142,10 @@
                                                         name="strike_id"
                                                         required>
                                                     <option disabled selected>Select Striker</option>
-                                                    @foreach($game->MatchPlayers as $mp)
-                                                        @if($mp->team_id == $batting_team_id)
-                                                            <option
-                                                                value="{{$mp->player_id}}">{{$mp->Players['first_name']}} {{$mp->Players['last_name']}}
-                                                            </option>
-                                                        @endif
+                                                    @foreach($batting_team_players as $mp)
+                                                        <option
+                                                            value="{{$mp->player_id}}">{{$mp->Players['first_name']}} {{$mp->Players['last_name']}}
+                                                        </option>
                                                     @endforeach
                                                 </select>
                                                 <label for="exampleFormControlSelect2">Select Non Striker</label>
@@ -154,12 +153,10 @@
                                                         name="nonstrike_id"
                                                         required>
                                                     <option selected disabled>Select Non Striker</option>
-                                                    @foreach($game->MatchPlayers as $mp)
-                                                        @if($mp->team_id == $batting_team_id)
-                                                            <option
-                                                                value="{{$mp->player_id}}">{{$mp->Players['first_name']}} {{$mp->Players['last_name']}}
-                                                            </option>
-                                                        @endif
+                                                    @foreach($batting_team_players as $mp)
+                                                        <option
+                                                            value="{{$mp->player_id}}">{{$mp->Players['first_name']}} {{$mp->Players['last_name']}}
+                                                        </option>
                                                     @endforeach
                                                 </select>
 
@@ -172,18 +169,16 @@
                                                         name="attacker_id"
                                                         required>
                                                     <option selected disabled>Select Bowler</option>
-                                                    @foreach($game->MatchPlayers as $mp)
-                                                        @if($mp->team_id == $bowling_team_id)
-                                                            <option
-                                                                value="{{$mp->player_id}}">{{$mp->Players['first_name']}} {{$mp->Players['last_name']}}
-                                                            </option>
-                                                        @endif
+                                                    @foreach($bowling_team_players as $mp)
+                                                        <option
+                                                            value="{{$mp->player_id}}">{{$mp->Players['first_name']}} {{$mp->Players['last_name']}}
+                                                        </option>
                                                     @endforeach
                                                 </select>
                                             </div>
                                         </div>
-                                        <input type="hidden" name="match_id" value="{{$game['match_id']}}">
-                                        <input type="hidden" name="tournament" value="{{$game['tournament_id']}}">
+                                        <input type="hidden" name="match_id" value="{{$match_id}}">
+                                        <input type="hidden" name="tournament" value="{{$tournament_id}}">
                                         <input type="hidden" name="bw_team_id" value="{{$bowling_team_id}}">
                                         <input type="hidden" name="bt_team_id" value="{{$batting_team_id}}">
                                         <input type="hidden" name="startInning" value="1">
@@ -197,16 +192,16 @@
                         </div>
                     </div>
 
-                    @if($game->status == '0' || $game->status == '2')
+                    @if($status == '0' || $status == '2')
                         {{--            <from id="startInningForm" class="text-center" style="display: block">--}}
                         {{--                <input type="hidden" name="startInning" value="1">--}}
-                        {{--                <input type="hidden" name="match_id" value="{{$game['match_id']}}">--}}
-                        {{--                <input type="hidden" name="tournament" value="{{$game['tournament_id']}}">--}}
-                        @if($game->status == '0')
+                        {{--                <input type="hidden" name="match_id" value="{{$match_id}}">--}}
+                        {{--                <input type="hidden" name="tournament" value="{{$tournament_id}}">--}}
+                        @if($status == '0')
                             <button class="btn btn-success btn-md mr-2 startInningButton">Start 1st Inning</button>   <a
                                 class="btn btn-primary btn-sm"
-                                href="/admin/result/{{$game->tournament_id}}/{{$game->match_id}}/show">Edit</a>
-                        @elseif($game->status == '2')
+                                href="/admin/result/{{$tournament_id}}/{{$match_id}}/show">Edit</a>
+                        @elseif($status == '2')
                             <button class="btn btn-success btn-md startInningButton">Start 2nd Inning</button>
                             <a class="btn btn-outline-success btn-square btn-sm mt-1 undo-button"
                                onclick="livescore_function('reverse_inning')">Undo</a>
@@ -215,15 +210,15 @@
                         {{--            </from>--}}
                     @endif
 
-                    @if($game->status == '4')
+                    @if($status == '4')
                         {{--                <h4>xyz won by 20 runs</h4>--}}
                         <a class="btn btn-outline-secondary btn-square btn-md mt-1 undo-button"
                            onclick="livescore_function('reverse_inning')">Undo</a>
-                        <a href="/admin/result/{{$game->tournament_id}}/{{$game->match_id}}/show"
+                        <a href="/admin/result/{{$tournament_id}}/{{$match_id}}/show"
                            class="btn btn-primary btn-square btn-md mt-1">Result</a>
                 @endif
 
-                @if($game->status == '1' || $game->status == '3')
+                @if($status == '1' || $status == '3')
                     <!-- <div class="container"> -->
 
                         <div class="modal  " id="overModal" tabindex="-1" data-backdrop="false" role="dialog"
@@ -243,19 +238,17 @@
                                                             name="newBowler_id"
                                                             required>
                                                         <option disabled selected>Select Bowler</option>
-                                                        @foreach($game->MatchPlayers as $mp)
-                                                            @if($mp->team_id == $bowling_team_id)
-                                                                @if($mp->bw_status != 11)
-                                                                    <option
-                                                                        value="{{$mp->player_id}}">{{$mp->Players['first_name']}} {{$mp->Players['last_name']}}</option>
-                                                                @endif
+                                                        @foreach($bowling_team_players as $mp)
+                                                            @if($mp->bw_status != 11)
+                                                                <option
+                                                                    value="{{$mp->player_id}}">{{$mp->Players['first_name']}} {{$mp->Players['last_name']}}</option>
                                                             @endif
                                                         @endforeach
                                                     </select>
                                                 </div>
                                             </div>
-                                            <input type="hidden" name="match_id" value="{{$game['match_id']}}">
-                                            <input type="hidden" name="tournament" value="{{$game['tournament_id']}}">
+                                            <input type="hidden" name="match_id" value="{{$match_id}}">
+                                            <input type="hidden" name="tournament" value="{{$tournament_id}}">
                                             <input type="hidden" name="bw_team_id" value="{{$bowling_team_id}}">
                                             <input type="hidden" name="bt_team_id" value="{{$batting_team_id}}">
                                             <input type="hidden" name="newOver" value="1">
@@ -305,12 +298,10 @@
                                                             name="wicket_primary"
                                                             required>
                                                         {{--                                            <option disabled selected>Select</option>--}}
-                                                        @foreach($game->MatchPlayers as $mp)
-                                                            @if($mp->team_id == $bowling_team_id)
-                                                                @if($mp->bw_status == '11')
-                                                                    <option selected
-                                                                            value="{{$mp->player_id}}">{{$mp->Players['first_name']}} {{$mp->Players['last_name']}}</option>
-                                                                @endif
+                                                        @foreach($bowling_team_players as $mp)
+                                                            @if($mp->bw_status == '11')
+                                                                <option selected
+                                                                        value="{{$mp->player_id}}">{{$mp->Players['first_name']}} {{$mp->Players['last_name']}}</option>
                                                             @endif
                                                         @endforeach
                                                     </select>
@@ -358,11 +349,9 @@
                                                             name="wicket_primary"
                                                             required>
                                                         <option disabled selected>Select</option>
-                                                        @foreach($game->MatchPlayers as $mp)
-                                                            @if($mp->team_id == $bowling_team_id)
-                                                                <option selected
-                                                                        value="{{$mp->player_id}}">{{$mp->Players['first_name']}} {{$mp->Players['last_name']}}</option>
-                                                            @endif
+                                                        @foreach($bowling_team_players as $mp)
+                                                            <option selected
+                                                                    value="{{$mp->player_id}}">{{$mp->Players['first_name']}} {{$mp->Players['last_name']}}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -372,11 +361,9 @@
                                                             name="wicket_secondary"
                                                             required disabled>
                                                         <option disabled selected>Select</option>
-                                                        @foreach($game->MatchPlayers as $mp)
-                                                            @if($mp->team_id == $bowling_team_id)
-                                                                <option
-                                                                    value="{{$mp->player_id}}">{{$mp->Players['first_name']}} {{$mp->Players['last_name']}}</option>
-                                                            @endif
+                                                        @foreach($bowling_team_players as $mp)
+                                                            <option
+                                                                value="{{$mp->player_id}}">{{$mp->Players['first_name']}} {{$mp->Players['last_name']}}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -387,12 +374,10 @@
                                                     <select class="form-control" id="wicket_primar"
                                                             name="batsman_runout">
                                                         <option disabled selected>Select</option>
-                                                        @foreach($game->MatchPlayers as $mp)
-                                                            @if($mp->team_id == $batting_team_id)
-                                                                @if($mp->bt_status == 11 || $mp->bt_status == 10)
-                                                                    <option
-                                                                        value="{{$mp->player_id}}">{{$mp->Players['first_name']}} {{$mp->Players['last_name']}}</option>
-                                                                @endif
+                                                        @foreach($current_batsman as $mp)
+                                                            @if($mp->bt_status == 11 || $mp->bt_status == 10)
+                                                                <option
+                                                                    value="{{$mp->player_id}}">{{$mp->Players['first_name']}} {{$mp->Players['last_name']}}</option>
                                                             @endif
                                                         @endforeach
                                                     </select>
@@ -422,17 +407,8 @@
                                                     </select>
                                                 </div>
 
-                                                {{--                                   this is for over check for bowler--}}
-                                                @foreach($game->MatchPlayers as $mp)
-                                                    @if($mp->team_id == $bowling_team_id)
-                                                        @if($mp->bw_status == '11')
-                                                            <input type="hidden" value="{{$mp->player_id}}"
-                                                                   name="attacker_id"/>
-                                                        @endif
-                                                    @endif
-                                                @endforeach
-
-                                                {{--wicket secondary--}}
+                                                <input type="hidden" value="{{$current_bowler->player_id}}"
+                                                       name="attacker_id"/>
 
                                             </div>
                                             <div id="div_batsman_cross" class="custom-control custom-switch mt-2 mr-3"
@@ -466,8 +442,8 @@
                                             {{--                                        <input type="checkbox" name="isBatsmanCross" id="input_batsman_cross"/>--}}
                                             {{--                                    </div>--}}
 
-                                            <input type="hidden" name="match_id" value="{{$game['match_id']}}">
-                                            <input type="hidden" name="tournament" value="{{$game['tournament_id']}}">
+                                            <input type="hidden" name="match_id" value="{{$match_id}}">
+                                            <input type="hidden" name="tournament" value="{{$tournament_id}}">
                                             <input type="hidden" name="bw_team_id" value="{{$bowling_team_id}}">
                                             <input type="hidden" name="bt_team_id" value="{{$batting_team_id}}">
                                             <input type="hidden" name="value" value="W">
@@ -538,8 +514,8 @@
                                         </div>
                                     </div>
 
-                                    <input type="hidden" name="match_id" value="{{$game['match_id']}}">
-                                    <input type="hidden" name="tournament" value="{{$game['tournament_id']}}">
+                                    <input type="hidden" name="match_id" value="{{$match_id}}">
+                                    <input type="hidden" name="tournament" value="{{$tournament_id}}">
                                     <input type="hidden" name="bw_team_id" value="{{$bowling_team_id}}">
                                     <input type="hidden" name="bt_team_id" value="{{$batting_team_id}}">
                                     <input type="hidden" name="value" value="rh">
@@ -561,17 +537,13 @@
                     <div class="tables">
                         <div class="row py-2">
                             <div class="col-8">
-                                @foreach($game->MatchDetail as $md)
-                                    @if($md->team_id == $batting_team_id)
-                                        <div class="col-md-12 team-name"><h5>{{$md->Teams->team_code}} <span
-                                                    id="team-score">{{$md->score}}</span>/<span
-                                                    id="team-wicket">{{$md->wicket}}</span> (<span
-                                                    id="team-over">{{$md->over}}</span>.<span
-                                                    id="team-overball">{{$md->overball}}</span>)</h5>
+                                <div class="col-md-12 team-name"><h5>{{$batting_team->Teams->team_code}} <span
+                                            id="team-score">{{$batting_team->score}}</span>/<span
+                                            id="team-wicket">{{$batting_team->wicket}}</span> (<span
+                                            id="team-over">{{$batting_team->over}}</span>.<span
+                                            id="team-overball">{{$batting_team->overball}}</span>)</h5>
 
-                                        </div>
-                                    @endif
-                                @endforeach
+                                </div>
                             </div>
                             <div class="col-4">
                                 @if($target)
@@ -636,8 +608,8 @@
                                     <td id="bowler-wickets">{{$current_bowler->bw_wickets}}</td>
 
                                 </tr>
-                                <input type="hidden" name="match_id" value="{{$game->match_id}}">
-                                <input type="hidden" name="tournament" value="{{$game->tournament_id}}">
+                                <input type="hidden" name="match_id" value="{{$match_id}}">
+                                <input type="hidden" name="tournament" value="{{$tournament_id}}">
                                 </tbody>
                             </table>
 
@@ -1159,15 +1131,12 @@
                             }
 
 
-
-
                             if (data.target && data.batting_team_score) {
                                 if (data.target <= data.batting_team_score) {
                                     $('.score-button').addClass('disabled');
                                     $('#endInningForm').submit();
                                 }
-                            }
-                            else{
+                            } else {
                                 if (data.isEndInning === true) {
                                     $('.score-button').addClass('disabled');
                                     $('#endInningForm').submit();
