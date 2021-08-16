@@ -14,6 +14,11 @@ class Schedule extends Model
         return $this->hasOne('App\Game','match_id','id');
     }
 
+    public function Tournament()
+    {
+        return $this->belongsTo(Tournament::class,'tournament_id','id');
+    }
+
     public function  MatchDetail(){
         return $this->hasMany('App\MatchDetail','match_id','id');
     }

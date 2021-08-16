@@ -23,7 +23,7 @@
         <div class="container-fluid">
             <div class="card">
                 <div class="card-header">
-                    <a href="/admin/LiveUpdate/{{$matchs->match_id}}/{{$matchs->tournament_id}}" class="btn btn-info"
+                    <a href="/admin/LiveUpdate/{{$match_id}}/{{$tournament_id}}" class="btn btn-info"
                     >Live Score</a>
                 </div>
                 <div class="card-body">

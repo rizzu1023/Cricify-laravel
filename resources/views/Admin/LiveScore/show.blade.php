@@ -962,7 +962,7 @@
                 },
                 error: function (data) {
                     if (data.status === 422) {
-                        alert('please select a bowler');
+                        alert('Select a bowler');
                     }
                 }
             });
@@ -983,7 +983,7 @@
                 },
                 error: function (data) {
                     if (data.status === 422) {
-                        alert('please select proper data');
+                        alert('Select proper data');
                     } else {
                         alert('something went wrong');
                     }
@@ -1018,7 +1018,7 @@
             let nonstrike_id = $("select[name=nonstrike_id]").val();
 
             if (strike_id === nonstrike_id) {
-                alert('Please select different Batsman.');
+                alert('Select different Batsman.');
             } else {
                 $.ajax({
                     type: "POST",
@@ -1030,7 +1030,7 @@
                     },
                     error: function (data) {
                         if (data.status === 422) {
-                            alert('Please select proper data');
+                            alert('Select proper data');
                         }
                     }
                 });
@@ -1192,7 +1192,7 @@
                     $('.undo-button').removeClass('disabled');
 
                     if (data.status === 422) {
-                        alert('please select proper data');
+                        alert('Select proper data');
                     } else {
                         alert('something went wrong');
                     }
