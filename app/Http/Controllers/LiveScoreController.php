@@ -256,12 +256,12 @@ class LiveScoreController extends Controller
             $current_overball = $game->MatchDetail['1']->overball;
         }
 
-        $over = MatchTrack::select('action','over','overball')->where('match_id', $id)->where('team_id', $batting_team_id)->where('tournament_id', $tournament)
+        $overs = MatchTrack::select('action','over','overball')->where('match_id', $id)->where('team_id', $batting_team_id)->where('tournament_id', $tournament)
             ->orderBy('over', 'desc')
             ->orderBy('overball', 'desc')
             ->orderBy('created_at', 'desc')
-            ->get()->take(10);
-        $over = $over->reverse();
+            ->get()->take(12);
+        $over = $overs->reverse();
 
 //        return $over;
 
@@ -301,8 +301,8 @@ class LiveScoreController extends Controller
 
         $batting_team = $matchs->MatchDetail->where('isBatting',1)->first();
         $bowling_team = $matchs->MatchDetail->where('isBatting',0)->first();
-        $batting = $batting_team->team_id;
-        $bowling = $bowling_team->team_id;
+        $batting = optional($batting_team)->team_id;
+        $bowling = optional($bowling_team)->team_id;
 
         $batting_team_players = $matchs->MatchPlayers->where('team_id',$batting)->sortBy('bt_order');
         $bowling_team_players = $matchs->MatchPlayers->where('team_id',$bowling);
@@ -537,7 +537,7 @@ class LiveScoreController extends Controller
             ->first();
 
         $game->mom = $request->mom;
-        $game->save();
+        $game->update();
 
         return back()->with('message', 'Man of the match successfully selected');
     }

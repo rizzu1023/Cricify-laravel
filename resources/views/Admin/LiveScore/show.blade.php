@@ -639,7 +639,7 @@
                             </table>
 
                             <div id="current-over" class="px-2">
-                                <span><h6 style="display:inline-block;font-weight: bold">Last 10 balls : </h6></span>
+                                <span><h6 style="display:inline-block;font-weight: bold">Last 12 balls : </h6></span>
                                 @foreach($over as $o)
 
 
