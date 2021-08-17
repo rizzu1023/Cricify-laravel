@@ -10,12 +10,12 @@
             <div class="page-title">
                 <div class="row">
                     <div class="col-6">
-                        <h3>Dashboard</h3>
+                        <h6>Live Score</h6>
                     </div>
                     <div class="col-6">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="/admin/dashboard"> <i data-feather="home"></i></a></li>
-                            <li class="breadcrumb-item active">Dashboard</li>
+{{--                            <li class="breadcrumb-item active">Dashboard</li>--}}
                             {{--              <li class="breadcrumb-item active">Product list</li>--}}
                         </ol>
                     </div>
@@ -24,102 +24,10 @@
         </div>
         <!-- Container-fluid starts-->
         <div class="container-fluid">
-            <div class="card">
-                <div class="card-header">
-                    @include('Admin.layouts.message')
-                    <div class="row">
-
-                        @if($status == '1' || $status == '3')
-                            <div class="col-6">
-                                <a href="/admin/LiveScoreCard/{{$match_id}}/{{$tournament_id}}"
-                                   class="btn btn-info btn-sm"
-                                >Scorecard</a>
-                            </div>
-                            <div class="col-6 text-right">
-                                <a class="btn btn-success btn-sm"
-                                   href="/admin/result/{{$tournament_id}}/{{$match_id}}/show">Edit</a>
-                            </div>
-
-                            <div class="col-6 mt-1">
-                                <form id="resetInningForm" style="display: inline-block;">
-                                    @csrf
-                                    <input type="hidden" name="resetInning" value="1">
-                                    <input type="hidden" name="match_id" value="{{$match_id}}">
-                                    <input type="hidden" name="tournament" value="{{$tournament_id}}">
-                                    <input type="hidden" name="bt_team_id" value="{{$batting_team_id}}">
-                                    <input type="hidden" name="bw_team_id" value="{{$bowling_team_id}}">
-                                    <button type="submit" class="btn btn-secondary btn-sm"
-                                            onclick="return confirm('Are you sure?')">Reset Inning
-                                    </button>
-                                </form>
-                            </div>
-                            <div class="col-6 mt-1 text-right">
-                                <form id="endInningForm" style="display: inline-block;">
-                                    @csrf
-                                    <input type="hidden" name="endInning" value="1">
-                                    <input type="hidden" name="match_id" value="{{$match_id}}">
-                                    <input type="hidden" name="tournament" value="{{$tournament_id}}">
-                                    <button type="submit" class="btn btn-danger btn-sm"
-                                            onclick="return confirm('Are you sure?')">End Inning
-                                    </button>
-                                </form>
-                            </div>
-
-
-
-                        @elseif($status == '2')
-                            <span>First Inning has Been ended</span>
-                        @elseif($status == '4')
-                            <h4 class="mt-3">{{ $game->WON ? $game->WON->team_name : NULL}} {{$game->description}}</h4>
-
-                            @if($game->mom != NULL && $game->mom != '--')
-                                <h4 class="mt-5">Man of the Match
-                                    : {{ $game->MOM ? $game->MOM['first_name'] : NULL}} {{$game->MOM ? $game->MOM['last_name'] : NULL}}</h4>
-
-                            @endif
-                            @if($game->WON)
-
-                                <div class="form-body mt-5">
-                                    <form method="POST" action="{{ Route('select.mom') }}">
-                                        @csrf
-                                        <div class="row">
-                                            <div class="col-8">
-                                                <div class="form-group">
-                                                    <select class="form-control" id="exampleFormControlSelect2"
-                                                            name="mom"
-                                                            required>
-                                                        <option value="">Select Man of the Match</option>
-                                                        @foreach($game->MatchPlayers as $mp)
-                                                            @if($mp->team_id == $game->won)
-                                                                <option
-                                                                    value="{{$mp->player_id}}">{{ $mp->Players['first_name'] }} {{ $mp->Players['last_name'] }}</option>
-                                                            @endif
-                                                        @endforeach
-                                                    </select>
-                                                    <input type="hidden" name="match_id" value="{{$match_id}}">
-                                                    <input type="hidden" name="tournament_id"
-                                                           value="{{$tournament_id}}">
-
-                                                </div>
-                                            </div>
-                                            <div class="col-4">
-                                                @if($game->mom == NULL)
-                                                    <button type="submit" class="btn  btn-success">Select</button>
-                                                @else
-                                                    <button type="submit" class="btn  btn-success">Change</button>
-                                                @endif
-
-                                            </div>
-                                        </div>
-
-                                    </form>
-                                </div>
-                            @endif
-                        @endif
-                    </div>
-                </div>
-                <div class="card-body pt-0">
-                    <!-- Opening Modal -->
+{{--            <div class="card">--}}
+                @include('Admin.layouts.message')
+{{--                <div class="card-body pt-0">--}}
+{{--                </div>--}}
                     <div class="modal  " id="openingModal" tabindex="-1" data-backdrop="false" role="dialog"
                          aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
@@ -537,15 +445,15 @@
                     <div class="tables">
                         <div class="row py-2">
                             <div class="col-8">
-                                <div class="col-md-12 team-name"><h5>{{$batting_team->Teams->team_code}} <span
+                                <div class="col-md-12 team-name"><h4>{{$batting_team->Teams->team_code}} <span
                                             id="team-score">{{$batting_team->score}}</span>/<span
                                             id="team-wicket">{{$batting_team->wicket}}</span> (<span
                                             id="team-over">{{$batting_team->over}}</span>.<span
-                                            id="team-overball">{{$batting_team->overball}}</span>)</h5>
+                                            id="team-overball">{{$batting_team->overball}}</span>)</h4>
 
                                 </div>
                             </div>
-                            <div class="col-4">
+                            <div class="col-4 pt-2">
                                 @if($target)
                                     <h6>Target : {{$target}}</h6>
                                 @endif
@@ -745,7 +653,98 @@
 
                         </form>
                     </div>
+                <div class="card-footer mt-2">
+                    <div class="row">
 
+                        @if($status == '1' || $status == '3')
+                            <div class="col-6">
+                                <a href="/admin/LiveScoreCard/{{$match_id}}/{{$tournament_id}}"
+                                   class="btn btn-info btn-sm"
+                                >Scorecard</a>
+                            </div>
+                            <div class="col-6 text-right">
+                                <a class="btn btn-success btn-sm"
+                                   href="/admin/result/{{$tournament_id}}/{{$match_id}}/show">Edit</a>
+                            </div>
+
+                            <div class="col-6 mt-1">
+                                <form id="resetInningForm" style="display: inline-block;">
+                                    @csrf
+                                    <input type="hidden" name="resetInning" value="1">
+                                    <input type="hidden" name="match_id" value="{{$match_id}}">
+                                    <input type="hidden" name="tournament" value="{{$tournament_id}}">
+                                    <input type="hidden" name="bt_team_id" value="{{$batting_team_id}}">
+                                    <input type="hidden" name="bw_team_id" value="{{$bowling_team_id}}">
+                                    <button type="submit" class="btn btn-secondary btn-sm"
+                                            onclick="return confirm('Are you sure?')">Reset Inning
+                                    </button>
+                                </form>
+                            </div>
+                            <div class="col-6 mt-1 text-right">
+                                <form id="endInningForm" style="display: inline-block;">
+                                    @csrf
+                                    <input type="hidden" name="endInning" value="1">
+                                    <input type="hidden" name="match_id" value="{{$match_id}}">
+                                    <input type="hidden" name="tournament" value="{{$tournament_id}}">
+                                    <button type="submit" class="btn btn-danger btn-sm"
+                                            onclick="return confirm('Are you sure?')">End Inning
+                                    </button>
+                                </form>
+                            </div>
+
+
+
+                        @elseif($status == '2')
+                            <span>First Inning has Been ended</span>
+                        @elseif($status == '4')
+                            <h4 class="mt-3">{{ $game->WON ? $game->WON->team_name : NULL}} {{$game->description}}</h4>
+
+                            @if($game->mom != NULL && $game->mom != '--')
+                                <h4 class="mt-5">Man of the Match
+                                    : {{ $game->MOM ? $game->MOM['first_name'] : NULL}} {{$game->MOM ? $game->MOM['last_name'] : NULL}}</h4>
+
+                            @endif
+                            @if($game->WON)
+
+                                <div class="form-body mt-5">
+                                    <form method="POST" action="{{ Route('select.mom') }}">
+                                        @csrf
+                                        <div class="row">
+                                            <div class="col-8">
+                                                <div class="form-group">
+                                                    <select class="form-control" id="exampleFormControlSelect2"
+                                                            name="mom"
+                                                            required>
+                                                        <option value="">Select Man of the Match</option>
+                                                        @foreach($game->MatchPlayers as $mp)
+                                                            @if($mp->team_id == $game->won)
+                                                                <option
+                                                                    value="{{$mp->player_id}}">{{ $mp->Players['first_name'] }} {{ $mp->Players['last_name'] }}</option>
+                                                            @endif
+                                                        @endforeach
+                                                    </select>
+                                                    <input type="hidden" name="match_id" value="{{$match_id}}">
+                                                    <input type="hidden" name="tournament_id"
+                                                           value="{{$tournament_id}}">
+
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                @if($game->mom == NULL)
+                                                    <button type="submit" class="btn  btn-success">Select</button>
+                                                @else
+                                                    <button type="submit" class="btn  btn-success">Change</button>
+                                                @endif
+
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            @endif
+                        @endif
+                    </div>
+                </div>
 
 
                 @endif
@@ -753,8 +752,6 @@
 
                 @endif
             </div>
-        </div>
-    </div>
 @endsection
 
 
