@@ -323,20 +323,20 @@ class LiveScoreController extends Controller
                         'where_batsman_runout' => 'required',
                         'run_scored' => 'required',
                         'attacker_id' => 'required',
-                        'newBatsman_id' => 'required',
+                        'newBatsman_id' => 'required_without:all_out',
                     ]);
                 } elseif ($request->wicket_type == 'bold' || $request->wicket_type == 'lbw' || $request->wicket_type == 'hitwicket') {
                     $request->validate([
                         'wicket_primary' => 'required',
                         'player_id' => 'required',
-                        'newBatsman_id' => 'required',
+                        'newBatsman_id' => 'required_without:all_out',
                     ]);
                 }
                 elseif ($request->wicket_type == 'catch' || $request->wicket_type == 'stump') {
                     $request->validate([
                         'wicket_primary' => 'required',
                         'player_id' => 'required',
-                        'newBatsman_id' => 'required',
+                        'newBatsman_id' => 'required_without:all_out',
                         'wicket_secondary' => 'required',
                     ]);
                 }
@@ -383,6 +383,9 @@ class LiveScoreController extends Controller
 
             if ($request->value == 'W') {
                 event(new wicketEvent($request));
+                if($request->all_out == 'on'){
+                    event(new endInningEvent($request));
+                }
             }
             if ($request->value == 8) event(new dotBallEvent($request));
 
