@@ -3,10 +3,6 @@
 namespace App\Listeners;
 
 use App\Events\startInningEvent;
-use App\Game;
-use App\MatchPlayers;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class startInningListener
 {
@@ -28,28 +24,27 @@ class startInningListener
      */
     public function handle($event)
     {
-        MatchPlayers::where('match_id', $event->request->match_id)
-            ->where('tournament_id', $event->request->tournament)
-            ->where('team_id', $event->request->bt_team_id)
-            ->where('player_id', $event->request->strike_id)
-            ->update(['bt_status' => 11,'bt_order' => 1]);
+        $match = $event->match;
+        $batting_team = $match->MatchDetail->where('isBatting',1)->first();
+        $batting_team_id = optional($batting_team)->team_id;
+        $bowling_team = $match->MatchDetail->where('isBatting',0)->first();
+        $bowling_team_id = optional($bowling_team)->team_id;
 
-//                batsman ko non striker select karega
-        MatchPlayers::where('match_id', $event->request->match_id)
-            ->where('tournament_id', $event->request->tournament)
-            ->where('team_id', $event->request->bt_team_id)
-            ->where('player_id', $event->request->nonstrike_id)
-            ->update(['bt_status' => 10,'bt_order' => 2]);
+        $striker = $match->MatchPlayers->where('team_id',$batting_team_id)->where('player_id',$event->request->strike_id)->first();
+        $striker->bt_status = 11;
+        $striker->bt_order = 1;
+        $striker->update();
 
-//                bowler ko select karega
-        MatchPlayers::where('match_id', $event->request->match_id)
-            ->where('tournament_id', $event->request->tournament)
-            ->where('team_id', $event->request->bw_team_id)
-            ->where('player_id', $event->request->attacker_id)
-            ->update(['bw_status' => 11]);
+        $non_striker = $match->MatchPlayers->where('team_id',$batting_team_id)->where('player_id',$event->request->nonstrike_id)->first();
+        $non_striker->bt_status = 10;
+        $non_striker->bt_order = 2;
+        $non_striker->update();
 
-        $match = Game::where('match_id',$event->request->match_id)
-            ->where('tournament_id',$event->request->tournament)
-            ->increment('status');
+        $attacker = $match->MatchPlayers->where('team_id',$bowling_team_id)->where('player_id',$event->request->attacker_id)->first();
+        $attacker->bw_status = 11;
+        $attacker->update();
+
+        $match->status += 1;
+        $match->update();
     }
 }

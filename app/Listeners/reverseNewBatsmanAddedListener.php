@@ -27,15 +27,13 @@ class reverseNewBatsmanAddedListener
      */
     public function handle($event)
     {
-        $nonstriker_batsman = MatchPlayers::where('match_id', $event->request->match_id)
-            ->where('tournament_id', $event->request->tournament)
-            ->where('team_id', $event->request->bt_team_id)
-            ->where('bt_status', 10)->first();
+        $match = $event->match;
 
-        $striker_batsman = MatchPlayers::where('match_id', $event->request->match_id)
-            ->where('tournament_id', $event->request->tournament)
-            ->where('team_id', $event->request->bt_team_id)
-            ->where('bt_status', 11)->first();
+        $batting_team = $match->MatchDetail->where('isBatting',1)->first();
+        $batting_team_id = optional($batting_team)->team_id;
+
+        $nonstriker_batsman =  $match->MatchPlayers->where('team_id',$batting_team_id)->where('bt_status',10)->first();
+        $striker_batsman =  $match->MatchPlayers->where('team_id',$batting_team_id)->where('bt_status',11)->first();
 
 
         if ($event->previous_ball->wicket_type == 'runout') {

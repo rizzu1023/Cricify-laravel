@@ -27,10 +27,13 @@ class bowlerFiveRunUpdateListener
      */
     public function handle($event)
     {
-        MatchPlayers::where('match_id', $event->request->match_id)
-            ->where('tournament_id', $event->request->tournament)
-            ->where('team_id', $event->request->bw_team_id)
-            ->where('player_id', $event->request->attacker_id)
-            ->increment('bw_runs',5);
+        $match = $event->match;
+
+        $bowling_team = $match->MatchDetail->where('isBatting',0)->first();
+        $bowling_team_id = optional($bowling_team)->team_id;
+
+        $player = $match->MatchPlayers->where('team_id',$bowling_team_id)->where('bw_status',11)->first();
+        $player->bw_runs += 5;
+        $player->update();
     }
 }

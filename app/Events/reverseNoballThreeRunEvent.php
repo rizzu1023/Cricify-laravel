@@ -14,17 +14,21 @@ class reverseNoballThreeRunEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
     public $request;
+    public $match;
     public $previous_ball;
 
     /**
      * Create a new event instance.
      *
-     * @return void
+     * @param $match
+     * @param $request
+     * @param $previous_ball
      */
-    public function __construct($request,$previous_ball)
+    public function __construct($match,$request,$previous_ball)
     {
-        $this->request = $request;
         $this->previous_ball = $previous_ball;
+        $this->request = $request;
+        $this->match = $match;
     }
 
     /**

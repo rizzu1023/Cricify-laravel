@@ -27,25 +27,18 @@ class RetiredHurtBatsmanListener
      */
     public function handle(RetiredHurtBatsmanEvent $event)
     {
-        $retired_hurt_batsman = MatchPlayers::where('match_id', $event->request->match_id)
-            ->where('tournament_id', $event->request->tournament)
-            ->where('team_id', $event->request->bt_team_id)
-            ->where('player_id', $event->request->retiredHurtBatsman_id)->first();
+        $match = $event->match;
+        $batting_team = $match->MatchDetail->where('isBatting',1)->first();
+        $batting_team_id = optional($batting_team)->team_id;
 
-        $new_batsman = MatchPlayers::where('match_id', $event->request->match_id)
-            ->where('tournament_id', $event->request->tournament)
-            ->where('team_id', $event->request->bt_team_id)
-            ->where('player_id', $event->request->newBatsman_id)->first();
 
-        $highest_batting_order = MatchPlayers::where('match_id', $event->request->match_id)
-            ->where('tournament_id', $event->request->tournament)
-            ->where('team_id', $event->request->bt_team_id)
-            ->where('bt_order','<',100)
-            ->max('bt_order');
+        $retired_hurt_batsman = $match->MatchPlayers->where('team_id',$batting_team_id)->where('player_id', $event->request->retiredHurtBatsman_id)->first();
+        $new_batsman = $match->MatchPlayers->where('team_id',$batting_team_id)->where('player_id', $event->request->newBatsman_id)->first();
+        $highest_batting_order = $match->MatchPlayers->where('team_id',$batting_team_id)->where('bt_order','<',100)->sortByDesc('bt_order')->first()->bt_order;
 
         $strike_status = $retired_hurt_batsman->bt_status;
         $retired_hurt_batsman->bt_status = 12;
-        $retired_hurt_batsman->save();
+        $retired_hurt_batsman->update();
 
         if($strike_status == 10){
             $new_batsman->bt_status = 10;
@@ -55,6 +48,6 @@ class RetiredHurtBatsmanListener
         }
 
         $new_batsman->bt_order = $highest_batting_order + 1;
-        $new_batsman->save();
+        $new_batsman->update();
     }
 }

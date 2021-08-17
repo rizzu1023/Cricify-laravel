@@ -28,51 +28,32 @@ class endInningListener
      */
     public function handle($event)
     {
-        $match1 = Game::where('match_id',$event->request->match_id)
-            ->where('tournament_id',$event->request->tournament)
-            ->increment('status');
+        $match = $event->match;
+        $match->status += 1;
+        $match->update();
 
-        $match = Game::with('MatchDetail')->where('match_id',$event->request->match_id)->first();
+        $batting_team = $match->MatchDetail->where('isBatting',1)->first();
+        $bowling_team = $match->MatchDetail->where('isBatting',0)->first();
 
         if($match->status == 2){
-            $inning1 = MatchDetail::where('match_id',$event->request->match_id)
-                ->where('tournament_id',$event->request->tournament)
-                ->where('isBatting',1)
-                ->first();
 
-            $inning0 = MatchDetail::where('match_id',$event->request->match_id)
-                ->where('tournament_id',$event->request->tournament)
-                ->where('isBatting',0)
-                ->first();
-
-
-            $inning1->isBatting = 0;
-            $inning0->isBatting = 1;
-            $inning1->update();
-            $inning0->update();
+            $batting_team->isBatting = 0;
+            $bowling_team->isBatting = 1;
+            $batting_team->update();
+            $bowling_team->update();
 
         }
         if($match->status == 4){
-            $inning1 = MatchDetail::where('match_id',$event->request->match_id)
-                ->where('tournament_id',$event->request->tournament)
-                ->where('isBatting',1)
-                ->first();
 
-            $inning0 = MatchDetail::where('match_id',$event->request->match_id)
-                ->where('tournament_id',$event->request->tournament)
-                ->where('isBatting',0)
-                ->first();
-
-
-            if($inning1->score > $inning0->score){
-                $wickets = 10 - $inning1->wicket;
-                $match->won = $inning1->team_id;
+            if($batting_team->score > $bowling_team->score){
+                $wickets = 10 - $batting_team->wicket;
+                $match->won = $batting_team->team_id;
                 $result = "won by $wickets wickets";
                 $match->description = $result;
             }
-            else if($inning1->score < $inning0->score){
-                $runs = $inning0->score - $inning1->score;
-                $match->won = $inning0->team_id;
+            else if($batting_team->score < $bowling_team->score){
+                $runs = $bowling_team->score - $batting_team->score;
+                $match->won = $bowling_team->team_id;
                 $result = "won by $runs runs";
                 $match->description = $result;
             }
@@ -81,10 +62,6 @@ class endInningListener
                 $match->description = "Match Draw";
             }
             $match->update();
-
-            $inning1->isBatting = 0;
-            $inning1->update();
-
 
             UpdatePointsTableJob::dispatch($match);
         }

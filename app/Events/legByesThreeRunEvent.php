@@ -14,15 +14,18 @@ class legByesThreeRunEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
     public $request;
+    public $match;
 
     /**
      * Create a new event instance.
      *
-     * @return void
+     * @param $match
+     * @param $request
      */
-    public function __construct($request)
+    public function __construct($match,$request)
     {
         $this->request = $request;
+        $this->match = $match;
     }
 
     /**

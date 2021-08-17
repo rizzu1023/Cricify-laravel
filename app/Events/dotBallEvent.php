@@ -13,15 +13,18 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 class dotBallEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
+    public $match;
     public $request;
+
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($request)
+    public function __construct($match,$request)
     {
+        $this->match = $match;
         $this->request = $request;
     }
 

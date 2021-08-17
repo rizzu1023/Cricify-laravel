@@ -37,6 +37,10 @@ class Game extends Model
         return $this->hasMany('App\MatchPlayers','match_id','match_id')->orderBy('updated_at','asc');
     }
 
+    public function MatchTracks(){
+        return $this->hasMany(MatchTrack::class,'match_id','match_id');
+    }
+
     public function WON(){
         return $this->belongsTo('App\Teams','won','id');
     }

@@ -28,7 +28,12 @@ class matchTrackListener
      */
     public function handle($event)
     {
-        $match_detail = MatchDetail::select('score','wicket','over','overball')->where('team_id',$event->request->bt_team_id)->where('tournament_id',$event->request->tournament)->where('match_id',$event->request->match_id)->first();
+        $match = $event->match;
+        $match_detail = $match->MatchDetail->where('isBatting',1)->first();
+        $batting_team_id = $match_detail->team_id;
+        $bowling_team_id = $match->MatchDetail->where('isBatting',0)->first()->team_id;
+
+
         $action = '--';
         $run = 0;
         $wicket = 0;
@@ -139,25 +144,15 @@ class matchTrackListener
             }
         }
 
-        $striker = MatchPlayers::where('match_id', $event->request->match_id)
-            ->where('tournament_id', $event->request->tournament)
-            ->where('team_id', $event->request->bt_team_id)
-            ->where('bt_status', 11)->first();
+        $striker = $match->MatchPlayers->where('team_id',$batting_team_id)->where('bt_status',11)->first();
+        $non_striker = $match->MatchPlayers->where('team_id',$batting_team_id)->where('bt_status',10)->first();
+        $attacker = $match->MatchPlayers->where('team_id',$bowling_team_id)->where('bw_status',11)->first();
 
-        $non_striker = MatchPlayers::where('match_id', $event->request->match_id)
-            ->where('tournament_id', $event->request->tournament)
-            ->where('team_id', $event->request->bt_team_id)
-            ->where('bt_status', 10)->first();
-
-        $attacker = MatchPlayers::where('match_id', $event->request->match_id)
-            ->where('tournament_id', $event->request->tournament)
-            ->where('team_id', $event->request->bw_team_id)
-            ->where('bw_status', 11)->first();
 
             if ($match_detail) {
                 MatchTrack::create([
-                    'match_id' => $event->request->match_id,
-                    'team_id' => $event->request->bt_team_id,
+                    'match_id' => $match->match_id,
+                    'team_id' => $match_detail->team_id,
                     'player_id' => $striker->player_id,
                     'attacker_id' => $attacker->player_id,
                     'non_striker_id' => $non_striker->player_id,
@@ -171,7 +166,7 @@ class matchTrackListener
                     'over' => $match_detail->over,
                     'overball' => $match_detail->overball,
                     'batsman_cross' => $batsman_cross,
-                    'tournament_id' => $event->request->tournament,
+                    'tournament_id' => $match->tournament_id,
                 ]);
             }
         }

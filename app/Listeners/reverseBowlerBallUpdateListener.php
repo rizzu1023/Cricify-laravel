@@ -27,12 +27,13 @@ class reverseBowlerBallUpdateListener
      */
     public function handle($event)
     {
-        $striker = MatchPlayers::where('match_id', $event->request->match_id)
-            ->where('tournament_id', $event->request->tournament)
-            ->where('team_id', $event->request->bw_team_id)
-            ->where('bw_status', 11)->first();
+        $match = $event->match;
 
-        $striker->bw_overball = $striker->bw_overball - 1;
-        $striker->save();
+        $match_detail = $match->MatchDetail->where('isBatting',0)->first();
+        $bowling_team_id = $match_detail->team_id;
+
+        $player = $match->MatchPlayers->where('team_id',$bowling_team_id)->where('bw_status',11)->first();
+        $player->bw_overball -= 1;
+        $player->update();
     }
 }

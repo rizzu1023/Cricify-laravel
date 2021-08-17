@@ -156,6 +156,7 @@
             }).change(function () {
                 if ($(".team2-checkbox:input:checkbox:checked").length > max_limit) {
                     this.checked = false;
+                    alert('You can select maximum ' + max_limit + ' players');
                 }
             });
         });
