@@ -39,8 +39,8 @@ class  strikeRotateListener
 //            ->where('team_id', $event->request->bt_team_id)
 //            ->whereIn('bt_status', [10, 11])->get();
 
-        $nonstriker = $match->MatchPlayers->where('team_id',$batting_team_id)->where('bt_status',11)->first();
-        $striker = $match->MatchPlayers->where('team_id',$batting_team_id)->where('bt_status',10)->first();
+        $striker = $match->MatchPlayers->where('team_id',$batting_team_id)->where('bt_status',11)->first();
+        $nonstriker = $match->MatchPlayers->where('team_id',$batting_team_id)->where('bt_status',10)->first();
 
 
         DB::transaction(function () use ($nonstriker, $striker) {

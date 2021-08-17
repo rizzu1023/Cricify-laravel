@@ -36,15 +36,15 @@ class isOverForTeam
 
 
         if ($batting_team->overball > 5) {
-            $batting_team->update([
-                'overball' => 0,
-                'over' => $batting_team->over + 1,
-                'isOver' => 1,
-            ]);
+
+            $batting_team->overball = 0;
+            $batting_team->over += 1;
+            $batting_team->isOver = 1;
+            $batting_team->update();
 
 
-            $striker = $match->MatchPlayers->where('team_id',$batting_team_id)->where('bt_status',11);
-            $nonstriker = $match->MatchPlayers->where('team_id',$batting_team_id)->where('bt_status',10);
+            $striker = $match->MatchPlayers->where('team_id',$batting_team_id)->where('bt_status',11)->first();
+            $nonstriker = $match->MatchPlayers->where('team_id',$batting_team_id)->where('bt_status',10)->first();
 
             DB::transaction(function() use ($nonstriker,$striker){
                 $nonstriker->update(['bt_status' => 11]);

@@ -144,24 +144,10 @@ class matchTrackListener
             }
         }
 
-//        $striker = MatchPlayers::where('match_id', $event->request->match_id)
-//            ->where('tournament_id', $event->request->tournament)
-//            ->where('team_id', $event->request->bt_team_id)
-//            ->where('bt_status', 11)->first();
-
         $striker = $match->MatchPlayers->where('team_id',$batting_team_id)->where('bt_status',11)->first();
         $non_striker = $match->MatchPlayers->where('team_id',$batting_team_id)->where('bt_status',10)->first();
         $attacker = $match->MatchPlayers->where('team_id',$bowling_team_id)->where('bw_status',11)->first();
 
-//        $non_striker = MatchPlayers::where('match_id', $event->request->match_id)
-//            ->where('tournament_id', $event->request->tournament)
-//            ->where('team_id', $event->request->bt_team_id)
-//            ->where('bt_status', 10)->first();
-//
-//        $attacker = MatchPlayers::where('match_id', $event->request->match_id)
-//            ->where('tournament_id', $event->request->tournament)
-//            ->where('team_id', $event->request->bw_team_id)
-//            ->where('bw_status', 11)->first();
 
             if ($match_detail) {
                 MatchTrack::create([

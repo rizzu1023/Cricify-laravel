@@ -2,13 +2,10 @@
 
 namespace App\Listeners;
 
-use App\Events\wicketEvent;
-use App\MatchPlayers;
-use App\MatchDetail;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Queue\InteractsWithQueue;
 
-class currentBatsmanRemoveListener
+class wicketListener
 {
     /**
      * Create the event listener.
@@ -23,7 +20,7 @@ class currentBatsmanRemoveListener
     /**
      * Handle the event.
      *
-     * @param wicketEvent $event
+     * @param  object  $event
      * @return void
      */
     public function handle($event)
@@ -32,6 +29,8 @@ class currentBatsmanRemoveListener
 
         $batting_team = $match->MatchDetail->where('isBatting',1)->first();
         $batting_team_id = optional($batting_team)->team_id;
+        $bowling_team = $match->MatchDetail->where('isBatting',0)->first();
+        $bowling_team_id = optional($bowling_team)->team_id;
 
         $current_batsman = $match->MatchPlayers->where('team_id',$batting_team_id)->where('bt_status',11)->first();
 
@@ -42,7 +41,7 @@ class currentBatsmanRemoveListener
             $current_batsman->bt_status = 0;
             $current_batsman->update();
         }
-        if ($event->request->wicket_type == 'catch' || $event->request->wicket_type == 'stump') {
+        elseif ($event->request->wicket_type == 'catch' || $event->request->wicket_type == 'stump') {
             $current_batsman->wicket_type = $event->request->wicket_type;
             $current_batsman->wicket_primary = $event->request->attacker_id;
             $current_batsman->wicket_secondary = $event->request->wicket_secondary;
@@ -50,7 +49,7 @@ class currentBatsmanRemoveListener
             $current_batsman->bt_status = 0;
             $current_batsman->update();
         }
-        if ($event->request->wicket_type == 'runout') {
+        elseif ($event->request->wicket_type == 'runout') {
 
             $current_batsman->bt_runs = $current_batsman->bt_runs + $event->request->run_scored;
             $current_batsman->bt_balls = $current_batsman->bt_balls + 1;
@@ -108,6 +107,41 @@ class currentBatsmanRemoveListener
             else
                 $got_out_batsman->update();
         }
-    }
 
+        if ($event->request->wicket_type != 'runout') {
+            $match = $event->match;
+
+            $batting_team = $match->MatchDetail->where('isBatting',1)->first();
+            $batting_team_id = optional($batting_team)->team_id;
+
+            $highest_batting_order = $match->MatchPlayers->where('team_id',$batting_team_id)->where('bt_order','<',100)->sortByDesc('bt_order')->first()->bt_order;
+
+            $new_batsman =  $match->MatchPlayers->where('team_id',$batting_team_id)->where('player_id', $event->request->newBatsman_id)->first();
+            $new_batsman->bt_status = 11;
+            $new_batsman->bt_order = $highest_batting_order + 1;
+            $new_batsman->update();
+
+            if ($event->request->isBatsmanCross) {
+
+                $nonstriker_batsman =  $match->MatchPlayers->where('team_id',$batting_team_id)->where('bt_status',10)->first();
+                $nonstriker_batsman->bt_status = 11;
+                $nonstriker_batsman->update();
+
+                $striker_batsman =  $match->MatchPlayers->where('team_id',$batting_team_id)->where('player_id', $event->request->newBatsman_id)->first();
+                $striker_batsman->bt_status = 10;
+                $striker_batsman->update();
+            }
+        }
+
+        $bowler = $match->MatchPlayers->where('team_id',$bowling_team_id)->where('bw_status',11)->first();
+        $bowler->bw_overball += 1;
+        if($event->request->wicket_type != 'runout'){
+            $bowler->bw_wickets += 1;
+        }
+        $bowler->update();
+
+        $batting_team->overball += 1;
+        $batting_team->wicket += 1;
+        $batting_team->update();
+    }
 }
