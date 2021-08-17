@@ -27,9 +27,10 @@ class reverseTeamThreeRunUpdateListener
      */
     public function handle($event)
     {
-        MatchDetail::where('match_id', $event->request->match_id)
-            ->where('tournament_id', $event->request->tournament)
-            ->where('team_id', $event->request->bt_team_id)
-            ->decrement('score',3);
+        $match = $event->match;
+        $batting_team = $match->MatchDetail->where('isBatting',1)->first();
+
+        $batting_team->score -= 3;
+        $batting_team->update();
     }
 }

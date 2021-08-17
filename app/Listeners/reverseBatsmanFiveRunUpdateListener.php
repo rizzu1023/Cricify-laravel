@@ -27,12 +27,13 @@ class reverseBatsmanFiveRunUpdateListener
      */
     public function handle($event)
     {
-        $striker = MatchPlayers::where('match_id', $event->request->match_id)
-            ->where('tournament_id', $event->request->tournament)
-            ->where('team_id', $event->request->bt_team_id)
-            ->where('bt_status', 11)->first();
+        $match = $event->match;
 
-        $striker->bt_runs = $striker->bt_runs - 5;
-        $striker->save();
+        $match_detail = $match->MatchDetail->where('isBatting',1)->first();
+        $batting_team_id = $match_detail->team_id;
+
+        $player = $match->MatchPlayers->where('team_id',$batting_team_id)->where('bt_status',11)->first();
+        $player->bt_runs -= 5;
+        $player->update();
     }
 }

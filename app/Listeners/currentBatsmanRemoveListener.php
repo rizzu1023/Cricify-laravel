@@ -28,23 +28,19 @@ class currentBatsmanRemoveListener
      */
     public function handle($event)
     {
-        $current_batsman = MatchPlayers::where('match_id', $event->request->match_id)
-            ->where('tournament_id', $event->request->tournament)
-            ->where('team_id', $event->request->bt_team_id)
-            ->where('bt_status', 11)->first();
+        $match = $event->match;
 
+        $batting_team = $match->MatchDetail->where('isBatting',1)->first();
+        $batting_team_id = optional($batting_team)->team_id;
 
-        $current_batting_team = MatchDetail::where('match_id', $event->request->match_id)
-            ->where('tournament_id', $event->request->tournament)
-            ->where('team_id', $event->request->bt_team_id)
-            ->first();
+        $current_batsman = $match->MatchPlayers->where('team_id',$batting_team_id)->where('bt_status',11)->first();
 
         if ($event->request->wicket_type == 'bold' || $event->request->wicket_type == 'lbw' || $event->request->wicket_type == 'hitwicket') {
             $current_batsman->wicket_type = $event->request->wicket_type;
             $current_batsman->wicket_primary = $event->request->attacker_id;
             $current_batsman->bt_balls = $current_batsman->bt_balls + 1;
             $current_batsman->bt_status = 0;
-            $current_batsman->save();
+            $current_batsman->update();
         }
         if ($event->request->wicket_type == 'catch' || $event->request->wicket_type == 'stump') {
             $current_batsman->wicket_type = $event->request->wicket_type;
@@ -52,7 +48,7 @@ class currentBatsmanRemoveListener
             $current_batsman->wicket_secondary = $event->request->wicket_secondary;
             $current_batsman->bt_balls = $current_batsman->bt_balls + 1;
             $current_batsman->bt_status = 0;
-            $current_batsman->save();
+            $current_batsman->update();
         }
         if ($event->request->wicket_type == 'runout') {
 
@@ -60,38 +56,21 @@ class currentBatsmanRemoveListener
             $current_batsman->bt_balls = $current_batsman->bt_balls + 1;
             $current_batsman->update();
 
-            $current_batting_team->score = $current_batting_team->score + $event->request->run_scored;
-            $current_batting_team->update();
+            $batting_team->score = $batting_team->score + $event->request->run_scored;
+            $batting_team->update();
 
-            $got_out_batsman = MatchPlayers::where('match_id', $event->request->match_id)
-                ->where('tournament_id', $event->request->tournament)
-                ->where('team_id', $event->request->bt_team_id)
-                ->where('player_id', $event->request->batsman_runout)->first();
+            $got_out_batsman = $match->MatchPlayers->where('team_id',$batting_team_id)->where('player_id', $event->request->batsman_runout)->first();
+            $new_batsman = $match->MatchPlayers->where('team_id',$batting_team_id)->where('player_id', $event->request->newBatsman_id)->first();
+            $highest_batting_order = $match->MatchPlayers->where('team_id',$batting_team_id)->where('bt_order','<',100)->sortByDesc('bt_order')->first()->bt_order;
 
-            $highest_batting_order = MatchPlayers::where('match_id', $event->request->match_id)
-                ->where('tournament_id', $event->request->tournament)
-                ->where('team_id', $event->request->bt_team_id)
-                ->where('bt_order', '<', 100)
-                ->max('bt_order');
-
-            $new_batsman = MatchPlayers::where('match_id', $event->request->match_id)
-                ->where('tournament_id', $event->request->tournament)
-                ->where('team_id', $event->request->bt_team_id)
-                ->where('player_id', $event->request->newBatsman_id)->first();
 
             if ($new_batsman)
                 $new_batsman->bt_order = $highest_batting_order + 1;
 
 
-            $striker_batsman = MatchPlayers::where('match_id', $event->request->match_id)
-                ->where('tournament_id', $event->request->tournament)
-                ->where('team_id', $event->request->bt_team_id)
-                ->where('bt_status', 11)->first();
+            $striker_batsman = $match->MatchPlayers->where('team_id',$batting_team_id)->where('bt_status',11)->first();
+            $non_striker_batsman = $match->MatchPlayers->where('team_id',$batting_team_id)->where('bt_status',10)->first();
 
-            $non_striker_batsman = MatchPlayers::where('match_id', $event->request->match_id)
-                ->where('tournament_id', $event->request->tournament)
-                ->where('team_id', $event->request->bt_team_id)
-                ->where('bt_status', 10)->first();
 
             if ($got_out_batsman->bt_status == 10 && $event->request->where_batsman_runout == 'strike') {
                 $striker_batsman->bt_status = 10;

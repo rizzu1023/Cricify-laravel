@@ -22,17 +22,21 @@ class bowlerWicketUpdateListener
     /**
      * Handle the event.
      *
-     * @param  wicketEvent  $event
+     * @param wicketEvent $event
      * @return void
      */
     public function handle($event)
     {
-        if($event->request->wicket_type != 'runout'){
-        MatchPlayers::where('match_id', $event->request->match_id)
-            ->where('tournament_id', $event->request->tournament)
-            ->where('team_id', $event->request->bw_team_id)
-            ->where('bw_status', '11')
-            ->increment('bw_wickets');
+        if ($event->request->wicket_type != 'runout') {
+
+            $match = $event->match;
+            $bowling_team = $match->MatchDetail->where('isBatting', 0)->first();
+            $bowling_team_id = optional($bowling_team)->team_id;
+
+            $current_bowler = $match->MatchPlayers->where('team_id', $bowling_team_id)->where('bw_status', 11)->first();
+            $current_bowler->bw_wickets += 1;
+            $current_bowler->update();
+
         }
     }
 }

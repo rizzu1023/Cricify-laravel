@@ -33,6 +33,7 @@
                                 <thead>
                                 <tr>
                                     <th>Sr</th>
+                                    <th>Image</th>
                                     <th>Player Id</th>
                                     <th>Player Name</th>
                                     <th>Player Role</th>
@@ -46,6 +47,7 @@
                                     <tr>
 
                                         <th scope="row">{{$i}}</th>
+                                        <td><img height="50px" width=50px" src="{{ $p->getFirstMedia('player-image') ? $p->getFirstMedia('player-image')->getUrl('player-profile') : asset("images/avatar.png") }}"></td>
                                         <td>{{$p->player_id}}</td>
                                         <td>{{$p->first_name}} {{$p->last_name}}</td>
                                         <td>{{$p->Role->name}}</td>

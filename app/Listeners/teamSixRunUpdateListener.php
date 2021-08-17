@@ -22,19 +22,15 @@ class teamSixRunUpdateListener
     /**
      * Handle the event.
      *
-     * @param  sixRunEvent  $event
+     * @param sixRunEvent $event
      * @return void
      */
     public function handle($event)
     {
-        MatchDetail::where('match_id', $event->request->match_id)
-            ->where('tournament_id', $event->request->tournament)
-            ->where('team_id', $event->request->bt_team_id)
-            ->increment('score',6);
+        $match = $event->match;
+        $batting_team = $match->MatchDetail->where('isBatting', 1)->first();
 
-        /*MatchDetail::where('match_id', $request->match_id)
-            ->where('tournament_id', $request->tournament)
-            ->where('team_id', $request->bt_team_id)
-            ->increment('score', $request->value, ['overball' => DB::raw('overball + 1')]);*/
+        $batting_team->score += 6;
+        $batting_team->update();
     }
 }

@@ -27,16 +27,13 @@ class bowlerTwoRunUpdateListener
      */
     public function handle($event)
     {
-        MatchPlayers::where('match_id', $event->request->match_id)
-            ->where('tournament_id', $event->request->tournament)
-            ->where('team_id', $event->request->bw_team_id)
-            ->where('player_id', $event->request->attacker_id)
-            ->increment('bw_runs',2);
+        $match = $event->match;
 
-        /*MatchPlayers::where('match_id', $request->match_id)
-            ->where('tournament_id', $request->tournament)
-            ->where('team_id', $request->bw_team_id)
-            ->where('player_id', $request->attacker_id)
-            ->increment('bw_runs', $request->value, ['bw_overball' => DB::raw('bw_overball + 1')]);*/
+        $bowling_team = $match->MatchDetail->where('isBatting',0)->first();
+        $bowling_team_id = optional($bowling_team)->team_id;
+
+        $player = $match->MatchPlayers->where('team_id',$bowling_team_id)->where('bw_status',11)->first();
+        $player->bw_runs += 2;
+        $player->update();
     }
 }

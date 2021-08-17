@@ -49,7 +49,7 @@
                             @foreach($players as $p)
                                 <tr id="{{$p->id}}">
                                     <td>{{$loop->iteration}}</td>
-                                    <td class="text-center"><img src="{{ asset("Assets/Admin/images/ecommerce/product-table-1.png") }}" alt="img not found"></td>
+                                    <td class="text-center"><img height="50px" width=50px" src="{{ $p->getFirstMedia('player-image') ? $p->getFirstMedia('player-image')->getUrl('player-profile') : asset("images/avatar.png") }}" alt="img not found"></td>
                                     <td>
                                         <h6> {{$p->player_id}}</h6>
                                         {{--                    <span>Interchargebla lens Digital Camera with APS-C-X Trans CMOS Sens</span>--}}
@@ -85,8 +85,8 @@
 @endsection
 
 @section('js')
-            <script src="{{asset('Assets/Admin/js/datatable/datatables/jquery.dataTables.min.js')}}"></script>
-            <script src="{{asset('Assets/Admin/js/datatable/datatables/datatable.custom.js')}}"></script>
+            <script src="{{asset('assets/Admin/js/datatable/datatables/jquery.dataTables.min.js')}}"></script>
+            <script src="{{asset('assets/Admin/js/datatable/datatables/datatable.custom.js')}}"></script>
 @endsection
 
 
