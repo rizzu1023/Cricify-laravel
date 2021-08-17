@@ -4,7 +4,9 @@ use App\Http\Controllers\LiveScoreController;
 use App\Http\Controllers\ResultController;
 use App\Http\Controllers\PointsTableController;
 use App\Http\Controllers\TournamentScheduleController;
-
+use App\Http\Controllers\TeamPlayerController;
+use App\Http\Controllers\TournamentController;
+use App\Http\Controllers\SuperAdminController;
 //frontend Routes
 Route::get('/index', [MainController::class,'GetIndex']);
 Route::get('/pointsTable', [MainController::class,'GetPointsTable']);

@@ -78,12 +78,16 @@ class TeamPlayerController extends Controller
         $bw = Bowling::where('player_id', $player->player_id)->first();
         $teams = MatchPlayers::where('player_id', $player->player_id)->select('team_id')->distinct()->get();
 
+
         return view('Admin/Player/show', compact('player', 'bt', 'bw', 'teams','team'));
     }
 
     public function edit(Teams $team, Players $player)
     {
-        return view('Admin.Player.edit', compact('player', 'team'));
+        $roles = MasterRole::where('status',1)->get();
+        $battingStyles = MasterBattingStyle::where('status',1)->get();
+        $bowlingStyles = MasterBowlingStyle::where('status',1)->get();
+        return view('Admin.Player.edit', compact('player', 'team','roles','battingStyles','bowlingStyles'));
     }
 
 
@@ -97,18 +101,18 @@ class TeamPlayerController extends Controller
             'player_id' => 'required',
             'first_name' => 'required',
             'last_name' => 'required',
-            'role' => 'required',
-            'batting_style' => 'required',
-            'bowling_style' => '',
-        ]);
-
-        $request->validate([
-            'player_image' => 'sometimes|required|mimes:png,jpeg,jpg'
+            'role_id' => 'required',
+            'batting_style_id' => 'required',
+            'bowling_style_id' => '',
         ]);
 
         $player->update($data);
 
         if($request->hasFile('player_image')){
+            $request->validate([
+                'player_image' => 'mimes:png,jpeg,jpg'
+            ]);
+
             $player->addMediaFromRequest('player_image')->toMediaCollection('player-image');
         }
 

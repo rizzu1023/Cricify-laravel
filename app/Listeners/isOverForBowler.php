@@ -3,10 +3,7 @@
 namespace App\Listeners;
 
 use App\Events\strikeRotateEvent;
-use App\MatchDetail;
 use App\MatchPlayers;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class isOverForBowler
 {

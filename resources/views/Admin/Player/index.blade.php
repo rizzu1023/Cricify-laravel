@@ -56,7 +56,7 @@
                                             @csrf
                                             @method('DELETE')
                                             <!-- <input type="hidden" value="#" name="id"> -->
-                                                <button class="btn btn-danger btn-sm" onclick="return tconfirm('Are you sure you want to remove this player ?');">Delete</button>
+                                                <button class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to remove this player ?');">Delete</button>
                                             </form>
 
                                         </td>
