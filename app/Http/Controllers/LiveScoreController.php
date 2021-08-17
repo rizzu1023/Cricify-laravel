@@ -387,44 +387,44 @@ class LiveScoreController extends Controller
                     event(new endInningEvent($request));
                 }
             }
-            if ($request->value == 8) event(new dotBallEvent($request));
+            elseif ($request->value == 8) event(new dotBallEvent($request));
 
-            if ($request->value == 1) event(new oneRunEvent($request));
-            if ($request->value == 2) event(new twoRunEvent($request));
-            if ($request->value == 3) event(new threeRunEvent($request));
-            if ($request->value == 4) event(new fourRunEvent($request));
-            if ($request->value == 5) event(new fiveRunEvent($request));
-            if ($request->value == 6) event(new sixRunEvent($request));
+            elseif ($request->value == 1) event(new oneRunEvent($request));
+            elseif ($request->value == 2) event(new twoRunEvent($request));
+            elseif ($request->value == 3) event(new threeRunEvent($request));
+            elseif ($request->value == 4) event(new fourRunEvent($request));
+            elseif ($request->value == 5) event(new fiveRunEvent($request));
+            elseif ($request->value == 6) event(new sixRunEvent($request));
 
-            if ($request->value == 'wd') event(new wideZeroRunEvent($request));
-            if ($request->value == 'wd1') event(new wideOneRunEvent($request));
-            if ($request->value == 'wd2') event(new wideTwoRunEvent($request));
-            if ($request->value == 'wd3') event(new wideThreeRunEvent($request));
-            if ($request->value == 'wd4') event(new wideFourRunEvent($request));
+            elseif ($request->value == 'wd') event(new wideZeroRunEvent($request));
+            elseif ($request->value == 'wd1') event(new wideOneRunEvent($request));
+            elseif ($request->value == 'wd2') event(new wideTwoRunEvent($request));
+            elseif ($request->value == 'wd3') event(new wideThreeRunEvent($request));
+            elseif ($request->value == 'wd4') event(new wideFourRunEvent($request));
 
-            if ($request->value == 'b1') event(new byesOneRunEvent($request));
-            if ($request->value == 'b2') event(new byesTwoRunEvent($request));
-            if ($request->value == 'b3') event(new byesThreeRunEvent($request));
-            if ($request->value == 'b4') event(new byesFourRunEvent($request));
+            elseif ($request->value == 'b1') event(new byesOneRunEvent($request));
+            elseif ($request->value == 'b2') event(new byesTwoRunEvent($request));
+            elseif ($request->value == 'b3') event(new byesThreeRunEvent($request));
+            elseif ($request->value == 'b4') event(new byesFourRunEvent($request));
 
-            if ($request->value == 'lb1') event(new legByesOneRunEvent($request));
-            if ($request->value == 'lb2') event(new legByesTwoRunEvent($request));
-            if ($request->value == 'lb3') event(new legByesThreeRunEvent($request));
-            if ($request->value == 'lb4') event(new legByesFourRunEvent($request));
+            elseif ($request->value == 'lb1') event(new legByesOneRunEvent($request));
+            elseif ($request->value == 'lb2') event(new legByesTwoRunEvent($request));
+            elseif ($request->value == 'lb3') event(new legByesThreeRunEvent($request));
+            elseif ($request->value == 'lb4') event(new legByesFourRunEvent($request));
 
-            if ($request->value == 'nb') event(new noballZeroRunEvent($request));
-            if ($request->value == 'nb1') event(new noballOneRunEvent($request));
-            if ($request->value == 'nb2') event(new noballTwoRunEvent($request));
-            if ($request->value == 'nb3') event(new noballThreeRunEvent($request));
-            if ($request->value == 'nb4') event(new noballFourRunEvent($request));
-            if ($request->value == 'nb5') event(new noballFiveRunEvent($request));
-            if ($request->value == 'nb6') event(new noballSixRunEvent($request));
+            elseif ($request->value == 'nb') event(new noballZeroRunEvent($request));
+            elseif ($request->value == 'nb1') event(new noballOneRunEvent($request));
+            elseif ($request->value == 'nb2') event(new noballTwoRunEvent($request));
+            elseif ($request->value == 'nb3') event(new noballThreeRunEvent($request));
+            elseif ($request->value == 'nb4') event(new noballFourRunEvent($request));
+            elseif ($request->value == 'nb5') event(new noballFiveRunEvent($request));
+            elseif ($request->value == 'nb6') event(new noballSixRunEvent($request));
 
-            if ($request->value == 'rh') event(new RetiredHurtBatsmanEvent($request));
-            if ($request->value == 'sr') event(new strikeRotateEvent($request));
+            elseif ($request->value == 'rh') event(new RetiredHurtBatsmanEvent($request));
+            elseif ($request->value == 'sr') event(new strikeRotateEvent($request));
 
 
-            if ($request->value == 'undo' || $request->value == 'reverse_inning') {
+            elseif ($request->value == 'undo' || $request->value == 'reverse_inning') {
 
                 if($request->value == 'reverse_inning'){
                     event(new reverseEndInningEvent($request));
@@ -464,34 +464,34 @@ class LiveScoreController extends Controller
 
 
                 if (!$previous_ball) return response()->json(['status' => false, 'message' => 'Invalid Option']);
-                if ($previous_ball->action == 'zero') event(new reverseDotBallEvent($request, $previous_ball));
-                if ($previous_ball->action == 'one') event(new reverseOneRunEvent($request, $previous_ball));
-                if ($previous_ball->action == 'two') event(new reverseTwoRunEvent($request, $previous_ball));
-                if ($previous_ball->action == 'three') event(new reverseThreeRunEvent($request, $previous_ball));
-                if ($previous_ball->action == 'four') event(new reverseFourRunEvent($request, $previous_ball));
-                if ($previous_ball->action == 'five') event(new reverseFiveRunEvent($request, $previous_ball));
-                if ($previous_ball->action == 'six') event(new reverseSixRunEvent($request, $previous_ball));
-                if ($previous_ball->action == 'wd') event(new reverseWideZeroRunEvent($request, $previous_ball));
-                if ($previous_ball->action == 'wd1') event(new reverseWideOneRunEvent($request, $previous_ball));
-                if ($previous_ball->action == 'wd2') event(new reverseWideTwoRunEvent($request, $previous_ball));
-                if ($previous_ball->action == 'wd3') event(new reverseWideThreeRunEvent($request, $previous_ball));
-                if ($previous_ball->action == 'wd4') event(new reverseWideFourRunEvent($request, $previous_ball));
-                if ($previous_ball->action == 'wicket') event(new reverseWicketEvent($request, $previous_ball));
-                if ($previous_ball->action == 'nb') event(new reverseNoballZeroRunEvent($request, $previous_ball));
-                if ($previous_ball->action == 'nb1') event(new reverseNoballOneRunEvent($request, $previous_ball));
-                if ($previous_ball->action == 'nb2') event(new reverseNoballTwoRunEvent($request, $previous_ball));
-                if ($previous_ball->action == 'nb3') event(new reverseNoballThreeRunEvent($request, $previous_ball));
-                if ($previous_ball->action == 'nb4') event(new reverseNoballFourRunEvent($request, $previous_ball));
-                if ($previous_ball->action == 'nb5') event(new reverseNoballFiveRunEvent($request, $previous_ball));
-                if ($previous_ball->action == 'nb6') event(new reverseNoballSixRunEvent($request, $previous_ball));
-                if ($previous_ball->action == 'lb1') event(new reverseLegByesOneRunEvent($request, $previous_ball));
-                if ($previous_ball->action == 'lb2') event(new reverseLegByesTwoRunEvent($request, $previous_ball));
-                if ($previous_ball->action == 'lb3') event(new reverseLegByesThreeRunEvent($request, $previous_ball));
-                if ($previous_ball->action == 'lb4') event(new reverseLegByesFourRunEvent($request, $previous_ball));
-                if ($previous_ball->action == 'b1') event(new reverseByesOneRunEvent($request, $previous_ball));
-                if ($previous_ball->action == 'b2') event(new reverseByesTwoRunEvent($request, $previous_ball));
-                if ($previous_ball->action == 'b3') event(new reverseByesThreeRunEvent($request, $previous_ball));
-                if ($previous_ball->action == 'b4') event(new reverseByesFourRunEvent($request, $previous_ball));
+                elseif ($previous_ball->action == 'zero') event(new reverseDotBallEvent($request, $previous_ball));
+                elseif ($previous_ball->action == 'one') event(new reverseOneRunEvent($request, $previous_ball));
+                elseif ($previous_ball->action == 'two') event(new reverseTwoRunEvent($request, $previous_ball));
+                elseif ($previous_ball->action == 'three') event(new reverseThreeRunEvent($request, $previous_ball));
+                elseif ($previous_ball->action == 'four') event(new reverseFourRunEvent($request, $previous_ball));
+                elseif ($previous_ball->action == 'five') event(new reverseFiveRunEvent($request, $previous_ball));
+                elseif ($previous_ball->action == 'six') event(new reverseSixRunEvent($request, $previous_ball));
+                elseif ($previous_ball->action == 'wd') event(new reverseWideZeroRunEvent($request, $previous_ball));
+                elseif ($previous_ball->action == 'wd1') event(new reverseWideOneRunEvent($request, $previous_ball));
+                elseif ($previous_ball->action == 'wd2') event(new reverseWideTwoRunEvent($request, $previous_ball));
+                elseif ($previous_ball->action == 'wd3') event(new reverseWideThreeRunEvent($request, $previous_ball));
+                elseif ($previous_ball->action == 'wd4') event(new reverseWideFourRunEvent($request, $previous_ball));
+                elseif ($previous_ball->action == 'wicket') event(new reverseWicketEvent($request, $previous_ball));
+                elseif ($previous_ball->action == 'nb') event(new reverseNoballZeroRunEvent($request, $previous_ball));
+                elseif ($previous_ball->action == 'nb1') event(new reverseNoballOneRunEvent($request, $previous_ball));
+                elseif ($previous_ball->action == 'nb2') event(new reverseNoballTwoRunEvent($request, $previous_ball));
+                elseif ($previous_ball->action == 'nb3') event(new reverseNoballThreeRunEvent($request, $previous_ball));
+                elseif ($previous_ball->action == 'nb4') event(new reverseNoballFourRunEvent($request, $previous_ball));
+                elseif ($previous_ball->action == 'nb5') event(new reverseNoballFiveRunEvent($request, $previous_ball));
+                elseif ($previous_ball->action == 'nb6') event(new reverseNoballSixRunEvent($request, $previous_ball));
+                elseif ($previous_ball->action == 'lb1') event(new reverseLegByesOneRunEvent($request, $previous_ball));
+                elseif ($previous_ball->action == 'lb2') event(new reverseLegByesTwoRunEvent($request, $previous_ball));
+                elseif ($previous_ball->action == 'lb3') event(new reverseLegByesThreeRunEvent($request, $previous_ball));
+                elseif ($previous_ball->action == 'lb4') event(new reverseLegByesFourRunEvent($request, $previous_ball));
+                elseif ($previous_ball->action == 'b1') event(new reverseByesOneRunEvent($request, $previous_ball));
+                elseif ($previous_ball->action == 'b2') event(new reverseByesTwoRunEvent($request, $previous_ball));
+                elseif ($previous_ball->action == 'b3') event(new reverseByesThreeRunEvent($request, $previous_ball));
+                elseif ($previous_ball->action == 'b4') event(new reverseByesFourRunEvent($request, $previous_ball));
             }
 
 
