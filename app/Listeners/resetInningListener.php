@@ -2,13 +2,7 @@
 
 namespace App\Listeners;
 
-use App\Events\resetInningEvent;
-use App\Game;
-use App\MatchDetail;
-use App\MatchPlayers;
 use App\MatchTrack;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 
 class resetInningListener
 {
@@ -33,18 +27,16 @@ class resetInningListener
     public function handle($event)
     {
 
-        $game = Game::where('match_id',$event->request->match_id)
-            ->where('tournament_id',$event->request->tournament)
-            ->first();
+        $match = $event->match;
 
-        if($game->status == 1 || $game->status == 3){
-            $game->status = $game->status - 1;
-            $game->update();
+        if($match->status == 1 || $match->status == 3){
+            $match->status -= 1;
+            $match->update();
 
-            $batting_team = MatchDetail::where('match_id',$event->request->match_id)
-                ->where('tournament_id',$event->request->tournament)
-                ->where('team_id',$event->request->bt_team_id)
-                ->first();
+            $batting_team = $match->MatchDetail->where('isBatting',1)->first();
+            $batting_team_id = optional($batting_team)->team_id;
+            $bowling_team = $match->MatchDetail->where('isBatting',0)->first();
+            $bowling_team_id = optional($bowling_team)->team_id;
 
             $batting_team->score = 0;
             $batting_team->wicket = 0;
@@ -57,13 +49,9 @@ class resetInningListener
             $batting_team->isOver = 0;
             $batting_team->save();
 
-            $batting_team_players = MatchPlayers::where('match_id', $event->request->match_id)
-                ->where('tournament_id', $event->request->tournament)
-                ->where('team_id', $event->request->bt_team_id)->get();
+            $batting_team_players = $match->MatchPlayers->where('team_id',$batting_team_id);
 
-            $bowling_team_players = MatchPlayers::where('match_id', $event->request->match_id)
-                ->where('tournament_id', $event->request->tournament)
-                ->where('team_id', $event->request->bw_team_id)->get();
+            $bowling_team_players = $match->MatchPlayers->where('team_id',$bowling_team_id);
 
             foreach ($batting_team_players as $player){
                 $player->bt_status = 'DNB';
@@ -72,9 +60,9 @@ class resetInningListener
                 $player->bt_fours = 0;
                 $player->bt_sixes = 0;
                 $player->bt_order = 100;
-                $player->wicket_type = '--';
-                $player->wicket_primary = '--';
-                $player->wicket_secondary = '--';
+                $player->wicket_type = NULL;
+                $player->wicket_primary = NULL;
+                $player->wicket_secondary = NULL;
                 $player->save();
             }
 
@@ -90,15 +78,11 @@ class resetInningListener
                 $player->save();
             }
 
-            $batting_team_match_track = MatchTrack::where('match_id', $event->request->match_id)
-                ->where('tournament_id', $event->request->tournament)
-                ->where('team_id', $event->request->bt_team_id)->get();
+            $batting_team_match_track = MatchTrack::where('match_id', $match->match_id)
+                ->where('tournament_id', $match->tournament_id)
+                ->where('team_id', $batting_team_id)->get();
 
-            foreach ($batting_team_match_track as $mt){
-                $mt->delete();
-            }
+            $batting_team_match_track->each->delete();
         }
-
-
     }
 }

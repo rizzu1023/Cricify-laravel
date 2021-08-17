@@ -27,12 +27,13 @@ class reverseBatsmanFourBoundaryUpdateListener
      */
     public function handle($event)
     {
-        $striker = MatchPlayers::where('match_id', $event->request->match_id)
-            ->where('tournament_id', $event->request->tournament)
-            ->where('team_id', $event->request->bt_team_id)
-            ->where('bt_status', 11)->first();
+        $match = $event->match;
 
-        $striker->bt_fours = $striker->bt_fours - 1;
-        $striker->save();
+        $batting_team = $match->MatchDetail->where('isBatting',1)->first();
+        $batting_team_id = optional($batting_team)->team_id;
+
+        $player = $match->MatchPlayers->where('team_id',$batting_team_id)->where('bt_status',11)->first();
+        $player->bt_fours -= 1;
+        $player->update();
     }
 }

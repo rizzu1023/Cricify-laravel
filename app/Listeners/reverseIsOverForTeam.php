@@ -29,30 +29,20 @@ class reverseIsOverForTeam
      */
     public function handle($event)
     {
-        $over = MatchDetail::where('match_id', $event->request->match_id)
-            ->where('tournament_id', $event->request->tournament)
-            ->where('team_id', $event->request->bt_team_id)->first();
+        $match = $event->match;
+        $batting_team = $match->MatchDetail->where('isBatting',1)->first();
+        $batting_team_id = $batting_team->team_id;
 
 
-
-        if ($over->overball == 0) {
-            $over->update([
+        if ($batting_team->overball == 0) {
+            $batting_team->update([
                 'overball' => 6,
-                'over' => $over->over - 1,
+                'over' => $batting_team->over - 1,
             ]);
 
 
-
-            //strike Rotation
-
-            $query = MatchPlayers::where('match_id', $event->request->match_id)
-                ->where('tournament_id', $event->request->tournament)
-                ->where('team_id', $event->request->bt_team_id)
-                ->whereIn('bt_status', [10,11])->get();
-
-            $nonstriker = $query->where('bt_status', 10)->first();
-
-            $striker = $query->where('bt_status', 11)->first();
+            $striker = $match->MatchPlayers->where('team_id',$batting_team_id)->where('bt_status',11);
+            $nonstriker = $match->MatchPlayers->where('team_id',$batting_team_id)->where('bt_status',10);
 
             DB::transaction(function() use ($nonstriker,$striker){
                 $nonstriker->update(['bt_status' => 11]);

@@ -28,6 +28,22 @@ class EventServiceProvider extends ServiceProvider
             \App\Listeners\strikeRotateListener::class,
         ],
 
+        \App\Events\endInningEvent::class => [
+            \App\Listeners\endInningListener::class,
+        ],
+
+        \App\Events\resetInningEvent::class => [
+            \App\Listeners\resetInningListener::class,
+        ],
+
+        \App\Events\reverseEndInningEvent::class => [
+            \App\Listeners\reverseEndInningListener::class,
+        ],
+
+        \App\Events\RetiredHurtBatsmanEvent::class => [
+            \App\Listeners\RetiredHurtBatsmanListener::class,
+        ],
+
 //        Run events
 
         \App\Events\dotBallEvent::class => [
@@ -205,10 +221,7 @@ class EventServiceProvider extends ServiceProvider
 
 //        wicket events
 
-        \App\Events\RetiredHurtBatsmanEvent::class => [
-            \App\Listeners\RetiredHurtBatsmanListener::class,
-//            \App\Listeners\matchTrackListener::class,
-        ],
+
 
         \App\Events\wicketEvent::class => [
 //            \App\Listeners\batsmanBallUpdateListener::class,
@@ -651,23 +664,6 @@ class EventServiceProvider extends ServiceProvider
             \App\Listeners\reverseTeamOneNoballUpdateListener::class,
             \App\Listeners\reverseMatchTrackListener::class,
         ],
-
-
-        \App\Events\endInningEvent::class => [
-            \App\Listeners\endInningListener::class,
-        ],
-
-        \App\Events\resetInningEvent::class => [
-            \App\Listeners\resetInningListener::class,
-        ],
-
-        \App\Events\reverseEndInningEvent::class => [
-            \App\Listeners\reverseEndInningListener::class,
-        ],
-
-
-
-
     ];
 
     /**
