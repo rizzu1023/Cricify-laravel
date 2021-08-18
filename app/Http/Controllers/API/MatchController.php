@@ -38,7 +38,9 @@ class MatchController extends Controller
         $venue = NULL;
         $choose = NULL;
         $umpires = NULL;
+        $overs = NULL;
         if($schedule->Game){
+            $overs = (int) $schedule->Game->overs;
             if ($schedule->Game->umpire_1 && $schedule->Game->umpire_2) {
                 $umpires = $schedule->Game->umpire_1 . ' , ' . $schedule->Game->umpire_2;
             } elseif ($schedule->Game->umpire_1) {
@@ -64,6 +66,7 @@ class MatchController extends Controller
                 'times' => $format_time,
                 'toss' => $toss_team,
                 'choose' => $choose,
+                'over' => $overs,
                 'umpires' => $umpires,
                 'venue' => $venue,
             ];
@@ -78,6 +81,9 @@ class MatchController extends Controller
             'dates' => $format_date,
             'day' => $day,
             'times' => $format_time,
+            'overs' => $overs,
+            'umpires' => $umpires,
+            'venue' => $venue,
         ];
     }
 

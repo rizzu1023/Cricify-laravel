@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Batting;
+use App\Bowling;
+use App\Http\Resources\PlayerBattingResource;
+use App\Http\Resources\PlayerBowlingResource;
 use App\Http\Resources\PlayersResource;
 use App\Players;
 use App\Teams;
@@ -113,5 +117,26 @@ class PlayersController extends Controller
         }
 //        $player->delete();
         return back()->with(['message' => 'Player Deleted']);
+    }
+
+    public function playerBatting($playerId)
+    {
+        $player = Batting::where('player_id',$playerId)->first();
+        if($player){
+            return PlayerBattingResource::make($player);
+        }
+        return response()->json(['status' => false,'message' => 'Player Not Found'],404);
+    }
+
+    public function playerBowling($playerId)
+    {
+        $player = Bowling::where('player_id',$playerId)->first();
+        if($player){
+            return PlayerBowlingResource::make($player);
+        }
+        else{
+            return response()->json(['status' => false,'message' => 'Player Not Found'],404);
+        }
+
     }
 }

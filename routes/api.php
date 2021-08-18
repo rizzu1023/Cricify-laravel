@@ -59,6 +59,9 @@ Route::get('/tournaments/{tournament}/matches/{match_id}/match-overs',[\App\Http
 Route::get('/teams/{team}/players',[\App\Http\Controllers\API\PlayersController::class,'index']);
 Route::get('/players/{player}',[\App\Http\Controllers\API\PlayersController::class,'show']);
 
+Route::get('/player/batting/{playerId}',[\App\Http\Controllers\API\PlayersController::class,'playerBatting']);
+Route::get('/player/bowling/{playerId}',[\App\Http\Controllers\API\PlayersController::class,'playerBowling']);
+
 Route::post('/feedback',[\App\Http\Controllers\API\FeedbackController::class,'store']);
 
 
