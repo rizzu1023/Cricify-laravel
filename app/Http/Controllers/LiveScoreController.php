@@ -220,16 +220,6 @@ class LiveScoreController extends Controller
         $current_over = optional($batting_team)->over;
         $current_overball = optional($batting_team)->overball;
 
-        //when match ended
-        if(!$batting_team){
-            if($game->choose == 'Bowl'){
-                $batting_team_id = $game->toss;
-            }
-            else{
-                $batting_team_id = $match_detail->where('team_id','!=', $game->toss)->first()->team_id;
-            }
-        }
-
         $overs = MatchTrack::select('action','over','overball')->where('match_id', $id)->where('team_id', $batting_team_id)->where('tournament_id', $tournament)
             ->orderBy('over', 'desc')
             ->orderBy('overball', 'desc')
@@ -273,6 +263,7 @@ class LiveScoreController extends Controller
 
         $mom = NULL;
         if ($game->MOM) $mom = $game->MOM;
+
 
         return view('Admin/LiveScore/show', compact('batting_team','status','tournament_id','match_id','batting_team_players','bowling_team_players','mom', 'batting_team_score', 'target', 'over', 'game', 'batting_team_id', 'bowling_team_id', 'opening', 'isOver', 'current_over', 'current_overball', 'current_batsman', 'current_bowler', 'notout_batsman'));
     }
