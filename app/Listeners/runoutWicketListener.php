@@ -33,6 +33,10 @@ class runoutWicketListener
 
 
         $got_out_batsman->bt_status = 0;
+        $got_out_batsman->wicket_type = 'runout';
+        $got_out_batsman->bt_status = $event->request->wicket_primary;
+        $got_out_batsman->bt_status = $event->request->wicket_secondary ? $event->request->wicket_secondary : NULL;
+
         if($event->request->where_batsman_runout == 'strike'){
             if($got_out_batsman->id == $striker_batsman->id){
                 $new_batsman->bt_status = 11;
