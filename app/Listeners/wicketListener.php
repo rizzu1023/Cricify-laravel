@@ -20,19 +20,19 @@ class wicketListener
     /**
      * Handle the event.
      *
-     * @param  object  $event
+     * @param object $event
      * @return void
      */
     public function handle($event)
     {
         $match = $event->match;
 
-        $batting_team = $match->MatchDetail->where('isBatting',1)->first();
+        $batting_team = $match->MatchDetail->where('isBatting', 1)->first();
         $batting_team_id = optional($batting_team)->team_id;
-        $bowling_team = $match->MatchDetail->where('isBatting',0)->first();
+        $bowling_team = $match->MatchDetail->where('isBatting', 0)->first();
         $bowling_team_id = optional($bowling_team)->team_id;
 
-        $current_batsman = $match->MatchPlayers->where('team_id',$batting_team_id)->where('bt_status',11)->first();
+        $current_batsman = $match->MatchPlayers->where('team_id', $batting_team_id)->where('bt_status', 11)->first();
 
         if ($event->request->wicket_type == 'bold' || $event->request->wicket_type == 'lbw' || $event->request->wicket_type == 'hitwicket') {
             $current_batsman->wicket_type = $event->request->wicket_type;
@@ -40,8 +40,7 @@ class wicketListener
             $current_batsman->bt_balls = $current_batsman->bt_balls + 1;
             $current_batsman->bt_status = 0;
             $current_batsman->update();
-        }
-        elseif ($event->request->wicket_type == 'catch' || $event->request->wicket_type == 'stump') {
+        } elseif ($event->request->wicket_type == 'catch' || $event->request->wicket_type == 'stump') {
             $current_batsman->wicket_type = $event->request->wicket_type;
             $current_batsman->wicket_primary = $event->request->attacker_id;
             $current_batsman->wicket_secondary = $event->request->wicket_secondary;
@@ -49,95 +48,29 @@ class wicketListener
             $current_batsman->bt_status = 0;
             $current_batsman->update();
         }
-        elseif ($event->request->wicket_type == 'runout') {
-
-            $current_batsman->bt_runs = $current_batsman->bt_runs + $event->request->run_scored;
-            $current_batsman->bt_balls = $current_batsman->bt_balls + 1;
-            $current_batsman->update();
-
-            $batting_team->score = $batting_team->score + $event->request->run_scored;
-            $batting_team->update();
-
-            $got_out_batsman = $match->MatchPlayers->where('team_id',$batting_team_id)->where('player_id', $event->request->batsman_runout)->first();
-            $new_batsman = $match->MatchPlayers->where('team_id',$batting_team_id)->where('player_id', $event->request->newBatsman_id)->first();
-            $highest_batting_order = $match->MatchPlayers->where('team_id',$batting_team_id)->where('bt_order','<',100)->sortByDesc('bt_order')->first()->bt_order;
 
 
-            if ($new_batsman)
-                $new_batsman->bt_order = $highest_batting_order + 1;
+        $highest_batting_order = $match->MatchPlayers->where('team_id', $batting_team_id)->where('bt_order', '<', 100)->sortByDesc('bt_order')->first()->bt_order;
 
+        $new_batsman = $match->MatchPlayers->where('team_id', $batting_team_id)->where('player_id', $event->request->newBatsman_id)->first();
+        $new_batsman->bt_status = 11;
+        $new_batsman->bt_order = $highest_batting_order + 1;
+        $new_batsman->update();
 
-            $striker_batsman = $match->MatchPlayers->where('team_id',$batting_team_id)->where('bt_status',11)->first();
-            $non_striker_batsman = $match->MatchPlayers->where('team_id',$batting_team_id)->where('bt_status',10)->first();
+        if ($event->request->isBatsmanCross) {
 
+            $nonstriker_batsman = $match->MatchPlayers->where('team_id', $batting_team_id)->where('bt_status', 10)->first();
+            $nonstriker_batsman->bt_status = 11;
+            $nonstriker_batsman->update();
 
-            if ($got_out_batsman->bt_status == 10 && $event->request->where_batsman_runout == 'strike') {
-                $striker_batsman->bt_status = 10;
-                $striker_batsman->update();
-
-                if ($new_batsman) {
-                    $new_batsman->bt_status = 11;
-                    $new_batsman->update();
-                }
-            } elseif ($got_out_batsman->bt_status == 11 && $event->request->where_batsman_runout == 'strike') {
-                if ($new_batsman) {
-                    $new_batsman->bt_status = 11;
-                    $new_batsman->update();
-                }
-            } elseif ($got_out_batsman->bt_status == 10 && $event->request->where_batsman_runout == 'non_strike') {
-                if ($new_batsman) {
-                    $new_batsman->bt_status = 10;
-                    $new_batsman->update();
-                }
-            } elseif ($got_out_batsman->bt_status == 11 && $event->request->where_batsman_runout == 'non_strike') {
-                $non_striker_batsman->bt_status = 11;
-                $non_striker_batsman->update();
-
-                if ($new_batsman) {
-                    $new_batsman->bt_status = 10;
-                    $new_batsman->update();
-                }
-            }
-
-            $got_out_batsman->bt_status = 0;
-            $got_out_batsman->wicket_type = $event->request->wicket_type;
-            $got_out_batsman->wicket_primary = $event->request->wicket_primary;
-            if ($event->request->wicket_secondary)
-                $got_out_batsman->wicket_secondary = $event->request->wicket_secondary;
-            else
-                $got_out_batsman->update();
+            $striker_batsman = $match->MatchPlayers->where('team_id', $batting_team_id)->where('player_id', $event->request->newBatsman_id)->first();
+            $striker_batsman->bt_status = 10;
+            $striker_batsman->update();
         }
 
-        if ($event->request->wicket_type != 'runout') {
-            $match = $event->match;
-
-            $batting_team = $match->MatchDetail->where('isBatting',1)->first();
-            $batting_team_id = optional($batting_team)->team_id;
-
-            $highest_batting_order = $match->MatchPlayers->where('team_id',$batting_team_id)->where('bt_order','<',100)->sortByDesc('bt_order')->first()->bt_order;
-
-            $new_batsman =  $match->MatchPlayers->where('team_id',$batting_team_id)->where('player_id', $event->request->newBatsman_id)->first();
-            $new_batsman->bt_status = 11;
-            $new_batsman->bt_order = $highest_batting_order + 1;
-            $new_batsman->update();
-
-            if ($event->request->isBatsmanCross) {
-
-                $nonstriker_batsman =  $match->MatchPlayers->where('team_id',$batting_team_id)->where('bt_status',10)->first();
-                $nonstriker_batsman->bt_status = 11;
-                $nonstriker_batsman->update();
-
-                $striker_batsman =  $match->MatchPlayers->where('team_id',$batting_team_id)->where('player_id', $event->request->newBatsman_id)->first();
-                $striker_batsman->bt_status = 10;
-                $striker_batsman->update();
-            }
-        }
-
-        $bowler = $match->MatchPlayers->where('team_id',$bowling_team_id)->where('bw_status',11)->first();
+        $bowler = $match->MatchPlayers->where('team_id', $bowling_team_id)->where('bw_status', 11)->first();
         $bowler->bw_overball += 1;
-        if($event->request->wicket_type != 'runout'){
-            $bowler->bw_wickets += 1;
-        }
+        $bowler->bw_wickets += 1;
         $bowler->update();
 
         $batting_team->overball += 1;

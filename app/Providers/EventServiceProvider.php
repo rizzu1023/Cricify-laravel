@@ -151,9 +151,6 @@ class EventServiceProvider extends ServiceProvider
         ],
 
 //        wicket events
-
-
-
         \App\Events\wicketEvent::class => [
             \App\Listeners\matchTrackListener::class,
             \App\Listeners\wicketListener::class,
@@ -167,6 +164,45 @@ class EventServiceProvider extends ServiceProvider
             \App\Listeners\reverseWicketListener::class,
             \App\Listeners\reverseMatchTrackListener::class,
         ],
+
+
+        \App\Events\runoutWicketEvent::class => [
+            \App\Listeners\matchTrackListener::class,
+            \App\Listeners\runoutWicketListener::class,
+            \App\Listeners\isOverForBowler::class,
+            \App\Listeners\isOverForTeam::class,
+        ],
+
+        \App\Events\reverseRunoutWicketEvent::class => [
+            \App\Listeners\reverseIsOverForTeam::class,
+            \App\Listeners\reverseIsOverForBowler::class,
+            \App\Listeners\reverseRunoutWicketListener::class,
+            \App\Listeners\reverseMatchTrackListener::class,
+        ],
+
+//        \App\Events\wicketEvent::class => [
+//            \App\Listeners\matchTrackListener::class,
+//            \App\Listeners\currentBatsmanRemoveListener::class,
+//            \App\Listeners\newBatsmanAddedListener::class,
+//            \App\Listeners\bowlerBallUpdateListener::class,
+//            \App\Listeners\bowlerWicketUpdateListener::class,
+//            \App\Listeners\teamBallUpdateListener::class,
+//            \App\Listeners\teamWicketUpdateListener::class,
+//            \App\Listeners\isOverForBowler::class,
+//            \App\Listeners\isOverForTeam::class,
+//        ],
+
+//        \App\Events\reverseWicketEvent::class => [
+//            \App\Listeners\reverseIsOverForTeam::class,
+//            \App\Listeners\reverseIsOverForBowler::class,
+//            \App\Listeners\reverseNewBatsmanAddedListener::class,
+//            \App\Listeners\reverseCurrentBatsmanRemoveListener::class,
+//            \App\Listeners\reverseBowlerBallUpdateListener::class,
+//            \App\Listeners\reverseBowlerWicketUpdateListener::class,
+//            \App\Listeners\reverseTeamBallUpdateListener::class,
+//            \App\Listeners\reverseTeamWicketUpdateListener::class,
+//            \App\Listeners\reverseMatchTrackListener::class,
+//        ],
 //        Leg Byes Events
 
         \App\Events\legByesOneRunEvent::class => [
