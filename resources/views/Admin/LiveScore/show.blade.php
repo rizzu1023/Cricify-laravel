@@ -1063,6 +1063,15 @@
 
                                         var team_score = $('#team-score').text();
                                         $('#team-score').text(parseInt(team_score) + parseInt(data.value));
+
+                                        if(data.value == 4){
+                                            let batsman_fours = $('#11').find('#batsman-fours').text();
+                                            $('#11').find("#batsman-fours").text(parseInt(batsman_fours) + 1);
+                                        }
+                                        if(data.value == 6){
+                                            let batsman_sixes = $('#11').find('#batsman-sixes').text();
+                                            $('#11').find("#batsman-sixes").text(parseInt(batsman_sixes) + 1);
+                                        }
                                     }
 
 

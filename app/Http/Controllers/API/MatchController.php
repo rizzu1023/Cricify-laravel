@@ -38,13 +38,16 @@ class MatchController extends Controller
         $venue = NULL;
         $choose = NULL;
         $umpires = NULL;
-        if ($schedule->Game->umpire_1 && $schedule->Game->umpire_2) {
-            $umpires = $schedule->Game->umpire_1 . ' , ' . $schedule->Game->umpire_2;
-        } elseif ($schedule->Game->umpire_1) {
-            $umpires = $schedule->Game->umpire_1;
-        } elseif ($schedule->Game->umpire_2) {
-            $umpires = $schedule->Game->umpire_2;
+        if($schedule->Game){
+            if ($schedule->Game->umpire_1 && $schedule->Game->umpire_2) {
+                $umpires = $schedule->Game->umpire_1 . ' , ' . $schedule->Game->umpire_2;
+            } elseif ($schedule->Game->umpire_1) {
+                $umpires = $schedule->Game->umpire_1;
+            } elseif ($schedule->Game->umpire_2) {
+                $umpires = $schedule->Game->umpire_2;
+            }
         }
+
 
         if ($toss) {
             $toss_team = $team1->id == $toss->toss ? $team1 : $team2;
