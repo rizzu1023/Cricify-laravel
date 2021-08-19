@@ -104,6 +104,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
 
 
     Route::resource('/advertise','AdvertiseController');
+    Route::get('/advertise/status/toggle/{advertise}',[AdvertiseController::class,'toggleStatus']);
     Route::get('/users',[\App\Http\Controllers\UserController::class,'allUsers']);
 
 

@@ -90,7 +90,8 @@ class MatchController extends Controller
 
     public function matchLive(Tournament $tournament, $match_id)
     {
-        $advertise = $this->advertise('live');
+        $advertise_url = $this->advertise('live');
+        $advertise_height = 100;
 
         $schedule = Schedule::with('Game', 'Teams1', 'Teams2')->where('id', $match_id)->where('tournament_id', $tournament->id)->first();
 
@@ -132,7 +133,8 @@ class MatchController extends Controller
                         'won_match_detail' => $game,
                         'won' => $won ? TeamResource::make($won) : NULL,
                         'mom' => $mom ? PlayersResource::make($mom) : NULL,
-                        'advertise' => $advertise,
+                        'advertise_url' => $advertise_url,
+                        'advertise_height' => $advertise_height,
                     ];
                 }
 
@@ -148,6 +150,7 @@ class MatchController extends Controller
 
                 if ($batting_team) {
                     $match_detail = new MatchDetailResource($batting_team);
+                    //TODO optimize query
                     $batsman = MatchPlayers::with('Players', 'wicketPrimary', 'wicketSecondary')->whereIn('bt_status', ['10', '11'])->where('team_id', $batting_team->team_id)->where('match_id', $match_id)->where('tournament_id', $tournament->id)->orderBy('bt_order', 'asc')->get();
                     if ($batsman)
                         $current_batsman = MatchPlayersResource::collection($batsman);
@@ -213,7 +216,8 @@ class MatchController extends Controller
                     'remaining_runs' => $remaining_runs,
                     'crr' => $crr,
                     'rrr' => $rrr,
-                    'advertise' => $advertise,
+                    'advertise_url' => $advertise_url,
+                    'advertise_height' => $advertise_height,
                 ];
 
             }

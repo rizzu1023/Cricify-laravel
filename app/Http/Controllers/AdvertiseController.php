@@ -76,4 +76,12 @@ class AdvertiseController extends Controller
         $advertise->delete();
         return back()->with(['message' => 'Advertise Successfully Deleted!']);
     }
+
+    public function toggleStatus(Advertise $advertise)
+    {
+        $advertise->status =! $advertise->status;
+        $advertise->update();
+        return response()->json(['status' => true]);
+
+    }
 }

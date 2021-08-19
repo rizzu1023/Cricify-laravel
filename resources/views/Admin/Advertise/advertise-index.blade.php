@@ -48,7 +48,14 @@
                                                                  alt="img not found"></td>
                                     <td>{{$a->name}}</td>
                                     <td>{{$a->page}}</td>
-                                    <td>{{$a->status}}</td>
+                                    <td >
+                                        <div class="media-body  switch-sm">
+                                            <label class="switch">
+                                                <input type="checkbox" onchange="toggle_status_function({{$a->id}})" @if($a->status) checked=""@endif ><span class="switch-state" ></span>
+                                            </label>
+                                        </div>
+                                        {{--                                                    </div>--}}
+                                    </td>
                                     <td>
                                         <a class="btn btn-warning btn-sm"
                                            href="/admin/advertise/{{$a->id}}"> Details </a>
@@ -81,5 +88,49 @@
     </div>
 @endsection
 @section('js')
-
+<script>
+    function toggle_status_function(advertise_id){
+        $.ajax({
+            type : 'GET',
+            url  : "/admin/advertise/status/toggle/" + advertise_id,
+            data : {
+                "_token": "{{ csrf_token() }}",
+            },
+            success : function(data){
+                if(data.status){
+                    $.notify({
+                            // title:'Title',
+                            message:'Success'
+                        },
+                        {
+                            type:'success',
+                            allow_dismiss:false,
+                            newest_on_top:false ,
+                            mouse_over:false,
+                            showProgressbar:false,
+                            spacing:10,
+                            timer:500,
+                            placement:{
+                                from:'top',
+                                align:'right'
+                            },
+                            offset:{
+                                x:30,
+                                y:60
+                            },
+                            delay:500,
+                            z_index:10000,
+                            animate:{
+                                enter:'animated fadeIn',
+                                exit:'animated fadeOut'
+                            }
+                        });
+                };
+            },
+            error : function(data){
+                alert('something went wrong');
+            },
+        });
+    }
+</script>
 @endsection
