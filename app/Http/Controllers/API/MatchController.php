@@ -12,6 +12,7 @@ use App\Http\Resources\TeamResource;
 use App\MatchDetail;
 use App\MatchPlayers;
 use App\MatchTrack;
+use App\Models\Advertise;
 use App\Schedule;
 use App\Teams;
 use App\Tournament;
@@ -89,6 +90,8 @@ class MatchController extends Controller
 
     public function matchLive(Tournament $tournament, $match_id)
     {
+        $advertise = $this->advertise('live');
+
         $schedule = Schedule::with('Game', 'Teams1', 'Teams2')->where('id', $match_id)->where('tournament_id', $tournament->id)->first();
 
         $team1_id = $schedule->Teams1->id;
@@ -129,6 +132,7 @@ class MatchController extends Controller
                         'won_match_detail' => $game,
                         'won' => $won ? TeamResource::make($won) : NULL,
                         'mom' => $mom ? PlayersResource::make($mom) : NULL,
+                        'advertise' => $advertise,
                     ];
                 }
 
@@ -196,6 +200,7 @@ class MatchController extends Controller
                     $match_detail = new MatchDetailResource($inning_break_team);
                 }
 
+
                 return [
 //                'isMatch' => true,
                     'partnership' => $partnership,
@@ -208,6 +213,7 @@ class MatchController extends Controller
                     'remaining_runs' => $remaining_runs,
                     'crr' => $crr,
                     'rrr' => $rrr,
+                    'advertise' => $advertise,
                 ];
 
             }
@@ -217,6 +223,19 @@ class MatchController extends Controller
                 'match_status' => 0,
             ];
         }
+    }
+
+    public function advertise($page)
+    {
+        $url = NULL;
+        if($page == 'live'){
+            $advertise = Advertise::where('status',1)->where('page','live')->first();
+            if($advertise){
+                $url = $advertise->getFirstMedia('advertise-image') ? $advertise->getFirstMedia('advertise-image')->getUrl('compressed-image') : NULL;
+            }
+        }
+
+        return $url;
     }
 
     public function matchScorecard(Tournament $tournament, $match_id)

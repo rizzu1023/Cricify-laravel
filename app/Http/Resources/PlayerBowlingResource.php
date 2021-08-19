@@ -20,7 +20,7 @@ class PlayerBowlingResource extends JsonResource
             'bw_matches' => $this->bw_matches,
             'bw_innings' => $this->bw_innings,
             'bw_runs' => $this->bw_runs,
-            'bw_overs' => $this->over . '.' .$this->overball,
+            'bw_overs' => $this->bw_over . '.' .$this->bw_overball,
             'bw_maidens' => $this->bw_maidens,
             'bw_wickets' => $this->bw_wickets,
             'bw_average' => $this->bw_average,

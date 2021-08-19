@@ -13,28 +13,33 @@
                     <li class="sidebar-list"><a class="nav-link " href="/admin/dashboard">
                             <i data-feather="home"></i><span>Dashboard</span></a></li>
                     <li class="sidebar-list">
-                        <a class="nav-link  " href="/admin/Tournament"><i data-feather="truck"></i><span>Tournaments</span></a>
+                        <a class="nav-link  " href="/admin/Tournament"><i
+                                data-feather="truck"></i><span>Tournaments</span></a>
                     </li>
                     <li class="sidebar-list">
                         <a class="nav-link  " href="/admin/player"><i data-feather="users"></i><span>Players</span></a>
                     </li>
-{{--                    <li class="sidebar-list">--}}
-{{--                        <a class="nav-link  " href="/admin/teams"><i data-feather="users"></i><span>Teams</span></a>--}}
-{{--                    </li>--}}
+                    {{--                    <li class="sidebar-list">--}}
+                    {{--                        <a class="nav-link  " href="/admin/teams"><i data-feather="users"></i><span>Teams</span></a>--}}
+                    {{--                    </li>--}}
                     @auth
                         @if(auth()->user()->is_super_admin)
-                    <li class="sidebar-list">
-                        <a class="nav-link  " href="/admin/feedbacks"><i data-feather="book"></i><span>Feedbacks</span></a>
-                    </li>
-                            @endif
+                            <li class="sidebar-list">
+                                <a class="nav-link  " href="/admin/feedbacks"><i data-feather="message-circle"></i><span>Feedbacks</span></a>
+                            </li>
+                            <li class="sidebar-list"><a class="nav-link  " href="/admin/advertise"><i data-feather="paperclip"></i><span>Advertise</span></a>
+                            </li>
+                            <li class="sidebar-list"><a class="nav-link  " href="/admin/users"><i data-feather="users"></i><span>Users</span></a>
+                            </li>
+                        @endif
                     @endauth
 
 
-
-
                     <li class="sidebar-list">
-                        <a class="nav-link"  onclick="event.preventDefault(); document.getElementById('logout-form').submit();" href="{{ route('logout' ) }}"><i data-feather="log-out"></i><span>Log out</span></a>
-                        <form method="POST"  id="logout-form" action="{{ Route('logout') }}" >
+                        <a class="nav-link"
+                           onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                           href="{{ route('logout' ) }}"><i data-feather="log-out"></i><span>Log out</span></a>
+                        <form method="POST" id="logout-form" action="{{ Route('logout') }}">
                             @csrf
                         </form>
                     </li>

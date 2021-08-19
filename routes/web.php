@@ -7,6 +7,11 @@ use App\Http\Controllers\TournamentScheduleController;
 use App\Http\Controllers\TeamPlayerController;
 use App\Http\Controllers\TournamentController;
 use App\Http\Controllers\SuperAdminController;
+use App\Http\Controllers\AdvertiseController;
+use App\Http\Controllers\MainController;
+use App\Http\Controllers\PlayersController;
+use App\Http\Controllers\HomeController;
+
 //frontend Routes
 Route::get('/index', [MainController::class,'GetIndex']);
 Route::get('/pointsTable', [MainController::class,'GetPointsTable']);
@@ -32,7 +37,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
     Route::get('/teams/{team}/players/exist_create',[TeamPlayerController::class,'exist_team_player_create']);
     Route::post('/teams/{team}/players/exist_store',[TeamPlayerController::class,'exist_team_player_store']);
 
-    Route::resource('/PointsTable',\App\Http\Controllers\PointsTableController::class);  //PointsTable
+    Route::resource('/PointsTable','PointsTableController');  //PointsTable
     Route::resource('/Batting','BattingController');  //Batting
     Route::resource('/Bowling','BowlingController'); //Bowling
 
@@ -96,6 +101,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
 //    Route::post('/Schedule/create/tournament','ScheduleController@scheduleTournament')->name('scheduleTournament');
 
 //    Route::get('/BrowseResult', 'ResultController@BrowseResult')->name('BrowseResult');
+
+
+    Route::resource('/advertise','AdvertiseController');
+    Route::get('/users',[\App\Http\Controllers\UserController::class,'allUsers']);
 
 
 });
