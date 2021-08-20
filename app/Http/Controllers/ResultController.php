@@ -114,7 +114,6 @@ class ResultController extends Controller
             return back()->with('error', "this player already playing in this match");
 
         $game = Game::where('mom', $request->player_id)
-            ->where('team_id', $request->team_id)
             ->where('match_id', $request->match_id)
             ->where('tournament_id', $request->tournament_id)
             ->update(['mom' => $request->sub_player]);
