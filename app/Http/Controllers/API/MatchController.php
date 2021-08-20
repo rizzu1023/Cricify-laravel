@@ -379,7 +379,7 @@ class MatchController extends Controller
 
     public function matchOvers(Tournament $tournament, $match_id)
     {
-        $schedule = Schedule::with('Game', 'Teams1', 'Teams2')->where('id', $match_id)->where('tournament_id', $tournament->id)->first();
+        $schedule = Schedule::with('Game.MatchDetail', 'Teams1', 'Teams2')->where('id', $match_id)->where('tournament_id', $tournament->id)->first();
 
         $team1_id = $schedule->Teams1->id;
         $team2_id = $schedule->Teams2->id;
@@ -395,20 +395,25 @@ class MatchController extends Controller
                 ];
             } else {
 
-                if ($game) {
-                    if ($game->toss == $team1_id && $game->choose == 'Bat') {
-                        $batting_team_id = $team1_id;
-                        $bowling_team_id = $team2_id;
-                    } else {
-                        $batting_team_id = $team2_id;
-                        $bowling_team_id = $team1_id;
-                    }
-                }
+                $batting_team = $game->MatchDetail->where('isBatting',1)->first();
+                $batting_team_id = optional($batting_team)->team_id;
+                $bowling_team = $game->MatchDetail->where('isBatting',0)->first();
+                $bowling_team_id = optional($bowling_team)->team_id;
+
+//                if ($game) {
+//                    if ($game->toss == $team1_id && $game->choose == 'Bat') {
+//                        $batting_team_id = $team1_id;
+//                        $bowling_team_id = $team2_id;
+//                    } else {
+//                        $batting_team_id = $team2_id;
+//                        $bowling_team_id = $team1_id;
+//                    }
+//                }
 
                 $overs = MatchTrack::with('Players', 'Batsman')->select('over', DB::raw('Min(attacker_id) as attacker_id, SUM(wickets) as wickets,SUM(run) as runs'))
                     ->groupBy('over')
                     ->where('match_id', $match_id)
-                    ->where('team_id', $bowling_team_id)
+                    ->where('team_id', $batting_team_id)
                     ->where('tournament_id', $tournament->id)
                     ->orderBy('over', 'desc')
                     ->get();
@@ -416,7 +421,7 @@ class MatchController extends Controller
 
                 $over_detail = MatchTrack::select('over', 'action', 'run', 'overball')
                     ->where('match_id', $match_id)
-                    ->where('team_id', $bowling_team_id)
+                    ->where('team_id', $batting_team_id)
                     ->where('tournament_id', $tournament->id)
                     ->orderBy('over', 'desc')
                     ->orderBy('overball', 'asc')
@@ -443,14 +448,14 @@ class MatchController extends Controller
                 $overs2 = MatchTrack::with('Players', 'Batsman')->select('over', DB::raw('Min(attacker_id) as attacker_id, SUM(wickets) as wickets,SUM(run) as runs'))
                     ->groupBy('over')
                     ->where('match_id', $match_id)
-                    ->where('team_id', $batting_team_id)
+                    ->where('team_id', $bowling_team_id)
                     ->where('tournament_id', $tournament->id)
                     ->orderBy('over', 'desc')
                     ->get();
 
                 $over_detail2 = MatchTrack::select('over', 'action', 'run', 'overball')
                     ->where('match_id', $match_id)
-                    ->where('team_id', $batting_team_id)
+                    ->where('team_id', $bowling_team_id)
                     ->where('tournament_id', $tournament->id)
                     ->orderBy('over', 'desc')
                     ->orderBy('overball', 'asc')
