@@ -41,7 +41,12 @@ class TournamentController extends Controller
 
 
 
-        $Tournament = Tournament::where('user_id',auth()->user()->id)->get();
+        $user = auth()->user();
+        $Tournament = Tournament::where('user_id',$user->id)->get();
+        if($user->is_super_admin){
+            $Tournament = Tournament::all();
+        }
+
         return view('Admin/Tournament/index',compact('Tournament'));
     }
 
