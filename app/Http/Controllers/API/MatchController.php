@@ -150,8 +150,9 @@ class MatchController extends Controller
 
                 if ($batting_team) {
                     $match_detail = new MatchDetailResource($batting_team);
-                    //TODO optimize query
-                    $batsman = MatchPlayers::with('Players', 'wicketPrimary', 'wicketSecondary')->whereIn('bt_status', ['10', '11'])->where('team_id', $batting_team->team_id)->where('match_id', $match_id)->where('tournament_id', $tournament->id)->orderBy('bt_order', 'asc')->get();
+                    $batsman = MatchPlayers::with(['Players' => function($query){
+                        return $query->with('Role','BattingStyle','BowlingStyle');
+                    }, 'wicketPrimary', 'wicketSecondary'])->whereIn('bt_status', ['10', '11'])->where('team_id', $batting_team->team_id)->where('match_id', $match_id)->where('tournament_id', $tournament->id)->orderBy('bt_order', 'asc')->get();
                     if ($batsman)
                         $current_batsman = MatchPlayersResource::collection($batsman);
 
