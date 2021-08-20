@@ -22,6 +22,27 @@ use Illuminate\Support\Facades\DB;
 class MatchController extends Controller
 {
 
+    public function advertise($page, $tournament_id)
+    {
+        $url = NULL;
+        $height = 100;
+        $advertise = Advertise::where('status', 1)->where('page', $page)->first();
+        if ($advertise) {
+            if(!is_null($tournament_id)){
+                if($tournament_id == $advertise->tournament_id){
+                    $url = $advertise->getFirstMedia('advertise-image') ? $advertise->getFirstMedia('advertise-image')->getUrl('compressed-image') : NULL;
+                    $height = $advertise->height;
+                }
+                else{
+
+                }
+            }
+
+        }
+
+        return ['url' => $url, 'height' => $height];
+    }
+
 
     public function matchInfo(Tournament $tournament, $match_id)
     {
@@ -40,8 +61,8 @@ class MatchController extends Controller
         $choose = NULL;
         $umpires = NULL;
         $overs = NULL;
-        if($schedule->Game){
-            $overs = (int) $schedule->Game->overs;
+        if ($schedule->Game) {
+            $overs = (int)$schedule->Game->overs;
             if ($schedule->Game->umpire_1 && $schedule->Game->umpire_2) {
                 $umpires = $schedule->Game->umpire_1 . ' , ' . $schedule->Game->umpire_2;
             } elseif ($schedule->Game->umpire_1) {
@@ -90,8 +111,7 @@ class MatchController extends Controller
 
     public function matchLive(Tournament $tournament, $match_id)
     {
-        $advertise_url = $this->advertise('live');
-        $advertise_height = 100;
+        $advertise = $this->advertise('live', $tournament->id);
 
         $schedule = Schedule::with('Game', 'Teams1', 'Teams2')->where('id', $match_id)->where('tournament_id', $tournament->id)->first();
 
@@ -133,8 +153,8 @@ class MatchController extends Controller
                         'won_match_detail' => $game,
                         'won' => $won ? TeamResource::make($won) : NULL,
                         'mom' => $mom ? PlayersResource::make($mom) : NULL,
-                        'advertise_url' => $advertise_url,
-                        'advertise_height' => $advertise_height,
+                        'advertise_url' => $advertise['url'],
+                        'advertise_height' => $advertise['height'],
                     ];
                 }
 
@@ -150,13 +170,15 @@ class MatchController extends Controller
 
                 if ($batting_team) {
                     $match_detail = new MatchDetailResource($batting_team);
-                    $batsman = MatchPlayers::with(['Players' => function($query){
-                        return $query->with('Role','BattingStyle','BowlingStyle');
+                    $batsman = MatchPlayers::with(['Players.media' => function ($query) {
+                        return $query->with('media', 'Role', 'BattingStyle', 'BowlingStyle');
                     }, 'wicketPrimary', 'wicketSecondary'])->whereIn('bt_status', ['10', '11'])->where('team_id', $batting_team->team_id)->where('match_id', $match_id)->where('tournament_id', $tournament->id)->orderBy('bt_order', 'asc')->get();
                     if ($batsman)
                         $current_batsman = MatchPlayersResource::collection($batsman);
 
-                    $bowler = MatchPlayers::with('Players', 'wicketPrimary', 'wicketSecondary')->where('bw_status', '11')->where('team_id', '<>', $batting_team->team_id)->where('match_id', $match_id)->where('tournament_id', $tournament->id)->first();
+                    $bowler = MatchPlayers::with(['Players.media' => function ($query) {
+                        return $query->with('media', 'Role', 'BattingStyle', 'BowlingStyle');
+                    }, 'wicketPrimary', 'wicketSecondary'])->where('bw_status', '11')->where('team_id', '<>', $batting_team->team_id)->where('match_id', $match_id)->where('tournament_id', $tournament->id)->first();
                     if ($bowler)
                         $current_bowler = new MatchPlayersResource($bowler);
 //                else
@@ -217,8 +239,8 @@ class MatchController extends Controller
                     'remaining_runs' => $remaining_runs,
                     'crr' => $crr,
                     'rrr' => $rrr,
-                    'advertise_url' => $advertise_url,
-                    'advertise_height' => $advertise_height,
+                    'advertise_url' => $advertise['url'],
+                    'advertise_height' => $advertise['height'],
                 ];
 
             }
@@ -230,18 +252,6 @@ class MatchController extends Controller
         }
     }
 
-    public function advertise($page)
-    {
-        $url = NULL;
-        if($page == 'live'){
-            $advertise = Advertise::where('status',1)->where('page','live')->first();
-            if($advertise){
-                $url = $advertise->getFirstMedia('advertise-image') ? $advertise->getFirstMedia('advertise-image')->getUrl('compressed-image') : NULL;
-            }
-        }
-
-        return $url;
-    }
 
     public function matchScorecard(Tournament $tournament, $match_id)
     {

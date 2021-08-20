@@ -19,7 +19,7 @@ class FowResource extends JsonResource
             'score' => $this->score,
             'wickets' => $this->wickets,
             'over' => $this->over,
-            'overball' => $this->overball,
+            'overball' => $this->overball + 1,
         ];
     }
 }

@@ -84,7 +84,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="col-form-label">Batting Style</label>
-                                <select class="form-control" name="batting_style_id" required="" >
+                                <select class="form-control" name="batting_style_id" >
                                     <option selected="" disabled="" value="">Choose...</option>
                                     @foreach($masterBattingStyles as $style)
                                     <option value="{{ $style->id }}">{{ $style->name }}</option>
