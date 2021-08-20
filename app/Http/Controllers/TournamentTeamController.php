@@ -16,12 +16,14 @@ class TournamentTeamController extends Controller
 
     public function index(Tournament $tournament)
     {
-        $teams = Teams::where('tournament_id',$tournament->id)->where('user_id',auth()->user()->id)->get();
-        if($tournament->user_id == auth()->user()->id){
-            return view('Admin.Tournament.tournament-team-index',compact('teams','tournament'));
+        $user  = auth()->user();
+        $teams = Teams::where('tournament_id',$tournament->id)->where('user_id',$user->id)->get();
+        if($user->is_super_admin){
+            $teams = Teams::where('tournament_id',$tournament->id)->get();
+
         }
-        else
-            return "Page Not Found";
+        return view('Admin.Tournament.tournament-team-index',compact('teams','tournament'));
+
     }
 
     /**
