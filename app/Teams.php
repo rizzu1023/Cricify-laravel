@@ -28,11 +28,11 @@ class Teams extends Model
         return $this->belongsTo('App\Tournament','tournament_id','id');
     }
 
-    public function Players(){
-        return $this->belongsToMany('App\Players','player_team','team_id','player_id')->withTimestamps();
-    }
+//    public function Player(){
+//        return $this->belongsToMany('App\Players','player_team','team_id','player_id')->withTimestamps();
+//    }
 
-    public function Player()
+    public function Players()
     {
         return $this->hasMany(PlayerTeamMapping::class,'team_id','id');
     }

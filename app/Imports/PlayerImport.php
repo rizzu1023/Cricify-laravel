@@ -11,6 +11,7 @@ use App\Players;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
+use App\Models\PlayerTeamMapping;
 
 class PlayerImport implements ToModel, WithHeadingRow, WithValidation
 {
@@ -40,7 +41,7 @@ class PlayerImport implements ToModel, WithHeadingRow, WithValidation
         ]);
 
         $player =  Players::create([
-            'player_id' => $row['player_id'],
+            'mobile_number' => $row['mobile_number'],
             'first_name' => $row['first_name'],
             'last_name' => $row['last_name'],
             'role_id' => $role->id,
@@ -51,7 +52,10 @@ class PlayerImport implements ToModel, WithHeadingRow, WithValidation
         ]);
 
         if(!is_null($this->team)){
-            $player->Teams()->syncWithoutDetaching($this->team);
+            $mapping = PlayerTeamMapping::create([
+                'team_id' => $this->team->id,
+                'player_id' => $player->player_id,
+            ]);
         }
 
         Batting::create([
@@ -69,7 +73,7 @@ class PlayerImport implements ToModel, WithHeadingRow, WithValidation
     public function rules(): array
     {
         return [
-            '*.player_id' => 'required|unique:players,player_id',
+            '*.mobile_number' => 'required|unique:players,mobile_number',
             '*.first_name' => 'required|string',
             '*.last_name' => 'required|string',
             '*.role' => 'required',

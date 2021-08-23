@@ -52,13 +52,13 @@
                                         <td>{{$p->first_name}} {{$p->last_name}}</td>
                                         <td>{{$p->Role->name}}</td>
                                         <td>
-                                            <a class="btn btn-warning btn-sm" href="/admin/teams/{{$team->id}}/players/{{$p->id}}">Detail</a>
-                                            <a class="btn btn-success btn-sm" href="/admin/teams/{{$team->id}}/players/{{$p->id}}/edit">Edit</a>
-                                            <form style="display:inline-block" method="POST" action="/admin/teams/{{$team->id}}/players/{{$p->id}}">
+                                            <a class="btn btn-warning btn-sm" href="/admin/teams/{{$team->id}}/players/{{$p->player_id}}">Detail</a>
+                                            <a class="btn btn-success btn-sm" href="/admin/teams/{{$team->id}}/players/{{$p->player_id}}/edit">Edit</a>
+                                            <form style="display:inline-block" method="POST" action="/admin/teams/{{$team->id}}/players/{{$p->player_id}}">
                                             @csrf
                                             @method('DELETE')
                                             <!-- <input type="hidden" value="#" name="id"> -->
-                                                <button class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to remove this player ?');">Delete</button>
+                                                <button class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to remove this player ?');">Remove</button>
                                             </form>
 
                                         </td>
