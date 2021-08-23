@@ -115,6 +115,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
 Route::group(['prefix' => 'super-admin', 'middleware' => ['auth']], function() {
     Route::get('user',[SuperAdminController::class,'user_index']);
     Route::get('admin',[SuperAdminController::class,'admin_index']);
+    Route::get('app-users',[SuperAdminController::class,'appUsers']);
 });
 
 
