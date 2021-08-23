@@ -13,9 +13,11 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Players extends Model implements HasMedia
 {
-    use HasFactory,InteractsWithMedia,SoftDeletes;
+    use HasFactory,InteractsWithMedia;
 
     protected $guarded = [];
+
+    protected $primaryKey = 'player_id';
 
 //    public function Teams(){
 //        return $this->belongsTo('App\Teams','team_id','id')->withDefault([
@@ -23,13 +25,13 @@ class Players extends Model implements HasMedia
 //        ]);
 //    }
 
-    public function Teams(){
+    public function Team(){
         return $this->belongsToMany('App\Teams','player_team','player_id','team_id')->withTimestamps();
     }
 
-    public function Team()
+    public function Teams()
     {
-        return $this->hasMany(PlayerTeamMapping::class,'player_id','id');
+        return $this->hasMany(PlayerTeamMapping::class,'player_id','player_id');
     }
 
     public function Role()

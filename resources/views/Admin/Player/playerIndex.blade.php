@@ -11,8 +11,7 @@
                 <div class="row">
                     <div class="col-6">
                         <h3>Players</h3>
-                        <a style=" float: right" class="btn btn-success btn-sm " href="/admin/player/create"><i
-                                class="cil-user-plus"></i> Add New</a>
+                        <a style=" float: right" class="btn btn-success btn-sm " href="/admin/player/create"><i class="cil-user-plus"></i> Add New</a>
 
                     </div>
                     <div class="col-6">
@@ -57,10 +56,10 @@
                                     <td>{{$p->first_name}} {{$p->last_name}}</td>
                                     <td>{{$p->Role->name}}</td>
                                     <td>
-                                        <a class="btn btn-warning btn-sm" href="/admin/player/{{$p->id}}">Details</a>
-                                        <a class="btn btn-success btn-sm" href="/admin/player/{{$p->id}}/edit">Edit</a>
+                                        <a class="btn btn-warning btn-sm" href="/admin/player/{{$p->player_id}}">Details</a>
+                                        <a class="btn btn-success btn-sm" href="/admin/player/{{$p->player_id}}/edit">Edit</a>
                                         <form style="display:inline-block" method="POST"
-                                              action="/admin/player/{{$p->id}}">
+                                              action="/admin/player/{{$p->player_id}}">
                                         @csrf
                                         @method('DELETE')
                                         <!-- <input type="hidden" value="#" name="id"> -->

@@ -43,7 +43,7 @@
                                 <tbody>
                                 <tr>
                                     <td>Born</td>
-                                    <td>{{$player['role']}}</td>
+                                    <td>{{$player['dob']}}</td>
                                 </tr>
                                 <tr>
                                     <td>Age</td>
@@ -51,15 +51,15 @@
                                 </tr>
                                 <tr>
                                     <td>Role</td>
-                                    <td>{{$player['role']}}</td>
+                                    <td>{{$player->Role ? $player->Role->name : NULL}}</td>
                                 </tr>
                                 <tr>
                                     <td>Bowling Style</td>
-                                    <td>{{$player['batting_style']}}</td>
+                                    <td>{{$player->BattingStyle ? $player->BattingStyle->name : NULL}}</td>
                                 </tr>
                                 <tr>
                                     <td>Bowling Style</td>
-                                    <td>{{$player['bowling_style']}}</td>
+                                    <td>{{$player->BowlingStyle ? $player->BowlingStyle->name : NULL}}</td>
                                 </tr>
                                 <tr>
                                     <td>Teams</td>

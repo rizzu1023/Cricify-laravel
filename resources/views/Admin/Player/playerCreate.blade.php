@@ -62,16 +62,22 @@
                         <form method="POST" action="/admin/player">
                             @csrf
                             <div class="form-group">
-                                <label for="field1">Player Id</label>
-                                <input type="text" class="form-control" id="field1" name="player_id" required>
+                                <label for="field1">Player Mobile Number</label>
+                                <input type="text" class="form-control" id="field1" name="mobile_number">
+                                <div class="text-danger">{{ $errors->first('mobile_number')}}</div>
+
                             </div>
                             <div class="form-group">
                                 <label for="field1">First Name</label>
                                 <input type="text" class="form-control" id="field1" name="first_name" required>
+                                <div class="text-danger">{{ $errors->first('first_name')}}</div>
+
                             </div>
                             <div class="form-group">
                                 <label for="field1">Last Name</label>
                                 <input type="text" class="form-control" id="field1" name="last_name" required>
+                                <div class="text-danger">{{ $errors->first('last_name')}}</div>
+
                             </div>
                             <div class="form-group">
                                     <label class="col-form-label">Player Role</label>
@@ -84,7 +90,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="col-form-label">Batting Style</label>
-                                <select class="form-control" name="batting_style_id" >
+                                <select class="form-control" name="batting_style_id"  required="">
                                     <option selected="" disabled="" value="">Choose...</option>
                                     @foreach($masterBattingStyles as $style)
                                     <option value="{{ $style->id }}">{{ $style->name }}</option>
@@ -93,7 +99,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="col-form-label">Bowling Style (optional)</label>
-                                <select class="form-control" name="bowling_style_id" required="" >
+                                <select class="form-control" name="bowling_style_id" >
                                     <option selected="" disabled="" value="">Choose...</option>
                                     @foreach($masterBowlingStyles as $style)
                                         <option value="{{ $style->id }}">{{ $style->name }}</option>

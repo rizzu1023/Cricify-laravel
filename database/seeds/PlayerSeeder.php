@@ -14,9 +14,11 @@ class PlayerSeeder extends Seeder
      */
     public function run()
     {
-//        DB::table('players')->truncate();
+        DB::table('players')->truncate();
+        DB::table('battings')->truncate();
+        DB::table('bowlings')->truncate();
         DB::table('players')->insert([
-            'player_id' => 'EM',
+            'player_id' => 1,
             'first_name' => 'Eoin',
             'last_name' => 'Morgan',
             'role_id' => 1,
@@ -26,15 +28,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'EM'
+            'player_id' => 1
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'EM'
+            'player_id' => 1
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'JR',
+            'player_id' => 2,
 
             'first_name' => 'Joe',
             'last_name' => 'Root',
@@ -45,15 +47,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'JR'
+            'player_id' => 2
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'JR'
+            'player_id' => 2
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'JRY',
+            'player_id' => 3,
 
             'first_name' => 'Jason',
             'last_name' => 'Roy',
@@ -64,15 +66,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'JRY'
+            'player_id' => 3
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'JRY'
+            'player_id' => 3
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'LL',
+            'player_id' => 4,
 
             'first_name' => 'Liam',
             'last_name' => 'Livingstone',
@@ -83,15 +85,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'LL'
+            'player_id' => 4
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'LL'
+            'player_id' => 4
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'DM',
+            'player_id' => 5,
 
             'first_name' => 'David',
             'last_name' => 'Malan',
@@ -102,15 +104,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'DM'
+            'player_id' => 5
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'DM'
+            'player_id' => 5
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'MAL',
+            'player_id' => 6,
 
             'first_name' => 'Moeen',
             'last_name' => 'Ali',
@@ -121,15 +123,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'MAL'
+            'player_id' => 6
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'MAL'
+            'player_id' => 6
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'BST',
+            'player_id' => 7,
 
             'first_name' => 'Ben',
             'last_name' => 'Stokes',
@@ -140,15 +142,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'BST'
+            'player_id' => 7
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'BST'
+            'player_id' => 7
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'CW',
+            'player_id' => 8,
 
             'first_name' => 'Chris',
             'last_name' => 'Woakes',
@@ -159,16 +161,16 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'CW'
+            'player_id' => 8
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'CW'
+            'player_id' => 8
         ]);
 
 
 
         DB::table('players')->insert([
-            'player_id' => 'TCR',
+            'player_id' => 9,
 
             'first_name' => 'Tom',
             'last_name' => 'Curran',
@@ -179,15 +181,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'TCR'
+            'player_id' => 9
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'TCR'
+            'player_id' => 9
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'SMR',
+            'player_id' => 10,
 
             'first_name' => 'Sam',
             'last_name' => 'Curran',
@@ -198,15 +200,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'SMR'
+            'player_id' => 10
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'SMR'
+            'player_id' => 10
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'JBW',
+            'player_id' => 11,
 
             'first_name' => 'Jonny',
             'last_name' => 'Bairstow',
@@ -217,16 +219,16 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'JBW'
+            'player_id' => 11
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'JBW'
+            'player_id' => 11
         ]);
 
 
 
         DB::table('players')->insert([
-            'player_id' => 'JBT',
+            'player_id' => 12,
 
             'first_name' => 'Jos',
             'last_name' => 'Buttler',
@@ -237,17 +239,17 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'JBT'
+            'player_id' => 12
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'JBT'
+            'player_id' => 12
         ]);
 
 
         //INDIA  13-24
 
         DB::table('players')->insert([
-            'player_id' => 'VK',
+            'player_id' => 13,
 
             'first_name' => 'Virat',
             'last_name' => 'Kohli',
@@ -258,15 +260,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'VK'
+            'player_id' => 13
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'VK'
+            'player_id' => 13
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'RHS',
+            'player_id' => 14,
 
             'first_name' => 'Rohit',
             'last_name' => 'Sharma',
@@ -277,15 +279,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'RHS'
+            'player_id' => 14
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'RHS'
+            'player_id' => 14
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'SDW',
+            'player_id' => 15,
 
             'first_name' => 'Shikhar',
             'last_name' => 'Dhawan',
@@ -296,15 +298,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'SDW'
+            'player_id' => 15
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'SDW'
+            'player_id' => 15
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'SGL',
+            'player_id' => 16,
 
             'first_name' => 'Shubam',
             'last_name' => 'Gill',
@@ -315,15 +317,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'SGL'
+            'player_id' => 16
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'SGL'
+            'player_id' => 16
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'ARH',
+            'player_id' => 17,
 
             'first_name' => 'Ajinkya',
             'last_name' => 'Rahane',
@@ -334,15 +336,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'ARH'
+            'player_id' => 17
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'ARH'
+            'player_id' => 17
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'HPD',
+            'player_id' => 18,
 
             'first_name' => 'Hardik',
             'last_name' => 'Pandya',
@@ -353,15 +355,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'HPD'
+            'player_id' => 18
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'HPD'
+            'player_id' => 18
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'RJD',
+            'player_id' => 19,
 
             'first_name' => 'Ravindra',
             'last_name' => 'Jadeja',
@@ -372,15 +374,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'RJD'
+            'player_id' => 19
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'RJD'
+            'player_id' => 19
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'KLR',
+            'player_id' => 20,
 
             'first_name' => 'KL',
             'last_name' => 'Rahul',
@@ -391,15 +393,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'KLR'
+            'player_id' => 20
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'KLR'
+            'player_id' => 20
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'RPT',
+            'player_id' => 21,
 
             'first_name' => 'Rishab',
             'last_name' => 'Pant',
@@ -410,15 +412,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'RPT'
+            'player_id' => 21
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'RPT'
+            'player_id' => 21
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'MSM',
+            'player_id' => 22,
 
             'first_name' => 'Mohammed',
             'last_name' => 'Shami',
@@ -429,15 +431,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'MSM'
+            'player_id' => 22
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'MSM'
+            'player_id' => 22
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'JBM',
+            'player_id' => 23,
 
             'first_name' => 'Jasprit',
             'last_name' => 'Bumrah',
@@ -448,15 +450,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'JBM'
+            'player_id' => 23
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'JBM'
+            'player_id' => 23
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'MSJ',
+            'player_id' => 24,
 
             'first_name' => 'Mohammed',
             'last_name' => 'Siraj',
@@ -467,17 +469,17 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'MSJ'
+            'player_id' => 24
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'MSJ'
+            'player_id' => 24
         ]);
 
 
         // AUSTRALIA  25-36
 
         DB::table('players')->insert([
-            'player_id' => 'AFC',
+            'player_id' => 25,
 
             'first_name' => 'Aaron',
             'last_name' => 'Finch',
@@ -488,15 +490,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'AFC'
+            'player_id' => 25
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'AFC'
+            'player_id' => 25
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'SSM',
+            'player_id' => 26,
 
             'first_name' => 'Steve',
             'last_name' => 'Smith',
@@ -507,15 +509,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'SSM'
+            'player_id' => 26
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'SSM'
+            'player_id' => 26
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'DWR',
+            'player_id' => 27,
 
             'first_name' => 'David',
             'last_name' => 'Warner',
@@ -526,15 +528,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'DWR'
+            'player_id' => 27
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'DWR'
+            'player_id' => 27
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'JOB',
+            'player_id' => 28,
 
             'first_name' => 'Joe',
             'last_name' => 'Burns',
@@ -545,15 +547,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'JOB'
+            'player_id' => 28
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'JOB'
+            'player_id' => 28
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'WPC',
+            'player_id' => 29,
 
             'first_name' => 'Will',
             'last_name' => 'Pocuvski',
@@ -564,15 +566,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'WPC'
+            'player_id' => 29
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'WPC'
+            'player_id' => 29
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'GMX',
+            'player_id' => 30,
 
             'first_name' => 'Glenn',
             'last_name' => 'Maxwell',
@@ -583,15 +585,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'GMX'
+            'player_id' => 30
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'GMX'
+            'player_id' => 30
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'CGN',
+            'player_id' => 31,
 
             'first_name' => 'Cameroon',
             'last_name' => 'Gareen',
@@ -602,15 +604,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'CGN'
+            'player_id' => 31
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'CGN'
+            'player_id' => 31
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'AXC',
+            'player_id' => 32,
 
             'first_name' => 'Alex',
             'last_name' => 'Carey',
@@ -621,15 +623,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'AXC'
+            'player_id' => 32
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'AXC'
+            'player_id' => 32
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'TPN',
+            'player_id' => 33,
 
             'first_name' => 'Tim',
             'last_name' => 'Paine',
@@ -640,15 +642,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'TPN'
+            'player_id' => 33
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'TPN'
+            'player_id' => 33
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'PCM',
+            'player_id' => 34,
 
             'first_name' => 'Pat',
             'last_name' => 'Cummins',
@@ -659,15 +661,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'PCM'
+            'player_id' => 34
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'PCM'
+            'player_id' => 34
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'MST',
+            'player_id' => 35,
 
             'first_name' => 'Mitchell',
             'last_name' => 'Starc',
@@ -678,15 +680,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'MST'
+            'player_id' => 35
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'MST'
+            'player_id' => 35
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'JSH',
+            'player_id' => 36,
 
             'first_name' => 'Josh',
             'last_name' => 'Hazlewood',
@@ -697,17 +699,17 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'JSH'
+            'player_id' => 36
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'JSH'
+            'player_id' => 36
         ]);
 
 
         //New zealand 37-48
 
         DB::table('players')->insert([
-            'player_id' => 'MGT',
+            'player_id' => 37,
 
             'first_name' => 'Martin',
             'last_name' => 'Guptill',
@@ -718,15 +720,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'MGT'
+            'player_id' => 37
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'MGT'
+            'player_id' => 37
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'RTY',
+            'player_id' => 38,
 
             'first_name' => 'Ross',
             'last_name' => 'Taylor',
@@ -737,15 +739,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'RTY'
+            'player_id' => 38
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'RTY'
+            'player_id' => 38
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'KWL',
+            'player_id' => 39,
 
             'first_name' => 'Kane',
             'last_name' => 'Williomson',
@@ -756,15 +758,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'KWL'
+            'player_id' => 39
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'KWL'
+            'player_id' => 39
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'HNC',
+            'player_id' => 40,
 
             'first_name' => 'Henry ',
             'last_name' => 'Nicholas',
@@ -775,15 +777,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'HNC'
+            'player_id' => 40
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'HNC'
+            'player_id' => 40
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'JNS',
+            'player_id' => 41,
 
             'first_name' => 'James',
             'last_name' => 'Neesham',
@@ -794,15 +796,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'JNS'
+            'player_id' => 41
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'JNS'
+            'player_id' => 41
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'CMN',
+            'player_id' => 42,
 
             'first_name' => 'Colin',
             'last_name' => 'Munro',
@@ -813,15 +815,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'CMN'
+            'player_id' => 42
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'CMN'
+            'player_id' => 42
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'MSN',
+            'player_id' => 43,
 
             'first_name' => 'Mitchell',
             'last_name' => 'Santner',
@@ -832,15 +834,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'MSN'
+            'player_id' => 43
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'MSN'
+            'player_id' => 43
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'TLM',
+            'player_id' => 44,
 
             'first_name' => 'Tom',
             'last_name' => 'Latham',
@@ -851,15 +853,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'TLM'
+            'player_id' => 44
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'TLM'
+            'player_id' => 44
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'TBL',
+            'player_id' => 45,
 
             'first_name' => 'Tom',
             'last_name' => 'Blundell',
@@ -870,15 +872,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'TBL'
+            'player_id' => 45
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'TBL'
+            'player_id' => 45
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'TBT',
+            'player_id' => 46,
 
             'first_name' => 'Trent',
             'last_name' => 'Bolt',
@@ -889,15 +891,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'TBT'
+            'player_id' => 46
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'TBT'
+            'player_id' => 46
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'MHR',
+            'player_id' => 47,
 
             'first_name' => 'Mat',
             'last_name' => 'Henry',
@@ -908,15 +910,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'MHR'
+            'player_id' => 47
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'MHR'
+            'player_id' => 47
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'TMS',
+            'player_id' => 48,
 
             'first_name' => 'Tim',
             'last_name' => 'Southee',
@@ -927,19 +929,19 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'TMS'
+            'player_id' => 48
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'TMS'
+            'player_id' => 48
         ]);
 
 
         //South Africa 49-60
 
         DB::table('players')->insert([
-            'player_id' => 'FAF',
+            'player_id' => 49,
 
-            'first_name' => 'Faf',
+            'first_name' => 'FAF',
             'last_name' => 'Du Plessis',
             'role_id' => 1,
             'batting_style_id' => 1,
@@ -948,15 +950,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'FAF'
+            'player_id' => 49
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'FAF'
+            'player_id' => 49
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'DMR',
+            'player_id' => 50,
 
             'first_name' => 'David',
             'last_name' => 'Miller',
@@ -967,15 +969,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'DMR'
+            'player_id' => 50
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'DMR'
+            'player_id' => 50
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'AMR',
+            'player_id' => 51,
 
             'first_name' => 'Aiden',
             'last_name' => 'Markram',
@@ -986,15 +988,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'AMR'
+            'player_id' => 51
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'AMR'
+            'player_id' => 51
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'JPD',
+            'player_id' => 52,
 
             'first_name' => 'Jean Paul',
             'last_name' => 'Duminy',
@@ -1005,15 +1007,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'JPD'
+            'player_id' => 52
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'JPD'
+            'player_id' => 52
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'APW',
+            'player_id' => 53,
 
             'first_name' => 'Andile',
             'last_name' => 'Phehlukwayo',
@@ -1024,15 +1026,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'APW'
+            'player_id' => 53
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'APW'
+            'player_id' => 53
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'CMR',
+            'player_id' => 54,
 
             'first_name' => 'Chris',
             'last_name' => 'Morris',
@@ -1043,15 +1045,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'CMR'
+            'player_id' => 54
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'CMR'
+            'player_id' => 54
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'DPT',
+            'player_id' => 55,
 
             'first_name' => 'Dwaine',
             'last_name' => 'Pretorius',
@@ -1062,15 +1064,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'DPT'
+            'player_id' => 55
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'DPT'
+            'player_id' => 55
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'QDK',
+            'player_id' => 56,
 
             'first_name' => 'Quinton',
             'last_name' => 'de Kock',
@@ -1081,15 +1083,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'QDK'
+            'player_id' => 56
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'QDK'
+            'player_id' => 56
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'KRB',
+            'player_id' => 57,
 
             'first_name' => 'Kagiso',
             'last_name' => 'Rabada',
@@ -1100,15 +1102,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'KRB'
+            'player_id' => 57
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'KRB'
+            'player_id' => 57
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'LNG',
+            'player_id' => 58,
 
             'first_name' => 'Lungi',
             'last_name' => 'Ngidi',
@@ -1119,15 +1121,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'LNG'
+            'player_id' => 58
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'LNG'
+            'player_id' => 58
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'TSM',
+            'player_id' => 59,
 
             'first_name' => 'Tabraiz',
             'last_name' => 'Shamsi',
@@ -1138,15 +1140,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'TSM'
+            'player_id' => 59
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'TSM'
+            'player_id' => 59
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'ITH',
+            'player_id' => 60,
 
             'first_name' => 'Imran',
             'last_name' => 'Tahir',
@@ -1157,10 +1159,10 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'ITH'
+            'player_id' => 60
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'ITH'
+            'player_id' => 60
         ]);
 
 
@@ -1168,7 +1170,7 @@ class PlayerSeeder extends Seeder
 
 
         DB::table('players')->insert([
-            'player_id' => 'DBR',
+            'player_id' => 61,
 
             'first_name' => 'Daren',
             'last_name' => 'Bravo',
@@ -1179,15 +1181,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'DBR'
+            'player_id' => 61
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'DBR'
+            'player_id' => 61
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'CGY',
+            'player_id' => 62,
 
             'first_name' => 'Chris',
             'last_name' => 'Gayle',
@@ -1198,15 +1200,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'CGY'
+            'player_id' => 62
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'CGY'
+            'player_id' => 62
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'ELW',
+            'player_id' => 63,
 
             'first_name' => 'Evin',
             'last_name' => 'Lewis',
@@ -1217,15 +1219,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'ELW'
+            'player_id' => 63
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'ELW'
+            'player_id' => 63
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'SHT',
+            'player_id' => 64,
 
             'first_name' => 'Shimron',
             'last_name' => 'Hetmyer',
@@ -1236,15 +1238,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'SHT'
+            'player_id' => 64
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'SHT'
+            'player_id' => 64
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'FAN',
+            'player_id' => 65,
 
             'first_name' => 'Fabian',
             'last_name' => 'Allen',
@@ -1255,15 +1257,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'FAN'
+            'player_id' => 65
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'FAN'
+            'player_id' => 65
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'JHD',
+            'player_id' => 66,
 
             'first_name' => 'Json',
             'last_name' => 'Holder',
@@ -1274,15 +1276,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'JHD'
+            'player_id' => 66
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'JHD'
+            'player_id' => 66
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'ARS',
+            'player_id' => 67,
 
             'first_name' => 'Andre',
             'last_name' => 'Russell',
@@ -1293,15 +1295,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'ARS'
+            'player_id' => 67
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'ARS'
+            'player_id' => 67
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'SHP',
+            'player_id' => 68,
 
             'first_name' => 'Shai',
             'last_name' => 'Hope',
@@ -1312,15 +1314,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'SHP'
+            'player_id' => 68
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'SHP'
+            'player_id' => 68
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'NPR',
+            'player_id' => 69,
 
             'first_name' => 'Nicholas',
             'last_name' => 'Pooran',
@@ -1331,15 +1333,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'NPR'
+            'player_id' => 69
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'NPR'
+            'player_id' => 69
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'SCR',
+            'player_id' => 70,
 
             'first_name' => 'Sheldon',
             'last_name' => 'Cottrell',
@@ -1350,15 +1352,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'SCR'
+            'player_id' => 70
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'SCR'
+            'player_id' => 70
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'SGB',
+            'player_id' => 71,
 
             'first_name' => 'Shannon',
             'last_name' => 'Gabriel',
@@ -1369,15 +1371,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'SGB'
+            'player_id' => 71
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'SGB'
+            'player_id' => 71
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'KMR',
+            'player_id' => 72,
 
             'first_name' => 'Kemar',
             'last_name' => 'Roach',
@@ -1388,17 +1390,17 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'KWR'
+            'player_id' => 72
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'KWR'
+            'player_id' => 72
         ]);
 
 
         //PAKISTAN 73-84
 
         DB::table('players')->insert([
-            'player_id' => 'FZN',
+            'player_id' => 73,
 
             'first_name' => 'Fakhar',
             'last_name' => 'Zaman',
@@ -1409,15 +1411,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'FZN'
+            'player_id' => 73
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'FZN'
+            'player_id' => 73
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'IHQ',
+            'player_id' => 74,
 
             'first_name' => 'Imam-ul',
             'last_name' => 'Haq',
@@ -1428,15 +1430,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'IHQ'
+            'player_id' => 74
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'IHQ'
+            'player_id' => 74
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'BAM',
+            'player_id' => 75,
 
             'first_name' => 'Babar',
             'last_name' => 'Azam',
@@ -1447,15 +1449,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'BAM'
+            'player_id' => 75
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'BAM'
+            'player_id' => 75
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'ASA',
+            'player_id' => 76,
 
             'first_name' => 'Asif',
             'last_name' => 'Ali',
@@ -1466,14 +1468,14 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'ASA'
+            'player_id' => 76
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'ASA'
+            'player_id' => 76
         ]);
 
         DB::table('players')->insert([
-            'player_id' => 'HSH',
+            'player_id' => 77,
 
             'first_name' => 'Haris',
             'last_name' => 'Sohail',
@@ -1484,15 +1486,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'HSH'
+            'player_id' => 77
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'HSH'
+            'player_id' => 77
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'MHF',
+            'player_id' => 78,
 
             'first_name' => 'Mohammed',
             'last_name' => 'Hafeez',
@@ -1503,15 +1505,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'MHF'
+            'player_id' => 78
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'MHF'
+            'player_id' => 78
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'SBM',
+            'player_id' => 79,
 
             'first_name' => 'Shoiab ',
             'last_name' => 'Malik',
@@ -1522,15 +1524,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'SBM'
+            'player_id' => 79
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'SBM'
+            'player_id' => 79
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'MRZ',
+            'player_id' => 80,
 
             'first_name' => 'Mohammed',
             'last_name' => 'Rizwan',
@@ -1541,15 +1543,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'MRZ'
+            'player_id' => 80
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'MRZ'
+            'player_id' => 80
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'SRA',
+            'player_id' => 81,
 
             'first_name' => 'Sarfraz',
             'last_name' => 'Ahmed',
@@ -1560,15 +1562,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'SRA'
+            'player_id' => 81
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'SRA'
+            'player_id' => 81
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'WRZ',
+            'player_id' => 82,
 
             'first_name' => 'Wahab',
             'last_name' => 'Riaz',
@@ -1579,16 +1581,16 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'WRZ'
+            'player_id' => 82
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'WRZ'
+            'player_id' => 82
         ]);
 
 
 
         DB::table('players')->insert([
-            'player_id' => 'SFD',
+            'player_id' => 83,
 
             'first_name' => 'Shahid',
             'last_name' => 'Afridi',
@@ -1599,15 +1601,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'SFD'
+            'player_id' => 83
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'SFD'
+            'player_id' => 83
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'MAR',
+            'player_id' => 84,
 
             'first_name' => 'Mohammed',
             'last_name' => 'Amir',
@@ -1618,17 +1620,17 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'MAR'
+            'player_id' => 84
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'MAR'
+            'player_id' => 84
         ]);
 
 
 
         //SRI LANKA
         DB::table('players')->insert([
-            'player_id' => 'LTM',
+            'player_id' => 85,
 
             'first_name' => 'Lahirr',
             'last_name' => 'Thrimanne',
@@ -1639,15 +1641,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'LTM'
+            'player_id' => 85
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'LTM'
+            'player_id' => 85
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'DKR',
+            'player_id' => 86,
 
             'first_name' => 'Dimuth',
             'last_name' => 'Karunaratne',
@@ -1658,16 +1660,16 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'DKR'
+            'player_id' => 86
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'DKR'
+            'player_id' => 86
         ]);
 
 
 
         DB::table('players')->insert([
-            'player_id' => 'AFN',
+            'player_id' => 87,
 
             'first_name' => 'Aviska',
             'last_name' => 'Fernando',
@@ -1678,15 +1680,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'AFN'
+            'player_id' => 87
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'AFN'
+            'player_id' => 87
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'KMN',
+            'player_id' => 88,
 
             'first_name' => 'Kusal',
             'last_name' => 'Mendis',
@@ -1697,16 +1699,16 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'KMN'
+            'player_id' => 88
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'KMN'
+            'player_id' => 88
         ]);
 
 
 
         DB::table('players')->insert([
-            'player_id' => 'AGM',
+            'player_id' => 89,
 
             'first_name' => 'Angelo',
             'last_name' => 'Mathews',
@@ -1717,15 +1719,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'AGM'
+            'player_id' => 89
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'AGM'
+            'player_id' => 89
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'TSR',
+            'player_id' => 90,
 
             'first_name' => 'Tisara',
             'last_name' => 'Perera',
@@ -1736,15 +1738,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'TSR'
+            'player_id' => 90
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'TSR'
+            'player_id' => 90
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'IUD',
+            'player_id' => 91,
 
             'first_name' => 'Isuru',
             'last_name' => 'Udana',
@@ -1755,15 +1757,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'IUD'
+            'player_id' => 91
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'IUD'
+            'player_id' => 91
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'JMN',
+            'player_id' => 92,
 
             'first_name' => 'Jeevan',
             'last_name' => 'Mendis',
@@ -1774,15 +1776,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'JMN'
+            'player_id' => 92
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'JMN'
+            'player_id' => 92
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'KPR',
+            'player_id' => 93,
 
             'first_name' => 'Kusal',
             'last_name' => 'Perera',
@@ -1793,15 +1795,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'KPR'
+            'player_id' => 93
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'KPR'
+            'player_id' => 93
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'SLK',
+            'player_id' => 94,
 
             'first_name' => 'Suranga',
             'last_name' => 'Lakmal',
@@ -1812,15 +1814,15 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'SLK'
+            'player_id' => 94
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'SLK'
+            'player_id' => 94
         ]);
 
 
         DB::table('players')->insert([
-            'player_id' => 'LMG',
+            'player_id' => 95,
 
             'first_name' => 'Lasith',
             'last_name' => 'Malinga',
@@ -1831,14 +1833,14 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'LMG'
+            'player_id' => 95
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'LMG'
+            'player_id' => 95
         ]);
 
         DB::table('players')->insert([
-            'player_id' => 'NPD',
+            'player_id' => 96,
 
             'first_name' => 'Nuwan',
             'last_name' => 'Pradeep',
@@ -1849,10 +1851,10 @@ class PlayerSeeder extends Seeder
             'user_id' => 2,
         ]);
         DB::table('battings')->insert([
-            'player_id' => 'NPD'
+            'player_id' => 96
         ]);
         DB::table('bowlings')->insert([
-            'player_id' => 'NPD'
+            'player_id' => 96
         ]);
 
 

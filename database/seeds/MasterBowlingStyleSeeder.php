@@ -18,32 +18,32 @@ class MasterBowlingStyleSeeder extends Seeder
     {
         MasterBowlingStyle::truncate();
         MasterBowlingStyle::create([
-            'name' => 'Right Arm Faster',
+            'name' => 'Right Arm Fast',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
         MasterBowlingStyle::create([
-            'name' => 'Right Arm Medium Faster',
+            'name' => 'Right Arm Medium Fast',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
         MasterBowlingStyle::create([
-            'name' => 'Left Arm Faster',
+            'name' => 'Left Arm Fast',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
         MasterBowlingStyle::create([
-            'name' => 'Left Arm Medium Faster',
+            'name' => 'Left Arm Medium Fast',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
         MasterBowlingStyle::create([
-            'name' => 'Right Arm Spinner',
+            'name' => 'Off Spinner',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
         MasterBowlingStyle::create([
-            'name' => 'Left Arm Spinner',
+            'name' => 'Leg Spinner',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);

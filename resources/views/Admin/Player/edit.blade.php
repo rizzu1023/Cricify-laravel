@@ -32,7 +32,7 @@
                         <div class="card-body">
 
                             <div class="form-body">
-                                <form method="POST" action="{{route('teams.players.update',['team'=>$team->id,'player'=>$player->id])}}">
+                                <form method="POST" action="{{route('teams.players.update',['team'=>$team->id,'player'=>$player->player_id])}}">
                                     @csrf
                                     @method('PUT')
                                     <div class="form-group">
@@ -41,9 +41,9 @@
                                         <div>{{ $errors->first('player_image')}}</div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="field1">Player Id</label>
-                                        <input type="text" class="form-control" id="field1" name="player_id" value="{{$player['player_id']}}" readonly>
-                                        <div>{{ $errors->first('player_id')}}</div>
+                                        <label for="field1">Player Mobile Number</label>
+                                        <input type="text" class="form-control" id="field1" name="mobile_number" value="{{$player['mobile_number']}}" readonly>
+                                        <div>{{ $errors->first('mobile_number')}}</div>
                                     </div>
                                     <div class="form-group">
                                         <label for="field1">First Name</label>

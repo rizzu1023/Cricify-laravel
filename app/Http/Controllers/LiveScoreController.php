@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Teams;
 use App\Events\byesFourRunEvent;
 use App\Events\byesOneRunEvent;
 use App\Events\byesThreeRunEvent;
@@ -97,11 +98,11 @@ class LiveScoreController extends Controller
     {
         $schedule = Schedule::where('id', $id)->first();
         $team1_id = $schedule->team1_id;
-        $players1 = Players::whereHas('teams', function ($query) use ($team1_id) {
-            $query->where('team_id', $team1_id);
+        $players1 = Players::whereHas('Teams',function($query) use ($team1_id){
+            $query->where('team_id',$team1_id);
         })->get();
         $team2_id = $schedule->team2_id;
-        $players2 = Players::whereHas('teams', function ($query) use ($team2_id) {
+        $players2 = Players::whereHas('Teams', function ($query) use ($team2_id) {
             $query->where('team_id', $team2_id);
         })->get();
 

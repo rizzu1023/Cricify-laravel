@@ -43,7 +43,7 @@
                                         </option>
                                     @endforeach
                                 </select>
-                                <input type="hidden" name="player_id" value="{{$player['id']}}">
+                                <input type="hidden" name="player_id" value="{{$player['player_id']}}">
                             </form>
                             <table class="table table-sm table-striped" style="margin-top:50px;">
                                 <thead>
@@ -60,7 +60,7 @@
                                             <form action="/admin/player/remove-from-team" method="post">
                                                 @csrf
                                                 <button type="submit" class="btn btn-danger btn-sm text-white">Remove</button>
-                                                <input type="hidden" name="player_id" value="{{$player['id']}}">
+                                                <input type="hidden" name="player_id" value="{{$player['player_id']}}">
                                                 <input type="hidden" name="team_id" value="{{$t->id}}">
                                             </form>
                                         </td>
