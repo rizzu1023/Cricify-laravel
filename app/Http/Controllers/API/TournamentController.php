@@ -24,7 +24,7 @@ class TournamentController extends Controller
      */
     public function index()
     {
-        $tournaments = Tournament::where('status',1)->get();
+        $tournaments = Tournament::where('status',1)->orderBy('start_date','asc')->get();
         return TournamentResource::collection($tournaments);
     }
 
