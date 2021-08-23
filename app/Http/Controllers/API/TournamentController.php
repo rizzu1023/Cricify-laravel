@@ -8,12 +8,14 @@ use App\Http\Resources\PointsTableResource;
 use App\Http\Resources\ScheduleResource;
 use App\Http\Resources\TeamResource;
 use App\Http\Resources\TournamentResource;
+use App\Jobs\StoreAppUserIPJob;
 use App\Models\Group;
 use App\Models\GroupTeam;
 use App\Schedule;
 use App\Teams;
 use App\Tournament;
 use Illuminate\Http\Request;
+use App\Models\AppUser;
 
 class TournamentController extends Controller
 {
@@ -22,8 +24,10 @@ class TournamentController extends Controller
      *
      * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
-    public function index()
+    public function index(Request $request)
     {
+        StoreAppUserIPJob::dispatch($request->ip());
+
         $tournaments = Tournament::where('status',1)->orderBy('start_date','asc')->get();
         return TournamentResource::collection($tournaments);
     }

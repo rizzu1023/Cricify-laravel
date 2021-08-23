@@ -31,6 +31,8 @@
                             </li>
                             <li class="sidebar-list"><a class="nav-link  " href="/admin/users"><i data-feather="users"></i><span>Users</span></a>
                             </li>
+                            <li class="sidebar-list"><a class="nav-link  " href="/super-admin/app-users"><i data-feather="users"></i><span>App Users</span></a>
+                            </li>
                         @endif
                     @endauth
 
