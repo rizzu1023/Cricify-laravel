@@ -7,8 +7,8 @@
                 <div class="row">
                     <div class="col-6">
                         <h3>Points Table</h3>
-                        <a class="btn btn-success btn-sm " href="/admin/tournaments/{{$tournament->id}}/points-table/edit"><i
-                                class="cil-user-plus"></i> Update</a>
+{{--                        <a class="btn btn-success btn-sm " href="/admin/tournaments/{{$tournament->id}}/points-table/edit"><i--}}
+{{--                                class="cil-user-plus"></i> Update</a>--}}
                     </div>
                     <div class="col-6">
                         <ol class="breadcrumb">
@@ -60,6 +60,7 @@
                                             <td>{{ $team->points }}</td>
                                             <td>{{ $team->nrr }}</td>
                                             <td>
+                                                <a class="btn btn-sm btn-outline-primary" href="/admin/groups/{{$team->group_id}}/teams/{{$team->team_id}}/edit">Edit</a>
                                                 {{--                                            <a class="btn btn-sm btn-outline-success" type="button"   data-toggle="modal" data-target="#exampleModalCenter" title="">Edit</a>--}}
                                                 <form id="team-form" method="post" style="display: inline-block"
                                                       action="/admin/groups/{{$team->group_id}}/teams/{{$team->team_id}}">
