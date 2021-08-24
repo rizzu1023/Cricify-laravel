@@ -138,7 +138,7 @@ class MatchController extends Controller
                     'match_status' => $match_status,
                     'team1' => new MatchDetailResource($batting_team),
                     'team2' => new MatchDetailResource($bowling_team),
-                    'won_match_detail' => MatchResource::make($match),
+                    'won_match_detail' => $match,
                     'won' => $won ? TeamResource::make($won) : NULL,
                     'mom' => $mom ? PlayersResource::make($mom) : NULL,
                     'advertise_url' => $advertise['url'],
