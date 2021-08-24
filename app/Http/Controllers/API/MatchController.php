@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\FowResource;
 use App\Http\Resources\MatchDetailResource;
 use App\Http\Resources\MatchPlayersResource;
+use App\Http\Resources\MatchResource;
 use App\Http\Resources\MatchTrackResource;
 use App\Http\Resources\PlayersResource;
 use App\Http\Resources\TeamResource;
@@ -126,7 +127,7 @@ class MatchController extends Controller
                 ];
 
             } elseif ($match_status == 4) {
-                $match = Game::with(['MatchDetail'])->where('match_id', $match_id)->where('tournament_id', $tournament->id)->first();
+                $match = Game::with(['MatchDetail.Teams','MOM','WON'])->where('match_id', $match_id)->where('tournament_id', $tournament->id)->first();
 
                 $batting_team = $match->MatchDetail->where('isBatting', 1)->first();
                 $bowling_team = $match->MatchDetail->where('isBatting', 0)->first();
@@ -137,7 +138,7 @@ class MatchController extends Controller
                     'match_status' => $match_status,
                     'team1' => new MatchDetailResource($batting_team),
                     'team2' => new MatchDetailResource($bowling_team),
-                    'won_match_detail' => $match,
+                    'won_match_detail' => MatchResource::make($match),
                     'won' => $won ? TeamResource::make($won) : NULL,
                     'mom' => $mom ? PlayersResource::make($mom) : NULL,
                     'advertise_url' => $advertise['url'],
