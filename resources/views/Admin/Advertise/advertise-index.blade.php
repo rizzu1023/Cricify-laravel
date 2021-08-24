@@ -92,7 +92,7 @@
     function toggle_status_function(advertise_id){
         $.ajax({
             type : 'GET',
-            url  : "/admin/advertise/status/toggle/" + advertise_id,
+            url  : "/super-admin/advertise/status/toggle/" + advertise_id,
             data : {
                 "_token": "{{ csrf_token() }}",
             },

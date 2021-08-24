@@ -20,9 +20,11 @@ class PlayersResource extends JsonResource
         }
 
         return [
-            'id' => $this->id,
+
+            //TODO : need to change
+            'id' => 0,
             'player_profile' => $this->getFirstMedia('player-image') ? $this->getFirstMedia('player-image')->getUrl('player-profile') : NULL,
-            'player_id' => $this->player_id,
+            'player_id' => (String) $this->player_id,
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
             'role' => $this->Role->name,

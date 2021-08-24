@@ -25,11 +25,11 @@
                     @auth
                         @if(auth()->user()->is_super_admin)
                             <li class="sidebar-list">
-                                <a class="nav-link  " href="/admin/feedbacks"><i data-feather="message-circle"></i><span>Feedbacks</span></a>
+                                <a class="nav-link  " href="/super-admin/feedbacks"><i data-feather="message-circle"></i><span>Feedbacks</span></a>
                             </li>
-                            <li class="sidebar-list"><a class="nav-link  " href="/admin/advertise"><i data-feather="paperclip"></i><span>Advertise</span></a>
+                            <li class="sidebar-list"><a class="nav-link  " href="/super-admin/advertise"><i data-feather="paperclip"></i><span>Advertise</span></a>
                             </li>
-                            <li class="sidebar-list"><a class="nav-link  " href="/admin/users"><i data-feather="users"></i><span>Users</span></a>
+                            <li class="sidebar-list"><a class="nav-link  " href="/super-admin/users"><i data-feather="users"></i><span>Users</span></a>
                             </li>
                             <li class="sidebar-list"><a class="nav-link  " href="/super-admin/app-users"><i data-feather="users"></i><span>App Users</span></a>
                             </li>

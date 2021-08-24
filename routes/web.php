@@ -32,7 +32,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
     Route::post('/Tournament/addTeam',[TournamentController::class,'Tournament_add_Team'])->name('Tournament_add_Team');
     Route::post('/Tournament/destroyTeam',[TournamentController::class,'Tournament_destroy_Team'])->name('Tournament_destroy_Team');
 
-    Route::resource('/feedbacks','FeedbackController');
 
     Route::get('/teams/{team}/players/exist_create',[TeamPlayerController::class,'exist_team_player_create']);
     Route::post('/teams/{team}/players/exist_store',[TeamPlayerController::class,'exist_team_player_store']);
@@ -103,9 +102,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
 //    Route::get('/BrowseResult', 'ResultController@BrowseResult')->name('BrowseResult');
 
 
-    Route::resource('/advertise','AdvertiseController');
-    Route::get('/advertise/status/toggle/{advertise}',[AdvertiseController::class,'toggleStatus']);
-    Route::get('/users',[\App\Http\Controllers\UserController::class,'allUsers']);
 
 
 });
@@ -116,6 +112,10 @@ Route::group(['prefix' => 'super-admin', 'middleware' => ['auth']], function() {
     Route::get('user',[SuperAdminController::class,'user_index']);
     Route::get('admin',[SuperAdminController::class,'admin_index']);
     Route::get('app-users',[SuperAdminController::class,'appUsers']);
+    Route::resource('/advertise','AdvertiseController');
+    Route::get('/advertise/status/toggle/{advertise}',[AdvertiseController::class,'toggleStatus']);
+    Route::get('/users',[\App\Http\Controllers\UserController::class,'allUsers']);
+    Route::resource('/feedbacks','FeedbackController');
 });
 
 
