@@ -46,15 +46,15 @@
                                                 <td>{{$f->subject}}</td>
                                                 <td>
                                                                                     <a class="btn btn-warning btn-sm"
-                                                                                       href="/admin/feedbacks/{{$f->id}}"> Details </a>
+                                                                                       href="/super-admin/feedbacks/{{$f->id}}"> Details </a>
 {{--                                                    <a class="btn btn-success btn-sm"--}}
 {{--                                                       href="/admin/feedback/{{$f->id}}/edit"> Edit </a>--}}
 
                                                         <form style="display:inline-block" method="POST"
-                                                              action="/admin/feedbacks/{{$f->id}}">
+                                                              action="/super-admin/feedbacks/{{$f->id}}">
                                                             @csrf
                                                             @method('DELETE')
-                                                            <button class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this team?')"> Delete </button>
+                                                            <button class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this feedback?')"> Delete </button>
                                                         </form>
 
 

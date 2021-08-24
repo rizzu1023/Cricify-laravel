@@ -11,6 +11,7 @@ use App\Http\Controllers\AdvertiseController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\PlayersController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UserController;
 
 //frontend Routes
 Route::get('/index', [MainController::class,'GetIndex']);
@@ -114,7 +115,7 @@ Route::group(['prefix' => 'super-admin', 'middleware' => ['auth']], function() {
     Route::get('app-users',[SuperAdminController::class,'appUsers']);
     Route::resource('/advertise','AdvertiseController');
     Route::get('/advertise/status/toggle/{advertise}',[AdvertiseController::class,'toggleStatus']);
-    Route::get('/users',[\App\Http\Controllers\UserController::class,'allUsers']);
+    Route::get('/users',[UserController::class,'getAllUsers']);
     Route::resource('/feedbacks','FeedbackController');
 });
 

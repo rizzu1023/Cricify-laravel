@@ -22,9 +22,6 @@ class PlayersController extends Controller
     public function index(Teams $team)
     {
         $team_id = $team->id;
-//        $player = Players::whereHas('teams',function($query) use($team_id){
-//            $query->where('team_id',$team_id);
-//        })->orderByRaw("FIELD(role, 'Batsman','WK-Batsman','Allrounder','Bowler')")->get();
 
         $player = Players::with('media','Role','BattingStyle','BowlingStyle')->whereHas('Teams',function($query) use($team_id){
             $query->where('team_id',$team_id);
