@@ -34,12 +34,11 @@ class MatchController extends Controller
                     $url = $advertise->getFirstMedia('advertise-image') ? $advertise->getFirstMedia('advertise-image')->getUrl('compressed-image') : NULL;
                     $height = $advertise->height;
                 }
-            }
-            else{
+            } else {
                 $url = $advertise->getFirstMedia('advertise-image') ? $advertise->getFirstMedia('advertise-image')->getUrl('compressed-image') : NULL;
                 $height = $advertise->height;
-                }
             }
+        }
 
 
         return ['url' => $url, 'height' => $height];
@@ -114,26 +113,11 @@ class MatchController extends Controller
     public function matchLive(Tournament $tournament, $match_id)
     {
         $advertise = $this->advertise('live', $tournament->id);
-
-        $match = Game::with(['MatchDetail','MOM','WON','MatchTracks', 'MatchPlayers.Players' => function ($query) {
-            return $query->with('media', 'Role', 'BattingStyle', 'BowlingStyle');
-        }])->where('match_id', $match_id)->where('tournament_id', $tournament->id)->first();
+        $game = Game::where('match_id', $match_id)->where('tournament_id', $tournament->id)->first();
 
 
-//        with(['Players' => function ($query) {
-//                        return $query->with('media', 'Role', 'BattingStyle', 'BowlingStyle');
-//                    }, 'wicketPrimary', 'wicketSecondary'])
-//        $schedule = Schedule::with('Game', 'Teams1', 'Teams2')->where('id', $match_id)->where('tournament_id', $tournament->id)->first();
-
-
-        if ($match) {
-            $batting_team = $match->MatchDetail->where('isBatting', 1)->first();
-            $batting_team_id = optional($batting_team)->team_id;
-            $bowling_team = $match->MatchDetail->where('isBatting', 0)->first();
-            $bowling_team_id = optional($bowling_team)->team_id;
-
-
-            $match_status = $match->status;
+        if ($game) {
+            $match_status = $game->status;
 
             if ($match_status == 0) {
                 return [
@@ -142,6 +126,11 @@ class MatchController extends Controller
                 ];
 
             } elseif ($match_status == 4) {
+
+                $match = Game::with(['MatchDetail.Teams', 'MOM', 'WON'])->where('match_id', $match_id)->where('tournament_id', $tournament->id)->first();
+
+                $batting_team = $match->MatchDetail->where('isBatting', 1)->first();
+                $bowling_team = $match->MatchDetail->where('isBatting', 0)->first();
 
                 $won = $match->WON;
                 $mom = $match->MOM;
@@ -156,6 +145,17 @@ class MatchController extends Controller
                     'advertise_height' => $advertise['height'],
                 ];
             } else {
+
+                $match = Game::with(['MatchDetail.Teams', 'MOM', 'WON','MatchTrack','MatchPlayers.Players' => function ($query) {
+                    return $query->with('media', 'Role', 'BattingStyle', 'BowlingStyle');
+                }])->where('match_id', $match_id)->where('tournament_id', $tournament->id)->first();
+
+
+                $batting_team = $match->MatchDetail->where('isBatting', 1)->first();
+                $batting_team_id = optional($batting_team)->team_id;
+                $bowling_team = $match->MatchDetail->where('isBatting', 0)->first();
+                $bowling_team_id = optional($bowling_team)->team_id;
+
                 $total_overs = $match->overs;
                 $match_detail = NULL;
 
@@ -167,20 +167,11 @@ class MatchController extends Controller
                 if ($batting_team) {
                     $match_detail = new MatchDetailResource($batting_team);
                     $batsman = $match->MatchPlayers->whereIn('bt_status', ['10', '11'])->where('team_id', $batting_team_id)->sortByDesc('bt_order');
-//                    $batsman = MatchPlayers::with(['Players.media' => function ($query) {
-//                        return $query->with('media', 'Role', 'BattingStyle', 'BowlingStyle');
-//                    }, 'wicketPrimary', 'wicketSecondary'])->whereIn('bt_status', ['10', '11'])->where('team_id', $batting_team->team_id)->where('match_id', $match_id)->where('tournament_id', $tournament->id)->orderBy('bt_order', 'asc')->get();
                     $current_batsman = MatchPlayersResource::collection($batsman);
 
                     $bowler = $match->MatchPlayers->where('bw_status', '11')->where('team_id', $bowling_team_id)->first();
-
-//                    $bowler = MatchPlayers::with(['Players' => function ($query) {
-//                        return $query->with('media', 'Role', 'BattingStyle', 'BowlingStyle');
-//                    }, 'wicketPrimary', 'wicketSecondary'])->where('bw_status', '11')->where('team_id', '<>', $batting_team->team_id)->where('match_id', $match_id)->where('tournament_id', $tournament->id)->first();
                     if ($bowler)
                         $current_bowler = new MatchPlayersResource($bowler);
-//                else
-//                    $current_bowler = 'not_found';
 
                     $batting_team_overs = $batting_team->over;
                     $batting_team_balls = $batting_team->overball;
