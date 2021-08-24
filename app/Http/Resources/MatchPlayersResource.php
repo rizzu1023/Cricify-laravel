@@ -32,9 +32,10 @@ class MatchPlayersResource extends JsonResource
            $bw_economy = $this->calculate_economy($this->bw_runs,$this->bw_over,$this->bw_overball);
        }
 //        return parent::toArray($request);
+        // TODO :: app_update
         return [
             'id' => $this->id,
-            'player_id' => $this->player_id,
+            'player_id' => (String) $this->player_id,
             'match_id' => $this->match_id,
             'team_id' => $this->team_id,
             'bt_status' => $this->bt_status,
@@ -52,8 +53,8 @@ class MatchPlayersResource extends JsonResource
             'bw_maiden' => $this->bw_maiden,
             'bw_economy' => $bw_economy,
             'wicket_type' => $this->wicket_type,
-            'wicket_primary' => $this->wicket_primary,
-            'wicket_secondary' => $this->wicket_secondary,
+            'wicket_primary' => (String) $this->wicket_primary,
+            'wicket_secondary' => (String) $this->wicket_secondary,
             'tournament_id' => $this->tournament_id,
             'playerDetail' => new PlayersResource($this->Players),
             'wicketPrimary' => $this->wicketPrimary,
