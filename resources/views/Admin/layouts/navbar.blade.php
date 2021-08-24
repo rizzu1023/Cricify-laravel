@@ -110,7 +110,7 @@
 {{--                                    data-feather="maximize"></i></a></li>--}}
                         <li class="profile-nav onhover-dropdown p-0 mr-0">
                             <div class="media profile-media"><img class="b-r-10"
-                                    src="{{asset('assets/Admin/images/dashboard/wanc_logo.jpeg')}}" alt="" width="38px">
+                                    src="{{asset('assets/Admin/images/dashboard/cricify_logo_dark.png')}}" alt="" width="38px">
                                 <div class="media-body"><span>CRICIFY</span>
                                     <p class="mb-0 font-roboto">Admin <i class="middle fa fa-angle-down"></i></p>
                                 </div>

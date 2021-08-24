@@ -1,7 +1,9 @@
 <!-- Page Sidebar Start-->
 <div class="sidebar-wrapper">
-    <div class="logo-wrapper" style="box-shadow: none"><a href="/admin/">CIRCIFY</a></div>
-    <div class="logo-icon-wrapper"><a href="/admin/dashboard">CRICIFY</a></div>
+    <div class="logo-wrapper" style="box-shadow: none"><a href="/admin/"><img class="b-r-10"
+                                                                              src="{{asset('assets/Admin/images/dashboard/cricify_logo_dark.png')}}" alt="" width="38px"></a></div>
+    <div class="logo-icon-wrapper"><a href="/admin/dashboard"><img class="b-r-10"
+                                                                   src="{{asset('assets/Admin/images/dashboard/cricify_logo_dark.png')}}" alt="" width="38px"></a></div>
     <nav>
         <div class="sidebar-main">
             <div id="sidebar-menu">

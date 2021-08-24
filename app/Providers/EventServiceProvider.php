@@ -17,6 +17,14 @@ class EventServiceProvider extends ServiceProvider
             \App\Listeners\startInningListener::class,
         ],
 
+        \App\Events\holdMatchEvent::class => [
+            \App\Listeners\holdMatchListener::class,
+        ],
+
+        \App\Events\reverseHoldMatchEvent::class => [
+            \App\Listeners\reverseHoldMatchListener::class,
+        ],
+
         \App\Events\strikeRotateEvent::class => [
             \App\Listeners\strikeRotateListener::class,
         ],
