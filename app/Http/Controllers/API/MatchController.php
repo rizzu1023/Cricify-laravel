@@ -33,20 +33,14 @@ class MatchController extends Controller
                 if ($tournament_id == $advertise->tournament_id) {
                     $url = $advertise->getFirstMedia('advertise-image') ? $advertise->getFirstMedia('advertise-image')->getUrl('compressed-image') : NULL;
                     $height = $advertise->height;
-<<<<<<< Updated upstream
                 }
             }
             else{
                 $url = $advertise->getFirstMedia('advertise-image') ? $advertise->getFirstMedia('advertise-image')->getUrl('compressed-image') : NULL;
                 $height = $advertise->height;
-=======
-                } else {
-
                 }
->>>>>>> Stashed changes
             }
 
-        }
 
         return ['url' => $url, 'height' => $height];
     }
