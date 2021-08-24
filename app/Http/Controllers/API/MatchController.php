@@ -126,8 +126,7 @@ class MatchController extends Controller
                 ];
 
             } elseif ($match_status == 4) {
-
-                $match = Game::with(['MatchDetail.Teams','WON'])->where('match_id', $match_id)->where('tournament_id', $tournament->id)->first();
+                $match = Game::with(['MatchDetail'])->where('match_id', $match_id)->where('tournament_id', $tournament->id)->first();
 
                 $batting_team = $match->MatchDetail->where('isBatting', 1)->first();
                 $bowling_team = $match->MatchDetail->where('isBatting', 0)->first();
