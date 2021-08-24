@@ -146,7 +146,7 @@ class MatchController extends Controller
                 ];
             } else {
 
-                $match = Game::with(['MatchDetail.Teams', 'MOM', 'WON','MatchTrack','MatchPlayers.Players' => function ($query) {
+                $match = Game::with(['MatchDetail.Teams', 'MOM', 'WON','MatchTracks','MatchPlayers.Players' => function ($query) {
                     return $query->with('media', 'Role', 'BattingStyle', 'BowlingStyle');
                 }])->where('match_id', $match_id)->where('tournament_id', $tournament->id)->first();
 
