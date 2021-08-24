@@ -190,7 +190,7 @@ class MatchController extends Controller
 
                     $partnership = [];
 
-                    $partnership_query = $match->MatchTracks->whereIn('wickets', [$batting_team->wicket - 1, $batting_team->wicket])->where('team_id', $batting_team_id)->sorBy('wickets')->sortBy('score')->sortBy('over')->sortBy('overball');
+                    $partnership_query = $match->MatchTracks->whereIn('wickets', [$batting_team->wicket - 1, $batting_team->wicket])->where('team_id', $batting_team_id)->sortBy('wickets')->sortBy('score')->sortBy('over')->sortBy('overball');
 
                     $p0 = $partnership_query->where('wickets', $match_detail->wicket - 1)->last();
                     $p1 = $partnership_query->where('wickets', $match_detail->wicket)->last();
