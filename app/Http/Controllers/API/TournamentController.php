@@ -28,7 +28,7 @@ class TournamentController extends Controller
     {
         StoreAppUserIPJob::dispatch($request->ip());
 
-        $tournaments = Tournament::where('status',1)->orderBy('start_date','asc')->get();
+        $tournaments = Tournament::where('status',1)->orderBy('start_date','desc')->get();
         return TournamentResource::collection($tournaments);
     }
 

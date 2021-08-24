@@ -33,9 +33,10 @@ class MatchController extends Controller
                     $url = $advertise->getFirstMedia('advertise-image') ? $advertise->getFirstMedia('advertise-image')->getUrl('compressed-image') : NULL;
                     $height = $advertise->height;
                 }
-                else{
-
-                }
+            }
+            else{
+                $url = $advertise->getFirstMedia('advertise-image') ? $advertise->getFirstMedia('advertise-image')->getUrl('compressed-image') : NULL;
+                $height = $advertise->height;
             }
 
         }
@@ -381,11 +382,7 @@ class MatchController extends Controller
     {
         $schedule = Schedule::with('Game.MatchDetail', 'Teams1', 'Teams2')->where('id', $match_id)->where('tournament_id', $tournament->id)->first();
 
-        $team1_id = $schedule->Teams1->id;
-        $team2_id = $schedule->Teams2->id;
-
         $game = $schedule->Game;
-
 
         if ($game) {
 
@@ -400,15 +397,6 @@ class MatchController extends Controller
                 $bowling_team = $game->MatchDetail->where('isBatting',0)->first();
                 $bowling_team_id = optional($bowling_team)->team_id;
 
-//                if ($game) {
-//                    if ($game->toss == $team1_id && $game->choose == 'Bat') {
-//                        $batting_team_id = $team1_id;
-//                        $bowling_team_id = $team2_id;
-//                    } else {
-//                        $batting_team_id = $team2_id;
-//                        $bowling_team_id = $team1_id;
-//                    }
-//                }
 
                 $overs = MatchTrack::with('Players', 'Batsman')->select('over', DB::raw('Min(attacker_id) as attacker_id, SUM(wickets) as wickets,SUM(run) as runs'))
                     ->groupBy('over')

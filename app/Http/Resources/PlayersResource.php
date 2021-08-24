@@ -21,9 +21,9 @@ class PlayersResource extends JsonResource
 
         // TODO :: app_update
         return [
-            'id' => 0,
+            'id' => 0, //delete
             'player_profile' => $this->getFirstMedia('player-image') ? $this->getFirstMedia('player-image')->getUrl('player-profile') : NULL,
-            'player_id' => (String) $this->player_id,
+            'player_id' => (String) $this->player_id, //change to int
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
             'role' => $this->Role->name,

@@ -54,15 +54,14 @@
                                                 <input type="checkbox" onchange="toggle_status_function({{$a->id}})" @if($a->status) checked=""@endif ><span class="switch-state" ></span>
                                             </label>
                                         </div>
-                                        {{--                                                    </div>--}}
                                     </td>
                                     <td>
                                         <a class="btn btn-warning btn-sm"
-                                           href="/admin/advertise/{{$a->id}}"> Details </a>
+                                           href="/super-admin/advertise/{{$a->id}}"> Details </a>
                                         <a class="btn btn-success btn-sm"
-                                           href="/admin/advertise/{{$a->id}}/edit"> Edit </a>
+                                           href="/super-admin/advertise/{{$a->id}}/edit"> Edit </a>
                                         <form style="display:inline-block" method="POST"
-                                              action="/admin/advertise/{{$a->id}}">
+                                              action="/super-admin/advertise/{{$a->id}}">
                                             @csrf
                                             @method('DELETE')
                                             <button class="btn btn-danger btn-sm"
@@ -70,8 +69,6 @@
                                                 Delete
                                             </button>
                                         </form>
-
-
                                     </td>
 
                                 </tr>
