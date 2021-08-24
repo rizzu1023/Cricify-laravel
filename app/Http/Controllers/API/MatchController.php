@@ -115,7 +115,7 @@ class MatchController extends Controller
     {
         $advertise = $this->advertise('live', $tournament->id);
 
-        $match = Game::with(['MatchDetail','MOM','WON','MatchTracks', 'MatchPlayers' => function ($query) {
+        $match = Game::with(['MatchDetail','MOM','WON','MatchTracks', 'MatchPlayers.Players' => function ($query) {
             return $query->with('media', 'Role', 'BattingStyle', 'BowlingStyle');
         }])->where('match_id', $match_id)->where('tournament_id', $tournament->id)->first();
 
