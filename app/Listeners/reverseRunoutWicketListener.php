@@ -65,9 +65,9 @@ class reverseRunoutWicketListener
             }
         }
 
-        $dismissed_batsman->wicket_type = 'NULL';
-        $dismissed_batsman->wicket_primary = 'NULL';
-        $dismissed_batsman->wicket_secondary = 'NULL';
+        $dismissed_batsman->wicket_type = NULL;
+        $dismissed_batsman->wicket_primary = NULL;
+        $dismissed_batsman->wicket_secondary = NULL;
 
         $last_ball_played_batsman->bt_runs -= $event->previous_ball->run;
         $last_ball_played_batsman->bt_balls -= 1;
