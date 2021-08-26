@@ -27,7 +27,8 @@ class reverseHoldMatchListener
     {
         $match = $event->match;
 
-        $match->status = 10;
+        $match->status = $match->backup_status;
+        $match->backup_status = NULL;
         $match->description = NULL;
         $match->update();
     }

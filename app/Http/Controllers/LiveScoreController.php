@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\holdMatchEvent;
 use App\Teams;
 use App\Events\byesFourRunEvent;
 use App\Events\byesOneRunEvent;
@@ -336,6 +337,11 @@ class LiveScoreController extends Controller
 
             }
         }
+        if($request->has('holdMatch')){
+            $request->validate([
+                'description' => 'required|string',
+            ]);
+        }
         if ($request->has('startInning')) {
             if ($request->startInning == 1) {
 
@@ -373,6 +379,7 @@ class LiveScoreController extends Controller
 
             if ($request->endInning) event(new endInningEvent($match, $request));
             if ($request->resetInning) event(new resetInningEvent($match, $request));
+            if ($request->holdMatch) event(new holdMatchEvent($match, $request));
         }
 
         if ($request->value) {

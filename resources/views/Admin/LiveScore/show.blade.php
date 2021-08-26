@@ -102,7 +102,7 @@
                 <span>First Inning has Been ended</span>
                 <button class="btn btn-success btn-md startInningButton">Start 2nd Inning</button>
                 <a class="btn btn-outline-success btn-square btn-sm mt-1 undo-button"
-                   onclick="livescore_function('reverse_inning')">Undo</a>
+                   onclick="confirm('are you sure you want undo ?') ? livescore_function('reverse_inning') : null">Undo</a>
             @elseif($status == 1 || $status == 3)
                 <div class="modal  " id="overModal" tabindex="-1" data-backdrop="false" role="dialog"
                      aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -538,8 +538,7 @@
                             <a class="btn btn-outline-info btn-square btn-sm mt-1 score-button py-2"
                                id="undo_button"
                                style="font-size: 18px"
-                               onclick="livescore_function('undo')"><i data-feather="refresh-ccw"
-                                                                       class="mr-2"></i><span>Undo</span></a>
+                               onclick="livescore_function('undo')"><i data-feather="refresh-ccw" class="mr-2"></i><span>Undo</span></a>
                         </div>
                         <br>
 
@@ -656,7 +655,7 @@
             @elseif($status == 4)
                 <span style="font-size:20px">Match has been ended</span>
                 <a class="btn btn-outline-secondary btn-square btn-md mt-1 ml-5 undo-button"
-                   onclick="livescore_function('reverse_inning')">Undo</a>
+                   onclick="confirm('are you sure you want undo ?') ? livescore_function('reverse_inning') : null" >Undo</a>
                 <a href="/admin/result/{{$tournament_id}}/{{$match_id}}/show"
                    class="btn btn-primary btn-square btn-md mt-1">Result</a>
 

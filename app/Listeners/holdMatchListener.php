@@ -27,6 +27,7 @@ class holdMatchListener
     {
         $match = $event->match;
 
+        $match->backup_status = $match->status;
         $match->status = 10;
         $match->description = $event->request->description;
         $match->update();

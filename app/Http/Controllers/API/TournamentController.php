@@ -58,6 +58,4 @@ class TournamentController extends Controller
         }
         return PointsTableResource::collection($points_table);
     }
-
-
 }
