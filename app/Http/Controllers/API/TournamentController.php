@@ -42,7 +42,7 @@ class TournamentController extends Controller
 
     public function teams(Tournament $tournament)
     {
-        $team = Teams::where('tournament_id',$tournament->id)->get();
+        $team = Teams::where('tournament_id',$tournament->id)->where('status',1)->get();
         return TeamResource::collection($team);
     }
 

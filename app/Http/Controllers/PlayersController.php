@@ -22,7 +22,13 @@ class PlayersController extends Controller
 {
     public function index()
     {
-        $players = Players::with('Role', 'BattingStyle', 'BowlingStyle')->where('user_id', auth()->user()->id)->get();
+        $user = auth()->user();
+        if($user->is_super_admin){
+            $players = Players::with('media','Role', 'BattingStyle', 'BowlingStyle')->get();
+        }
+        else{
+            $players = Players::with('media','Role', 'BattingStyle', 'BowlingStyle')->where('user_id', $user->id)->get();
+        }
         return view('Admin.Player.playerIndex', compact('players'));
     }
 
