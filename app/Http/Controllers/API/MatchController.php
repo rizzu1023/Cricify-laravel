@@ -240,70 +240,89 @@ class MatchController extends Controller
 
     public function matchScorecard(Tournament $tournament, $match_id)
     {
+        $schedule = Schedule::with('Game', 'Teams1', 'Teams2')->where('id', $match_id)->where('tournament_id', $tournament->id)->first();
 
-        $match = Game::with(['MatchDetail','WON','MatchTracks','MatchPlayers.Players' => function ($query) {
-            return $query->with('media', 'Role', 'BattingStyle', 'BowlingStyle');
-        }])->where('match_id', $match_id)->where('tournament_id', $tournament->id)->first();
+        $team1_id = $schedule->Teams1->id;
+        $team2_id = $schedule->Teams2->id;
+
+        $team_query = Teams::whereIn('id', [$team1_id, $team2_id])->get();
+
 
         $isMatch = 'not_found';
         $toss_winning_team = NULL;
-        $match_status = NULL;
+        $match_status = null;
+        $match = $schedule->Game;
 
-
-        $team_won = '';
-        $won_description = '';
-
-        $bowling_team = NULL;
-        $batting_team = NULL;
-        $batting_team_id = NULL;
-        $bowling_team_id = NULL;
-        $team_query = collect();
 
         if ($match) {
+            if ($match->WON) {
+                $team_won = $match->WON->team_name;
+                $won_description = $match->description;
+            } else
+                $team_won = '0';
+            $won_description = '';
 
-            $isMatch = true;
-            $match_status = $match->status;
+        } else
+            $team_won = '';
+        $won_description = '';
 
-            $team_won = $match->WON ? $match->WON->team_name : '';
-            $won_description = $match->WON ? $match->description : '';
 
-            $toss_winning_team = Teams::where('id', $match->toss)->first();
+        if ($match) {
+            if ($match->status > 0) {
+                $isMatch = true;
+                $match_status = $match->status;
+            }
 
-            $batting_team = $match->MatchDetail->where('isBatting', 1)->first();
-            $batting_team_id = optional($batting_team)->team_id;
-            $bowling_team = $match->MatchDetail->where('isBatting', 0)->first();
-            $bowling_team_id = optional($bowling_team)->team_id;
+            $toss_winning_team = $team_query->where('id', $match->toss)->first();
+            if (($match->toss == $team1_id && $match->choose == 'Bat') || ($match->toss == $team2_id && $match->choose == 'Bowl')) {
+                $batting_team_id = $team1_id;
+                $bowling_team_id = $team2_id;
+            } else {
+                $batting_team_id = $team2_id;
+                $bowling_team_id = $team1_id;
+            }
         }
 
         $team1_detail = NULL;
         $team1_batsman = [];
         $team1_notout_batsman = [];
         $team1_bowler = [];
+        $team1_extras = NULL;
+        $team1_score = NULL;
         $team1_fow = NULL;
 
         $team2_detail = NULL;
         $team2_batsman = [];
         $team2_notout_batsman = [];
         $team2_bowler = [];
+        $team2_extras = NULL;
+        $team2_score = NULL;
         $team2_fow = NULL;
 
 
         if ($match) {
-            $match_players_query = $match->MatchPlayers;
+            $match_players_query = MatchPlayers::with(['Players' => function ($query) {
+                return $query->with('media', 'Role', 'BattingStyle', 'BowlingStyle');
+            }, 'wicketPrimary', 'wicketSecondary'])->where('match_id', $match_id)->where('tournament_id', $tournament->id)->orderBy('bt_order', 'asc')->get();
+            $match_details_query = MatchDetail::select('score', 'wicket', 'over', 'overball', 'no_ball', 'wide', 'byes', 'legbyes', 'team_id')->where('match_id', $match_id)->where('tournament_id', $tournament->id)->get();
             $match_track_query = MatchTrack::with('Batsman')->select('player_id', 'score', 'wickets', 'over', 'overball', 'team_id')->where('action', 'wicket')->where('match_id', $match_id)->where('tournament_id', $tournament->id)->orderBy('wickets', 'asc')->get();
 
 
             $team1_detail = $team_query->where('id', $batting_team_id)->first();
-            $team1_batsman = $match_players_query->whereIn('bt_status', ['0', '10', '11', '12'])->where('team_id', $batting_team_id)->sortBy('bt_order');
-            $team1_notout_batsman = $match_players_query->where('bt_status', 'DNB')->where('team_id', $batting_team_id); //TODO :: need to sorting
-            $team1_bowler = $match_players_query->whereIn('bw_status', ['1', '11'])->where('team_id', $bowling_team_id); // TODO :: need to sorting
+            $team1_batsman = $match_players_query->whereIn('bt_status', ['0', '10', '11', '12'])->where('team_id', $batting_team_id);
+            $team1_notout_batsman = $match_players_query->where('bt_status', 'DNB')->where('team_id', $batting_team_id);
+            $team1_bowler = $match_players_query->whereIn('bw_status', ['1', '11'])->where('team_id', $bowling_team_id);
+            $team1_extras = $match_details_query->where('team_id', $batting_team_id)->first();
+            $team1_score = $match_details_query->where('team_id', $batting_team_id)->first();
             $team1_fow = $match_track_query->where('team_id', $batting_team_id);
 
 
             $team2_detail = $team_query->where('id', $bowling_team_id)->first();
-            $team2_batsman = $match_players_query->whereIn('bt_status', ['0', '10', '11', '12'])->where('team_id', $bowling_team_id)->sortBy('bt_order');
-            $team2_notout_batsman = $match_players_query->where('bt_status', 'DNB')->where('team_id', $bowling_team_id); // TODO :: need to sorting
-            $team2_bowler = $match_players_query->whereIn('bw_status', ['1', '11'])->where('team_id', $batting_team_id); // TODO :: need to sorting
+            $team2_batsman = $match_players_query->whereIn('bt_status', ['0', '10', '11', '12'])->where('team_id', $bowling_team_id);
+            $team2_notout_batsman = $match_players_query->where('bt_status', 'DNB')->where('team_id', $bowling_team_id);
+            $team2_bowler = $match_players_query->whereIn('bw_status', ['1', '11'])->where('team_id', $batting_team_id);
+            $team2_extras = $match_details_query->where('team_id', $bowling_team_id)->first();
+            $team2_score = $match_details_query->where('team_id', $bowling_team_id)->first();
             $team2_fow = $match_track_query->where('team_id', $bowling_team_id);
         }
 
@@ -326,8 +345,8 @@ class MatchController extends Controller
                 'batsman' => MatchPlayersResource::collection($team1_batsman),
                 'notout_batsman' => MatchPlayersResource::collection($team1_notout_batsman),
                 'bowler' => MatchPlayersResource::collection($team1_bowler),
-                'extras' => $batting_team,
-                'score' => $batting_team,
+                'extras' => $team1_extras,
+                'score' => $team1_score,
                 'fow' => $team1_fow,
             ],
             'team2' => [
@@ -335,11 +354,112 @@ class MatchController extends Controller
                 'batsman' => MatchPlayersResource::collection($team2_batsman),
                 'notout_batsman' => MatchPlayersResource::collection($team2_notout_batsman),
                 'bowler' => MatchPlayersResource::collection($team2_bowler),
-                'extras' => $bowling_team,
-                'score' => $bowling_team,
+                'extras' => $team2_extras,
+                'score' => $team2_score,
                 'fow' => $team2_fow,
             ],
         ];
+
+        //TODO :: optimized code
+//        $match = Game::with(['MatchDetail','WON','MatchTracks','MatchPlayers.Players' => function ($query) {
+//            return $query->with('media', 'Role', 'BattingStyle', 'BowlingStyle');
+//        }])->where('match_id', $match_id)->where('tournament_id', $tournament->id)->first();
+//
+//        $isMatch = 'not_found';
+//        $toss_winning_team = NULL;
+//        $match_status = NULL;
+//
+//
+//        $team_won = '';
+//        $won_description = '';
+//
+//        $bowling_team = NULL;
+//        $batting_team = NULL;
+//        $batting_team_id = NULL;
+//        $bowling_team_id = NULL;
+//        $team_query = collect();
+//
+//        if ($match) {
+//
+//            $isMatch = true;
+//            $match_status = $match->status;
+//
+//            $team_won = $match->WON ? $match->WON->team_name : '';
+//            $won_description = $match->WON ? $match->description : '';
+//
+//            $toss_winning_team = Teams::where('id', $match->toss)->first();
+//
+//            $batting_team = $match->MatchDetail->where('isBatting', 1)->first();
+//            $batting_team_id = optional($batting_team)->team_id;
+//            $bowling_team = $match->MatchDetail->where('isBatting', 0)->first();
+//            $bowling_team_id = optional($bowling_team)->team_id;
+//        }
+//
+//        $team1_detail = NULL;
+//        $team1_batsman = [];
+//        $team1_notout_batsman = [];
+//        $team1_bowler = [];
+//        $team1_fow = NULL;
+//
+//        $team2_detail = NULL;
+//        $team2_batsman = [];
+//        $team2_notout_batsman = [];
+//        $team2_bowler = [];
+//        $team2_fow = NULL;
+//
+//
+//        if ($match) {
+//            $match_players_query = $match->MatchPlayers;
+//            $match_track_query = MatchTrack::with('Batsman')->select('player_id', 'score', 'wickets', 'over', 'overball', 'team_id')->where('action', 'wicket')->where('match_id', $match_id)->where('tournament_id', $tournament->id)->orderBy('wickets', 'asc')->get();
+//
+//
+//            $team1_detail = $team_query->where('id', $batting_team_id)->first();
+//            $team1_batsman = $match_players_query->whereIn('bt_status', ['0', '10', '11', '12'])->where('team_id', $batting_team_id)->sortBy('bt_order');
+//            $team1_notout_batsman = $match_players_query->where('bt_status', 'DNB')->where('team_id', $batting_team_id); //TODO :: need to sorting
+//            $team1_bowler = $match_players_query->whereIn('bw_status', ['1', '11'])->where('team_id', $bowling_team_id); // TODO :: need to sorting
+//            $team1_fow = $match_track_query->where('team_id', $batting_team_id);
+//
+//
+//            $team2_detail = $team_query->where('id', $bowling_team_id)->first();
+//            $team2_batsman = $match_players_query->whereIn('bt_status', ['0', '10', '11', '12'])->where('team_id', $bowling_team_id)->sortBy('bt_order');
+//            $team2_notout_batsman = $match_players_query->where('bt_status', 'DNB')->where('team_id', $bowling_team_id); // TODO :: need to sorting
+//            $team2_bowler = $match_players_query->whereIn('bw_status', ['1', '11'])->where('team_id', $batting_team_id); // TODO :: need to sorting
+//            $team2_fow = $match_track_query->where('team_id', $bowling_team_id);
+//        }
+//
+//
+//        if (is_null($team1_fow)) $team1_fow = null;
+//        else $team1_fow = FowResource::collection($team1_fow);
+//        if (is_null($team2_fow)) $team2_fow = null;
+//        else $team2_fow = FowResource::collection($team2_fow);
+//
+//
+//        return [
+//            'isMatch' => $isMatch,
+//            'won' => $team_won,
+//            'description' => $won_description,
+//            'match_status' => $match_status,
+//            'toss_winning_team' => $toss_winning_team,
+//            'match_detail' => $match,
+//            'team1' => [
+//                'detail' => $team1_detail,
+//                'batsman' => MatchPlayersResource::collection($team1_batsman),
+//                'notout_batsman' => MatchPlayersResource::collection($team1_notout_batsman),
+//                'bowler' => MatchPlayersResource::collection($team1_bowler),
+//                'extras' => $batting_team,
+//                'score' => $batting_team,
+//                'fow' => $team1_fow,
+//            ],
+//            'team2' => [
+//                'detail' => $team2_detail,
+//                'batsman' => MatchPlayersResource::collection($team2_batsman),
+//                'notout_batsman' => MatchPlayersResource::collection($team2_notout_batsman),
+//                'bowler' => MatchPlayersResource::collection($team2_bowler),
+//                'extras' => $bowling_team,
+//                'score' => $bowling_team,
+//                'fow' => $team2_fow,
+//            ],
+//        ];
 
     }
 
