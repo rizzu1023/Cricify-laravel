@@ -43,7 +43,7 @@
                                     <tr>
                                         <td>
                                             <a class="btn btn-success btn-sm" href="/admin/result/{{$result[$i]->tournament_id}}/{{$result[$i]->match_id}}/show">Show</a>
-
+                                            <a class="btn btn-primary btn-sm" href="/admin/LiveUpdate/{{$result[$i]->match_id}}/{{$result[$i]->tournament_id}}">Score</a>
                                         </td>
                                         <th scope="row">{{$result[$i]->match_id}}</th>
                                         <td>{{$result[$i]->Teams->team_name}}</td>

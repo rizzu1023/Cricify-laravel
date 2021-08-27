@@ -538,7 +538,8 @@
                             <a class="btn btn-outline-info btn-square btn-sm mt-1 score-button py-2"
                                id="undo_button"
                                style="font-size: 18px"
-                               onclick="livescore_function('undo')"><i data-feather="refresh-ccw" class="mr-2"></i><span>Undo</span></a>
+                               onclick="livescore_function('undo')"><i data-feather="refresh-ccw"
+                                                                       class="mr-2"></i><span>Undo</span></a>
                         </div>
                         <br>
 
@@ -649,13 +650,24 @@
                                 </button>
                             </form>
                         </div>
+{{--                        <div class="col-6 mt-1 text-right">--}}
+{{--                            <form id="holdMathForm" style="display: inline-block;">--}}
+{{--                                @csrf--}}
+{{--                                <input type="hidden" name="holdMatch" value="1">--}}
+{{--                                <input type="hidden" name="match_id" value="{{$match_id}}">--}}
+{{--                                <input type="hidden" name="tournament" value="{{$tournament_id}}">--}}
+{{--                                <button type="submit" class="btn btn-danger btn-sm"--}}
+{{--                                        onclick="return confirm('Are you sure?')">Stop Match--}}
+{{--                                </button>--}}
+{{--                            </form>--}}
+{{--                        </div>--}}
                     </div>
                 </div>
 
             @elseif($status == 4)
                 <span style="font-size:20px">Match has been ended</span>
                 <a class="btn btn-outline-secondary btn-square btn-md mt-1 ml-5 undo-button"
-                   onclick="confirm('are you sure you want undo ?') ? livescore_function('reverse_inning') : null" >Undo</a>
+                   onclick="confirm('are you sure you want undo ?') ? livescore_function('reverse_inning') : null">Undo</a>
                 <a href="/admin/result/{{$tournament_id}}/{{$match_id}}/show"
                    class="btn btn-primary btn-square btn-md mt-1">Result</a>
 
@@ -703,10 +715,20 @@
                         </form>
                     </div>
                 @endif
+            @elseif($status == 10)
+                <h2>{{ $game->description }}</h2>
+                <div class="col-6 mt-1 text-right">
+                    <form id="reverseHoldMathForm" style="display: inline-block;">
+                        @csrf
+                        <input type="hidden" name="reverseHoldMatch" value="1">
+                        <input type="hidden" name="match_id" value="{{$match_id}}">
+                        <input type="hidden" name="tournament" value="{{$tournament_id}}">
+                        <button type="submit" class="btn btn-danger btn-sm"
+                                onclick="return confirm('Are you sure?')">Start Match Again
+                        </button>
+                    </form>
+                </div>
             @endif
-
-
-
 
 
         </div>
@@ -994,6 +1016,22 @@
 
                 });
 
+                $('#holdMathForm').on('submit',function(e){
+                    e.preventDefault();
+
+                    // $.ajax({
+                    //     type: "POST",
+{{--                        url: "{{route('LiveUpdate')}}",--}}
+                        // data: {
+                        //     match_id: match_id,
+                        //     tournament: tournament,
+                        // },
+                        // success: function (data) {
+                        //     location.reload(true);
+                        // },
+                        // error : function(data) {},
+                });
+
 
                 $('.bt').on('click', function () {
                     $('.bt').prop('disabled', true);
@@ -1007,6 +1045,8 @@
                         $('#select_new_batsman_input').prop('required', true);
                     }
                 }
+
+
 
                 function livescore_function(value) {
 
@@ -1063,11 +1103,11 @@
                                         var team_score = $('#team-score').text();
                                         $('#team-score').text(parseInt(team_score) + parseInt(data.value));
 
-                                        if(data.value == 4){
+                                        if (data.value == 4) {
                                             let batsman_fours = $('#11').find('#batsman-fours').text();
                                             $('#11').find("#batsman-fours").text(parseInt(batsman_fours) + 1);
                                         }
-                                        if(data.value == 6){
+                                        if (data.value == 6) {
                                             let batsman_sixes = $('#11').find('#batsman-sixes').text();
                                             $('#11').find("#batsman-sixes").text(parseInt(batsman_sixes) + 1);
                                         }

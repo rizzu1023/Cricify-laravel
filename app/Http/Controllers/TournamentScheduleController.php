@@ -92,6 +92,7 @@ class TournamentScheduleController extends Controller
 
     public function results(Tournament $tournament)
     {
+        //TODO :: need to change logic
         $result = MatchDetail::where('tournament_id',$tournament->id)->orderBy('match_id','desc')->get();
         return view('Admin/Result/index',compact('result'));
     }

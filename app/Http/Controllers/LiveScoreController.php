@@ -339,7 +339,7 @@ class LiveScoreController extends Controller
         }
         if($request->has('holdMatch')){
             $request->validate([
-                'description' => 'required|string',
+                'description' => 'required',
             ]);
         }
         if ($request->has('startInning')) {
