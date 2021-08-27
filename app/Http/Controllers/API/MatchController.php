@@ -267,8 +267,7 @@ class MatchController extends Controller
             $team_won = $match->WON ? $match->WON->team_name : '';
             $won_description = $match->WON ? $match->description : '';
 
-            $team_query = Teams::whereIn('id', [$match->team1_id, $match->team2_id])->get();
-            $toss_winning_team = $team_query->where('id', $match->toss)->first();
+            $toss_winning_team = Teams::where('id', $match->toss)->first();
 
             $batting_team = $match->MatchDetail->where('isBatting', 1)->first();
             $batting_team_id = optional($batting_team)->team_id;
