@@ -10,6 +10,8 @@ use App\Http\Resources\MatchPlayersResource;
 use App\Http\Resources\MatchTrackResource;
 use App\Http\Resources\PlayersResource;
 use App\Http\Resources\TeamResource;
+use App\MatchDetail;
+use App\MatchPlayers;
 use App\MatchTrack;
 use App\Models\Advertise;
 use App\Schedule;
