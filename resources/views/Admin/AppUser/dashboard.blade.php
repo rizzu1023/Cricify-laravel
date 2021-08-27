@@ -64,8 +64,8 @@
                         <div class="bg-info b-r-4 card-body">
                             <div class="media static-top-widget">
                                 <div class="align-self-center text-center"><i data-feather="shopping-bag"></i></div>
-                                <div class="media-body"><span class="m-0">Matches</span>
-                                    <h4 class="mb-0 counter">0</h4><i class="icon-bg"
+                                <div class="media-body"><span class="m-0">Cities</span>
+                                    <h4 class="mb-0 counter">{{ $cities }}</h4><i class="icon-bg"
                                                                                  data-feather="user-plus"></i>
                                 </div>
                             </div>
@@ -74,6 +74,7 @@
                 </div>
             </div>
         </div>
+
         <div class="container-fluid">
             <div class="card">
                 <div class="card-body">

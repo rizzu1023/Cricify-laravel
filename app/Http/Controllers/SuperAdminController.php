@@ -19,6 +19,9 @@ class SuperAdminController extends Controller
 
         $appUsers = AppUser::orderBy('hit_count','desc')->get();
 
-        return view('Admin.AppUser.dashboard',compact('newUsers','appUsers','appUsed','totalUsers'));
+        $cities = AppUser::pluck('city')->unique()->count();
+        $states = AppUser::pluck('state')->unique()->count();
+
+        return view('Admin.AppUser.dashboard',compact('newUsers','appUsers','appUsed','totalUsers','cities','states'));
     }
 }
